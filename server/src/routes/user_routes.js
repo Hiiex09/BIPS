@@ -1,6 +1,7 @@
 import express from "express";
 import { protectRoute } from "../middlewares/auth_middleware.js";
 import { authorizedRoles } from "../middlewares/auth_roles.js";
+import { getUserInfo } from "../controllers/user_controller.js";
 
 const router = express.Router();
 
@@ -19,9 +20,7 @@ router.get(
   "/resident",
   protectRoute,
   authorizedRoles("Admin", "Staff", "Resident"),
-  (req, res) => {
-    res.send("Welcome Resident");
-  },
+  getUserInfo,
 );
 
 export default router;
