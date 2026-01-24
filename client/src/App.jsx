@@ -1,20 +1,38 @@
-import { BrowserRouter, Routes, Route } from "react-router";
-import Home from "./components/Home";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import Home from "./components/Home.jsx";
 import Navbar from "./components/Navbar";
-import { Services } from "./pages/Services";
-import Announcements from "./pages/Announcements";
-import About from "./pages/About";
+import { useQuery } from "@tanstack/react-query";
+import { checkAuth } from "./api/auth_api.js";
+import ResidentDashboard from "./pages/ResidentUI/ResidentDashboard.jsx";
+import Login from "./pages/Login.jsx";
 
 const App = () => {
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["checkAuth"],
+    queryFn: checkAuth,
+  });
+
   return (
     <>
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/announcements" element={<Announcements />} />
-          <Route path="/about" element={<About />} />
+          <Route
+            path="/"
+            element={!user ? <Home /> : <Navigate to="/resident" />}
+          />
+          <Route
+            path="/resident"
+            element={user ? <ResidentDashboard /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to={"/"} />}
+          />
         </Routes>
       </BrowserRouter>
     </>
