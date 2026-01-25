@@ -5,6 +5,7 @@ import { connectDB } from "./lib/db.js";
 import authRoutes from "./routes/auth_routes.js";
 import userRoutes from "./routes/user_routes.js";
 import announcementRoutes from "./routes/announcement_route.js";
+import certificateRoutes from "./routes/cert_request_route.js";
 import cors from "cors";
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use("/api/v1", authRoutes);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", announcementRoutes);
+app.use("/api/v1", certificateRoutes);
 
 const startServer = async () => {
   await connectDB();
