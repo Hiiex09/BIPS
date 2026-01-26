@@ -38,7 +38,7 @@ export const protectRoute = async (req, res, next) => {
             return res.status(404).json({ message: "User not found" });
           }
 
-          const newAccessToken = jwt.sign({ id: user_id }, access_token, {
+          const newAccessToken = jwt.sign({ user_id: user._id }, access_token, {
             expiresIn: "15mins",
           });
 
