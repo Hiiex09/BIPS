@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import {
   BadgeCheck,
   CircleSmall,
@@ -10,6 +13,8 @@ import {
 } from "lucide-react";
 
 const Login = () => {
+  const [mode, setMode] = useState("login");
+
   return (
     <div className="flex w-full flex-col lg:flex-row gap-5 py-10 px-2">
       <div className="card bg-blue-500 rounded-box grid min-h place-items-center w-1/4">
@@ -53,14 +58,26 @@ const Login = () => {
       <div className="min-h-screen flex items-center justify-center bg-base-200 px-4 w-full">
         <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xl">
           <div className="p-8">
-            {/* Tabs */}
             <div className="bg-base-200 rounded-lg p-1 flex mb-6">
-              <button className="btn btn-sm flex-1 btn-primary text-sm">
+              <Link
+                to={"/login"}
+                onClick={() => setMode("login")}
+                className={`btn btn-sm flex-1 text-sm ${
+                  mode === "login" ? "btn-primary" : "btn-ghost"
+                }`}
+              >
                 Login
-              </button>
-              <button className="btn btn-sm flex-1 btn-ghost text-sm">
+              </Link>
+
+              <Link
+                to={"/signup"}
+                onClick={() => setMode("signup")}
+                className={`btn btn-sm flex-1 text-sm ${
+                  mode === "signup" ? "btn-primary" : "btn-ghost"
+                }`}
+              >
                 Register
-              </button>
+              </Link>
             </div>
 
             {/* Title */}
@@ -119,6 +136,32 @@ const Login = () => {
                 <LogIn size={18} />
               </button>
             </form>
+            {mode === "login" ? (
+              <>
+                <p className="text-sm text-center mt-3">
+                  No account?{" "}
+                  <Link
+                    to={"/signup"}
+                    onClick={() => setMode("signup")}
+                    className="text-blue-600 cursor-pointer"
+                  >
+                    Register here
+                  </Link>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-sm text-center mt-3">
+                  Already have an account?{" "}
+                  <span
+                    onClick={() => setMode("login")}
+                    className="text-blue-600 cursor-pointer"
+                  >
+                    Login here
+                  </span>
+                </p>
+              </>
+            )}
           </div>
 
           {/* Footer */}
