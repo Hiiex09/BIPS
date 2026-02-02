@@ -14,7 +14,7 @@ export const Signup = () => {
   const [mode, setMode] = useState("signup");
 
   return (
-    <div className="flex w-full flex-col lg:flex-row gap-5 py-10 px-2">
+    <div className="flex w-full flex-col lg:flex-row gap-5 pt-5 px-2">
       {/* LEFT INFO PANEL */}
       <div className="card bg-blue-500 rounded-box grid min-h place-items-center w-1/4">
         <div className="p-10">
