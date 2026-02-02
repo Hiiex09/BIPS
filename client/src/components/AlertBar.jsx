@@ -1,9 +1,17 @@
+import { Megaphone } from "lucide-react";
+
 const AlertBar = () => {
   return (
-    <div className="max-w-8xl mx-auto px-4 lg:px-10 mt-4">
-      <div className="alert alert-info shadow">
-        <span>📢 Vaccination Drive this Saturday – 8:00 AM</span>
-        <button className="btn btn-sm btn-ghost">Details</button>
+    <div className="w-screen">
+      <div className="alert bg-blue-300 shadow flex justify-start">
+        <Megaphone size={20} />
+        <span>Vaccination Drive this Saturday – 8:00 AM</span>
+        <span>Vaccination Drive this Saturday – 8:00 AM</span>
+        <span>Vaccination Drive this Saturday – 8:00 AM</span>
+        <span>Vaccination Drive this Saturday – 8:00 AM</span>
+        <span>Vaccination Drive this Saturday – 8:00 AM</span>
+        <span>Vaccination Drive this Saturday – 8:00 AM</span>
+        <button className="btn btn-sm btn-primary">Details</button>
       </div>
     </div>
   );
