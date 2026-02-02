@@ -1,50 +1,78 @@
-import { useQuery } from "@tanstack/react-query";
-import { checkAuth } from "../api/auth_api.js";
-import { Link } from "react-router";
-import ResidetNav from "./ResidentComponents/ResidetNav.jsx";
+import { BrickWall, Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const { data: users } = useQuery({
-    queryKey: ["checkAuth"],
-    queryFn: checkAuth,
-  });
-
   return (
     <>
-      <div className="navbar bg-base-100 sticky top-0 z-50 shadow px-4 lg:px-10">
-        <div className="flex-1">
-          <span className="text-xl font-bold text-primary">
-            Barangay Tejero
-          </span>
+      <div className="navbar bg-base-100 shadow-sm w-screen px-3">
+        {/* Left Section */}
+        <div className="flex-1 flex items-center gap-3">
+          <BrickWall size={30} />
+
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex gap-6 font-medium">
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="#">Services</Link>
+            </li>
+            <li>
+              <Link to="#">Announcements</Link>
+            </li>
+            <li>
+              <Link to="#">About</Link>
+            </li>
+          </ul>
         </div>
 
-        {!users ? (
-          <>
-            <div className="hidden lg:flex">
-              <ul className="menu menu-horizontal gap-2">
-                <li>
-                  <Link to={"/"}>Home</Link>
-                </li>
-                <li>
-                  <Link to={"/services"}>Services</Link>
-                </li>
-                <li>
-                  <Link to={"/announcements"}>Announcements</Link>
-                </li>
-                <li>
-                  <Link to={"/about"}>About</Link>
-                </li>
-              </ul>
-            </div>
-            <button className="btn btn-primary mx-2">
-              <Link to={"/login"}>Login</Link>
+        {/* Right Section */}
+        <div className="hidden md:flex items-center gap-4">
+          <input
+            type="text"
+            placeholder="Search Services"
+            className="input input-bordered input-sm"
+          />
+          <Link to={"/login"} className="btn btn-primary btn-sm">
+            Resident Login
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden dropdown dropdown-end">
+          <button tabIndex={0} className="btn btn-ghost">
+            <Menu size={26} />
+          </button>
+
+          {/* Mobile Dropdown */}
+          <ul
+            tabIndex={0}
+            className="dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-56 space-y-3"
+          >
+            <li>
+              <a href="#Home">Home</a>
+            </li>
+            <li>
+              <a href="#Services">Services</a>
+            </li>
+            <li>
+              <a href="#Announcements">Announcements</a>
+            </li>
+            <li>
+              <a href="#About">About</a>
+            </li>
+
+            <input
+              type="text"
+              placeholder="Search Services"
+              className="input input-bordered input-sm w-full"
+            />
+
+            <button className="btn btn-primary btn-sm w-full">
+              Resident Login
             </button>
-          </>
-        ) : (
-          <div className="flex justify-center ">
-            <ResidetNav />
-          </div>
-        )}
+          </ul>
+        </div>
       </div>
     </>
   );

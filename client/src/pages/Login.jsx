@@ -16,7 +16,7 @@ const Login = () => {
   const [mode, setMode] = useState("login");
 
   return (
-    <div className="flex w-full flex-col lg:flex-row gap-5 py-10 px-2">
+    <div className="flex w-full flex-col lg:flex-row gap-5 pt-5 px-2">
       <div className="card bg-blue-500 rounded-box grid min-h place-items-center w-1/4">
         <div className="p-10">
           <div className="w-1/4 h-24 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg my-5">
