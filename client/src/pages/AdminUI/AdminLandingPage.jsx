@@ -10,8 +10,15 @@ import {
   User,
 } from "lucide-react";
 import AdminHomepage from "./AdminHomepage";
+import { logoutAuthUsers } from "../../hooks/UseAuthRouteHooks.js";
 
 const AdminLandingPage = () => {
+  const { mutate } = logoutAuthUsers();
+
+  const handleLogout = () => {
+    mutate();
+  };
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -53,18 +60,12 @@ const AdminLandingPage = () => {
             />
           </div>
           <div className="me-15 flex justify-center items-center gap-3">
-            <div>
-              <p>Sample</p>
-              <span></span>
-            </div>
-            <div className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
-              </div>
-            </div>
+            <button
+              onClick={handleLogout}
+              className="btn btn-md bg-blue-300 text-blue-900"
+            >
+              Logout
+            </button>
           </div>
         </nav>
 
@@ -143,26 +144,6 @@ const AdminLandingPage = () => {
                 <span className="is-drawer-close:hidden">Announcements</span>
               </button>
             </li>
-            {/* <hr className="pt-90 mt-20" />
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
-              >
-                <Settings size={20} />
-                <span className="is-drawer-close:hidden">Settings</span>
-              </button>
-            </li>
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Help"
-              >
-                <MessageCircleQuestion size={20} />
-                <span className="is-drawer-close:hidden">Help</span>
-              </button>
-            </li>
-            <li className="footer">Captain</li> */}
           </ul>
         </div>
       </div>
