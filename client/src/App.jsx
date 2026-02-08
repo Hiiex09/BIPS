@@ -6,10 +6,16 @@ import LandingPage from "./components/LandingPage.jsx";
 import ResidentDashboard from "./pages/ResidentUI/ResidentDashboard.jsx";
 import PublicLayout from "./Layout/PublicLayout.jsx";
 import AdminLayout from "./Layout/AdminLayout.jsx";
-import { checkAuth } from "./hooks/checkAuth.js";
+import { checkAuthUsers } from "./hooks/UseAuthRouteHooks.js";
+import AdminHomepage from "./pages/AdminUI/AdminHomepage.jsx";
+import AdminLandingPage from "./pages/AdminUI/AdminLandingPage.jsx";
 
 const App = () => {
-  const { user, isLoading, error } = checkAuth();
+  const { user, isLoading, error } = checkAuthUsers();
+
+  if (isLoading) {
+    return <div className="p-10 text-center">Loading...</div>;
+  }
 
   return (
     <>
@@ -20,10 +26,22 @@ const App = () => {
           {/* RESIDENT NAVBAR USER HERE */}
           <Route element={<PublicLayout />}>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={
+                !user ? (
+                  <Login />
+                ) : user.role === "Resident" ? (
+                  <Navigate to="/Resident" />
+                ) : (
+                  <Navigate to="/welcome" />
+                )
+              }
+            />
+
             <Route path="/signup" element={<Signup />} />
             <Route
-              path="/resident"
+              path="/Resident"
               element={
                 user ? <ResidentDashboard /> : <Navigate to={"/login"} />
               }
@@ -32,7 +50,13 @@ const App = () => {
 
           <Route
             path="/welcome"
-            element={user ? <AdminLayout /> : <Navigate to={"/"} />}
+            element={
+              user && (user.role === "Admin" || user.role === "Staff") ? (
+                <AdminLandingPage />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
         </Routes>
       </BrowserRouter>
