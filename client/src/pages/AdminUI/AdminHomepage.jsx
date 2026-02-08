@@ -1,21 +1,13 @@
 import { ClipboardClock, TriangleAlert, User, Users } from "lucide-react";
 import AdminTable from "./AdminTable";
 import AnnouncementPortal from "./AnnouncementPortal";
+import TotalResidents from "./pages/TotalResidents";
 
 const AdminHomepage = () => {
   return (
     <div className="p-5">
       <div className=" grid grid-flow-col grid-cols-3 gap-10">
-        <div className="p-5 rounded-lg  dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 shadow-sm">
-          <Users
-            size={50}
-            className="bg-blue-200 p-2 text-blue-900 rounded-md"
-          />
-          <p className="text-sm font-semibold text-neutral pt-3">
-            Total Residents
-          </p>
-          <span className="text-3xl font-bold">25,425</span>
-        </div>
+        <TotalResidents />
         <div className="p-5 rounded-lg  dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 shadow-sm">
           <ClipboardClock
             size={50}
