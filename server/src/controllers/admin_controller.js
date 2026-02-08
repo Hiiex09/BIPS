@@ -11,7 +11,7 @@ export const getAllResident = async (req, res) => {
     }
 
     res.status(200).json({
-      message: `Total Registered Resident: ${allResidentUser}`,
+      count: allResidentUser,
     });
   } catch (error) {
     console.log(`Error in retrieving list of user ${error.message}`);
