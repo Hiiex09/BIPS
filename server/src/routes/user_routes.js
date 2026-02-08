@@ -25,9 +25,7 @@ router.get(
   "/staff",
   protectRoute,
   authorizedRoles("Admin", "Staff"),
-  (req, res) => {
-    res.send("Welcome Staff");
-  },
+  getAllResident,
 );
 router.get(
   "/resident",
