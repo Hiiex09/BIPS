@@ -1,7 +1,14 @@
 import { BrickWall, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
-
+import { checkAuthUsers, logoutAuthUsers } from "../hooks/UseAuthRouteHooks.js";
 const Navbar = () => {
+  const { user, isLoading, error } = checkAuthUsers();
+  const { mutate } = logoutAuthUsers();
+
+  const handleLogout = () => {
+    mutate();
+  };
+
   return (
     <>
       <div className="navbar bg-base-100 shadow-sm w-screen px-3">
@@ -33,9 +40,15 @@ const Navbar = () => {
             placeholder="Search Services"
             className="input input-bordered input-sm"
           />
-          <Link to={"/login"} className="btn btn-primary btn-sm">
-            Resident Login
-          </Link>
+          {user ? (
+            <button onClick={handleLogout} className="btn btn-error btn-sm">
+              Logout
+            </button>
+          ) : (
+            <Link to={"/login"} className="btn btn-primary btn-sm">
+              Login
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -67,10 +80,18 @@ const Navbar = () => {
               placeholder="Search Services"
               className="input input-bordered input-sm w-full"
             />
-
-            <button className="btn btn-primary btn-sm w-full">
-              Resident Login
-            </button>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="btn btn-md bg-blue-300 text-blue-900 w-full"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="btn btn-primary btn-sm w-full">
+                Login
+              </Link>
+            )}
           </ul>
         </div>
       </div>
