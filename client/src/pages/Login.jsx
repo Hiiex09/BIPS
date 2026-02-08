@@ -11,9 +11,23 @@ import {
   ShieldUser,
   User,
 } from "lucide-react";
+import { loginAuthUsers } from "../hooks/UseAuthRouteHooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Login = () => {
   const [mode, setMode] = useState("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const queryClient = useQueryClient();
+
+  const { mutate } = loginAuthUsers();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mutate({ email, password });
+    queryClient.invalidateQueries(["users"]);
+    navigate("/welcome");
+  };
 
   return (
     <div className="flex w-full flex-col lg:flex-row gap-5 pt-5 px-2">
@@ -87,7 +101,7 @@ const Login = () => {
             </p>
 
             {/* Form */}
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {/* Email */}
               <div>
                 <span className="text-sm font-medium">
@@ -100,6 +114,8 @@ const Login = () => {
                     required
                     placeholder="juan.delacruz@example.com"
                     className="w-full"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </label>
               </div>
@@ -120,6 +136,8 @@ const Login = () => {
                     required
                     placeholder="••••••••"
                     className="w-full"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </label>
               </div>
@@ -131,7 +149,10 @@ const Login = () => {
               </label>
 
               {/* Button */}
-              <button className="btn btn-primary w-full mt-3 flex gap-2">
+              <button
+                type="submit"
+                className="btn btn-primary w-full mt-3 flex gap-2"
+              >
                 Login to Account
                 <LogIn size={18} />
               </button>
