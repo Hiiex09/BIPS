@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import InputForm from "./pages/InputForm";
 
 const AnnouncementPortal = () => {
   return (
@@ -6,10 +7,29 @@ const AnnouncementPortal = () => {
       <div className="p-5 rounded-lg  dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 shadow-sm">
         <div className="flex justify-between items-center">
           <h2 className="font-bold">Recent Announcements</h2>
-          <button className="inline-flex bg-primary px-3 py-1 rounded-md text-white">
-            <Plus />
+
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => document.getElementById("my_modal_5").showModal()}
+          >
+            <Plus size={15} />
             Post New
           </button>
+          <dialog
+            id="my_modal_5"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box">
+              <h3 className="font-bold text-lg">Create Annoucement</h3>
+              <InputForm />
+              <div className="modal-action">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn">Close</button>
+                </form>
+              </div>
+            </div>
+          </dialog>
         </div>
         <div className="bg-gray-100 p-2 mt-3 rounded">
           <h3 className="text-blue-500 font-bold">Health & Wellness</h3>
