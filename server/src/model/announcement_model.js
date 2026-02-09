@@ -12,7 +12,7 @@ const announcementSchema = new Schema(
     priority: {
       type: String,
       required: true,
-      enum: ["Norman", "Important", "Urgent"],
+      enum: ["Normal", "Important", "Urgent"],
     },
     status: { type: String, enum: ["Draft", "Published"] },
     author: {
