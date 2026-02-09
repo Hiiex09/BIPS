@@ -24,11 +24,11 @@ export const loginUser = async (data) => {
   }
 };
 
-export const logout = async () => {
+export const logout = async (data) => {
   try {
     const res = await axios.post(
       "http://localhost:4000/api/v1/logout",
-      {},
+      { data },
       { withCredentials: true },
     );
     return res.data;
