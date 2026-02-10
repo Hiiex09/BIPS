@@ -11,6 +11,7 @@ export const PostAnnouncement = async (req, res) => {
       status,
       expiresAt,
       author: req.user._id, // injected from auth middleware
+      postedBy: req.user.fullname,
     });
 
     res.status(201).json({
@@ -19,6 +20,25 @@ export const PostAnnouncement = async (req, res) => {
     });
   } catch (error) {
     console.log(`Error in creating announcement ${error.message}`);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const getAnnoucementPost = async (req, res) => {
+  try {
+    const allAnnouncementData = await Announcement.find()
+      .populate("author", "fullname")
+      .sort({
+        createdAt: -1,
+      });
+
+    if (!allAnnouncementData) {
+      return res.status(400).json({ message: "No announcement available" });
+    }
+
+    res.status(200).json({ allAnnouncementData });
+  } catch (error) {
+    console.log(`Error in getting announcement: ${error.message}`);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
