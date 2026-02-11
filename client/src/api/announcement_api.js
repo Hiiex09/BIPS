@@ -3,7 +3,7 @@ import axios from "axios";
 export const createAnnouncementApi = async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:4000/api/v1/announcement",
+      "http://localhost:4000/api/v1/create-announcement",
       data,
       { withCredentials: true },
     );
