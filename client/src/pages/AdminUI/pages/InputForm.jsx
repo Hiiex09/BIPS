@@ -19,6 +19,12 @@ const InputForm = () => {
     console.log("Submitting:", data);
 
     mutate(data);
+    setTitle("");
+    setContent("");
+    setCategory("");
+    setPriority("");
+    setStatus("");
+    setExpires("");
   };
 
   return (
