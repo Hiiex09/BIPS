@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const checkAuth = async () => {
   try {
-    const res = await axios.get("http://localhost:4000/api/v1/checkAuth", {
+    const res = await axios.get("http://localhost:4000/api/v1/auth/checkAuth", {
       withCredentials: true,
     });
     return res.data;
@@ -14,7 +14,7 @@ export const checkAuth = async () => {
 export const loginUser = async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:4000/api/v1/login",
+      "http://localhost:4000/api/v1/auth/login",
       data, // 1️⃣ payload goes here
       { withCredentials: true }, // 2️⃣ config goes here
     );
@@ -27,7 +27,7 @@ export const loginUser = async (data) => {
 export const logout = async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:4000/api/v1/logout",
+      "http://localhost:4000/api/v1/auth/logout",
       { data },
       { withCredentials: true },
     );

@@ -3,7 +3,7 @@ import axios from "axios";
 export const createAnnouncementApi = async (data) => {
   try {
     const res = await axios.post(
-      "http://localhost:4000/api/v1/create-announcement",
+      "http://localhost:4000/api/v1/announcement/create-announcement",
       data,
       { withCredentials: true },
     );
@@ -18,7 +18,7 @@ export const createAnnouncementApi = async (data) => {
 export const getAnnouncementApi = async (data) => {
   try {
     const res = await axios.get(
-      "http://localhost:4000/api/v1/get-announcement",
+      "http://localhost:4000/api/v1/announcement/get-announcement",
       data,
     );
 
