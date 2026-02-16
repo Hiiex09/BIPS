@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1users", userRoutes);
+app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/announcement", announcementRoutes);
 app.use("/api/v1/certificate", certificateRoutes);
 

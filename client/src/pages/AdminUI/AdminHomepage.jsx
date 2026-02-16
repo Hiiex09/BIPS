@@ -1,7 +1,7 @@
 import { ClipboardClock, TriangleAlert, User, Users } from "lucide-react";
 import AdminTable from "./AdminTable";
 import AnnouncementPortal from "./AnnouncementPortal";
-import TotalResidents from "./pages/TotalResidents";
+import TotalResidents from "./components/TotalResidents";
 
 const AdminHomepage = () => {
   return (

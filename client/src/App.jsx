@@ -9,6 +9,7 @@ import AdminLayout from "./Layout/AdminLayout.jsx";
 import { checkAuthUsers } from "./hooks/UseAuthRouteHooks.js";
 import AdminHomepage from "./pages/AdminUI/AdminHomepage.jsx";
 import AdminLandingPage from "./pages/AdminUI/AdminLandingPage.jsx";
+import UserManagement from "./pages/AdminUI/pages/UserManagement.jsx";
 
 const App = () => {
   const { user, isLoading, error } = checkAuthUsers();
@@ -55,6 +56,17 @@ const App = () => {
                 <AdminLandingPage />
               ) : (
                 <Navigate to="/" />
+              )
+            }
+          />
+
+          <Route
+            path="/user-management"
+            element={
+              user && (user.role === "Admin" || user.role === "Staff") ? (
+                <UserManagement />
+              ) : (
+                <Navigate to="/welcome" />
               )
             }
           />

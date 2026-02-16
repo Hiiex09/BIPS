@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import AdminHomepage from "./AdminHomepage";
 import { logoutAuthUsers } from "../../hooks/UseAuthRouteHooks.js";
+import { Link } from "react-router-dom";
 
 const AdminLandingPage = () => {
   const { mutate } = logoutAuthUsers();
@@ -114,7 +115,12 @@ const AdminLandingPage = () => {
                 data-tip="User Management"
               >
                 <User size={20} />
-                <span className="is-drawer-close:hidden">User Management</span>
+
+                <Link to="/user-management">
+                  <span className="is-drawer-close:hidden">
+                    User Management
+                  </span>
+                </Link>
               </button>
             </li>
             <li>
@@ -122,7 +128,7 @@ const AdminLandingPage = () => {
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="File"
               >
-                <File scale={20} />
+                <File size={20} />
                 <span className="is-drawer-close:hidden">Document Request</span>
               </button>
             </li>
