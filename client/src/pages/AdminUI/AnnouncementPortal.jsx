@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import InputForm from "./pages/InputForm";
+import InputForm from "../AdminUI/components/InputForm";
 
 const AnnouncementPortal = () => {
   return (
