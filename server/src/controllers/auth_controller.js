@@ -5,9 +5,6 @@ import bcrypt from "bcryptjs";
 export const signup = async (req, res) => {
   const { fullname, email, mobile, password, role } = req.body;
   try {
-    if (!fullname || !email || !mobile || !password || mobile.length < 11) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
     if (password.length < 8) {
       return res
         .status(400)
@@ -45,6 +42,22 @@ export const signup = async (req, res) => {
     }
   } catch (error) {
     console.log(`Error in signup controller ${error.message}`);
+
+    if (error.name === "ValidationError") {
+      const errors = Object.values(error.errors).map((err) => err.message);
+
+      return res.status(400).json({
+        message: "Validation failed",
+        errors,
+      });
+    }
+
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: "Duplicate field value entered",
+      });
+    }
+
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
