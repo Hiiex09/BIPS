@@ -129,7 +129,11 @@ const AdminLandingPage = () => {
                 data-tip="File"
               >
                 <File size={20} />
-                <span className="is-drawer-close:hidden">Document Request</span>
+                <Link to="/document-management">
+                  <span className="is-drawer-close:hidden">
+                    Document Request
+                  </span>
+                </Link>
               </button>
             </li>
             <li>
