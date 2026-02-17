@@ -3,12 +3,16 @@ import {
   ChartNoAxesCombined,
   ShieldCheck,
   ClipboardList,
+  ClipboardClock,
+  ClockAlert,
+  FileExclamationPoint,
+  Circle,
+  CircleCheck,
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import UserTable from "./UserTable";
 import Sidebar from "../components/Sidebar";
+import UserTable from "./UserTable";
 
-const UserManagement = () => {
+const DocumentsManagement = () => {
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -38,7 +42,7 @@ const UserManagement = () => {
             </svg>
           </label>
           <div className="px-4">Admin</div>
-          <h1 className="font-semibold">User Management</h1>
+          <h1 className="font-semibold">Documents Request</h1>
         </nav>
         {/* Page content here */}
         <div className="p-4">
@@ -48,20 +52,14 @@ const UserManagement = () => {
               <div className="card-body">
                 <div className="flex justify-between gap-10">
                   <h2 className="card-title text-sm text-gray-500">
-                    Total Residents
+                    Total Pending
                   </h2>
-                  <span className="bg-blue-100 p-3 rounded-sm">
-                    <Users size={15} color="blue" />
-                  </span>
                 </div>
-                <div className="inline">
-                  <p className="text-3xl font-bold">1,284</p>
-                  <div className="text-green-600 inline-flex mt-2">
-                    <ChartNoAxesCombined color="green" />
-                    <span className="text-xs mt-2 font-semibold">
-                      +12 from last month
-                    </span>
-                  </div>
+                <div className="inline-flex">
+                  <p className="text-3xl font-bold mt-2">24</p>
+                  <span className="bg-blue-100 p-3 rounded-sm">
+                    <ClipboardClock size={25} color="blue" />
+                  </span>
                 </div>
               </div>
             </div>
@@ -69,18 +67,16 @@ const UserManagement = () => {
             <div className="card card-border bg-base-100 w-96 shadow-lg">
               <div className="card-body">
                 <div className="flex justify-between gap-10">
-                  <h2 className="card-title text-sm text-gray-500">Verified</h2>
-                  <span className="bg-green-100 p-3 rounded-sm">
-                    <ShieldCheck size={15} color="green" />
-                  </span>
+                  <h2 className="card-title text-sm text-gray-500">
+                    Urgent Request
+                    <Circle color="red" size={5} className="m-1" />
+                  </h2>
                 </div>
-                <div className="inline">
+                <div className="inline-flex">
                   <p className="text-3xl font-bold">1,150</p>
-                  <div className="text-gray-600 inline-flex mt-2">
-                    <span className="text-xs mt-2 font-semibold">
-                      89% of total population
-                    </span>
-                  </div>
+                  <span className="bg-red-100 p-3 rounded-sm">
+                    <FileExclamationPoint size={25} color="red" />
+                  </span>
                 </div>
               </div>
             </div>
@@ -91,17 +87,12 @@ const UserManagement = () => {
                   <h2 className="card-title text-sm text-gray-500">
                     Pending Verification
                   </h2>
-                  <span className="bg-orange-100 p-3 rounded-sm">
-                    <ClipboardList size={15} color="orange" />
-                  </span>
                 </div>
-                <div className="inline">
+                <div className="inline-flex">
                   <p className="text-3xl font-bold">134</p>
-                  <div className="text-orange-600 inline-flex mt-2">
-                    <span className="text-xs mt-2 font-semibold">
-                      Requires Action
-                    </span>
-                  </div>
+                  <span className="bg-green-100 p-3 rounded-sm">
+                    <CircleCheck size={25} color="green" />
+                  </span>
                 </div>
               </div>
             </div>
@@ -168,4 +159,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default DocumentsManagement;
