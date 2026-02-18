@@ -1,20 +1,11 @@
-import {
-  Users,
-  ShieldCheck,
-  ClipboardList,
-  TrendingUp,
-  Eye,
-  Edit,
-  Trash2
-} from "lucide-react";
 import { useState } from "react";
-import PageLayout from "../../../components/admin/PageLayout";
-import StatsCard from "../../../components/admin/StatsCard";
-import SearchFilterBar from "../../../components/admin/SearchFilterBar";
-import Pagination from "../../../components/admin/Pagination";
-import { mockUsers, userStats } from "../../../data/mockData";
+import { Users, ShieldCheck, ClipboardList } from "lucide-react";
+import StatsCard from "../../components/admin/StatsCard";
+import SearchFilterBar from "../../components/admin/SearchFilterBar";
+import Pagination from "../../components/admin/Pagination";
+import { mockUsers, userStats } from "../../data/mockData";
 
-const UserManagement = () => {
+const DemoPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const totalPages = Math.ceil(mockUsers.length / itemsPerPage);
@@ -59,8 +50,14 @@ const UserManagement = () => {
   };
 
   return (
-    <PageLayout title="User Management">
-      <div className="space-y-6">
+    <div className="min-h-screen bg-base-200/30">
+      {/* Header */}
+      <div className="bg-base-100 border-b border-base-content/10 p-6 mb-6">
+        <h1 className="text-3xl font-bold text-primary">Barangay Management System</h1>
+        <p className="text-muted mt-2">User Management Dashboard - Demo</p>
+      </div>
+
+      <div className="container mx-auto p-6 space-y-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <StatsCard
@@ -121,7 +118,6 @@ const UserManagement = () => {
                     <th>Status</th>
                     <th>Verified</th>
                     <th>Join Date</th>
-                    <th className="text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -149,19 +145,6 @@ const UserManagement = () => {
                         </span>
                       </td>
                       <td className="text-sm">{user.joinDate}</td>
-                      <td>
-                        <div className="flex justify-center gap-2">
-                          <button className="btn btn-ghost btn-xs" title="View">
-                            <Eye size={16} />
-                          </button>
-                          <button className="btn btn-ghost btn-xs" title="Edit">
-                            <Edit size={16} />
-                          </button>
-                          <button className="btn btn-ghost btn-xs text-error" title="Delete">
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -179,8 +162,8 @@ const UserManagement = () => {
           onPageChange={setCurrentPage}
         />
       </div>
-    </PageLayout>
+    </div>
   );
 };
 
-export default UserManagement;
+export default DemoPage;
