@@ -19,16 +19,16 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <ul className="hidden md:flex gap-6 font-medium">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/" className="hover:text-primary transition-colors">Home</Link>
             </li>
             <li>
-              <Link to="#">Services</Link>
+              <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
             </li>
             <li>
-              <Link to="#">Announcements</Link>
+              <Link to="/announcements" className="hover:text-primary transition-colors">Announcements</Link>
             </li>
             <li>
-              <Link to="#">About</Link>
+              <Link to="/about" className="hover:text-primary transition-colors">About</Link>
             </li>
           </ul>
         </div>
@@ -63,16 +63,16 @@ const Navbar = () => {
             className="dropdown-content mt-3 p-4 shadow bg-base-100 rounded-box w-56 space-y-3"
           >
             <li>
-              <a href="#Home">Home</a>
+              <Link to="/" className="block py-2">Home</Link>
             </li>
             <li>
-              <a href="#Services">Services</a>
+              <Link to="/services" className="block py-2">Services</Link>
             </li>
             <li>
-              <a href="#Announcements">Announcements</a>
+              <Link to="/announcements" className="block py-2">Announcements</Link>
             </li>
             <li>
-              <a href="#About">About</a>
+              <Link to="/about" className="block py-2">About</Link>
             </li>
 
             <input

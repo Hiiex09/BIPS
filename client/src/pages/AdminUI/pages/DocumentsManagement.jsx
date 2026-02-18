@@ -1,161 +1,182 @@
 import {
-  Users,
-  ChartNoAxesCombined,
-  ShieldCheck,
   ClipboardList,
-  ClipboardClock,
-  ClockAlert,
-  FileExclamationPoint,
-  Circle,
-  CircleCheck,
+  AlertCircle,
+  CheckCircle,
+  Eye,
+  FileCheck,
+  Ban,
+  Clock
 } from "lucide-react";
-import Sidebar from "../components/Sidebar";
-import UserTable from "./UserTable";
+import { useState } from "react";
+import PageLayout from "../../../components/admin/PageLayout";
+import StatsCard from "../../../components/admin/StatsCard";
+import SearchFilterBar from "../../../components/admin/SearchFilterBar";
+import Pagination from "../../../components/admin/Pagination";
+import { mockDocuments, documentStats } from "../../../data/mockData";
 
 const DocumentsManagement = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(mockDocuments.length / itemsPerPage);
+
+  const currentDocuments = mockDocuments.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const documentTypeFilters = [
+    { label: "All Types", value: "all" },
+    { label: "Barangay Clearance", value: "Barangay Clearance" },
+    { label: "Certificate of Residency", value: "Certificate of Residency" },
+    { label: "Business Permit", value: "Business Permit" },
+    { label: "Indigency Certificate", value: "Indigency Certificate" }
+  ];
+
+  const statusFilters = [
+    { label: "All Statuses", value: "all" },
+    { label: "Pending", value: "Pending" },
+    { label: "Processing", value: "Processing" },
+    { label: "Ready", value: "Ready" },
+    { label: "Completed", value: "Completed" },
+    { label: "Rejected", value: "Rejected" }
+  ];
+
+  const getStatusBadgeClass = (status) => {
+    const classes = {
+      Pending: "badge-warning",
+      Processing: "badge-info",
+      Ready: "badge-success",
+      Completed: "badge-neutral",
+      Rejected: "badge-error"
+    };
+    return classes[status] || "badge-neutral";
+  };
+
   return (
-    <div className="drawer lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <Sidebar />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
-          >
-            {/* Sidebar toggle icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
-              fill="none"
-              stroke="currentColor"
-              className="my-1.5 inline-block size-4"
-            >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
-          </label>
-          <div className="px-4">Admin</div>
-          <h1 className="font-semibold">Documents Request</h1>
-        </nav>
-        {/* Page content here */}
-        <div className="p-4">
-          <div className="flex justify-between items-center py-5">
-            {/* Card 1 */}
-            <div className="card card-border bg-base-100 w-96 shadow-lg">
-              <div className="card-body">
-                <div className="flex justify-between gap-10">
-                  <h2 className="card-title text-sm text-gray-500">
-                    Total Pending
-                  </h2>
-                </div>
-                <div className="inline-flex">
-                  <p className="text-3xl font-bold mt-2">24</p>
-                  <span className="bg-blue-100 p-3 rounded-sm">
-                    <ClipboardClock size={25} color="blue" />
-                  </span>
-                </div>
-              </div>
-            </div>
-            {/* Card 2 */}
-            <div className="card card-border bg-base-100 w-96 shadow-lg">
-              <div className="card-body">
-                <div className="flex justify-between gap-10">
-                  <h2 className="card-title text-sm text-gray-500">
-                    Urgent Request
-                    <Circle color="red" size={5} className="m-1" />
-                  </h2>
-                </div>
-                <div className="inline-flex">
-                  <p className="text-3xl font-bold">1,150</p>
-                  <span className="bg-red-100 p-3 rounded-sm">
-                    <FileExclamationPoint size={25} color="red" />
-                  </span>
-                </div>
-              </div>
-            </div>
-            {/* Card 3 */}
-            <div className="card card-border bg-base-100 w-96 shadow-lg">
-              <div className="card-body">
-                <div className="flex justify-between gap-10">
-                  <h2 className="card-title text-sm text-gray-500">
-                    Pending Verification
-                  </h2>
-                </div>
-                <div className="inline-flex">
-                  <p className="text-3xl font-bold">134</p>
-                  <span className="bg-green-100 p-3 rounded-sm">
-                    <CircleCheck size={25} color="green" />
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div className="w-full my-5">
-              <label className="input">
-                <svg
-                  className="h-[1em] opacity-50"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <g
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2.5"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.3-4.3"></path>
-                  </g>
-                </svg>
-                <div>
-                  <input type="search" className="grow" placeholder="Search" />
-                </div>
-              </label>
-            </div>
-            <div className="inline-flex my-5 w-full space-x-5">
-              <select class="select w-full">
-                <option disabled selected>
-                  Filter by Role
-                </option>
-                <option>Admin</option>
-                <option>Staff</option>
-                <option>Resident</option>
-              </select>
-              <select class="select w-full">
-                <option disabled selected>
-                  Status
-                </option>
-                <option>Active</option>
-                <option>Inactive</option>
-                <option>Suspended</option>
-                <option>Deactivated</option>
-              </select>
-            </div>
-          </div>
-          <UserTable />
-          <div className="mt-10 flex justify-between">
-            <div>
-              <span className="text-xs ">Showing 1 to 4 of 20 entries</span>
-            </div>
-            <div className="join me-20">
-              <button className="join-item btn">1</button>
-              <button className="join-item btn btn-active">2</button>
-              <button className="join-item btn">3</button>
-              <button className="join-item btn">4</button>
+    <PageLayout title="Document Requests Management">
+      <div className="space-y-6">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <StatsCard
+            title="Total Pending"
+            value={documentStats.totalPending}
+            icon={ClipboardList}
+            iconColor="text-info"
+            iconBg="bg-info/10"
+          />
+          <StatsCard
+            title="Urgent Requests"
+            value={documentStats.urgentRequests}
+            subtitle="Requires immediate attention"
+            icon={AlertCircle}
+            iconColor="text-error"
+            iconBg="bg-error/10"
+          />
+          <StatsCard
+            title="Completed This Month"
+            value={documentStats.completedThisMonth}
+            subtitle={`Avg: ${documentStats.averageProcessingTime}`}
+            icon={CheckCircle}
+            iconColor="text-success"
+            iconBg="bg-success/10"
+          />
+        </div>
+
+        {/* Search and Filters */}
+        <SearchFilterBar
+          searchPlaceholder="Search by requester name or purpose..."
+          filters={[
+            {
+              placeholder: "Filter by Document Type",
+              options: documentTypeFilters,
+              onChange: (value) => console.log("Type filter:", value)
+            },
+            {
+              placeholder: "Filter by Status",
+              options: statusFilters,
+              onChange: (value) => console.log("Status filter:", value)
+            }
+          ]}
+        />
+
+        {/* Documents Table */}
+        <div className="card bg-base-100 shadow-md">
+          <div className="card-body p-0">
+            <div className="overflow-x-auto">
+              <table className="table table-zebra">
+                <thead className="bg-base-200">
+                  <tr>
+                    <th className="w-16">#</th>
+                    <th>Requester</th>
+                    <th>Document Type</th>
+                    <th>Purpose</th>
+                    <th>Date Requested</th>
+                    <th>Status</th>
+                    <th>Processed By</th>
+                    <th className="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentDocuments.map((doc, index) => (
+                    <tr key={doc.id} className="hover">
+                      <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
+                      <td>
+                        <div className="flex items-center gap-2">
+                          {doc.urgent && (
+                            <div className="indicator-item badge badge-error badge-xs"></div>
+                          )}
+                          <span className="font-medium">{doc.requester}</span>
+                        </div>
+                      </td>
+                      <td>{doc.documentType}</td>
+                      <td className="text-sm">{doc.purpose}</td>
+                      <td className="text-sm">{doc.dateRequested}</td>
+                      <td>
+                        <span className={`badge badge-sm ${getStatusBadgeClass(doc.status)}`}>
+                          {doc.status}
+                        </span>
+                      </td>
+                      <td className="text-sm">{doc.processedBy || "-"}</td>
+                      <td>
+                        <div className="flex justify-center gap-2">
+                          <button className="btn btn-ghost btn-xs" title="View">
+                            <Eye size={16} />
+                          </button>
+                          {doc.status === "Pending" && (
+                            <>
+                              <button className="btn btn-ghost btn-xs text-success" title="Approve">
+                                <FileCheck size={16} />
+                              </button>
+                              <button className="btn btn-ghost btn-xs text-error" title="Reject">
+                                <Ban size={16} />
+                              </button>
+                            </>
+                          )}
+                          {doc.status === "Processing" && (
+                            <button className="btn btn-ghost btn-xs text-info" title="Mark Ready">
+                              <Clock size={16} />
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={mockDocuments.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
-    </div>
+    </PageLayout>
   );
 };
 
