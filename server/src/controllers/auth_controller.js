@@ -3,8 +3,18 @@ import User from "../model/auth_model.js";
 import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
-  const { fullname, email, mobile, password, role } = req.body;
+  const { firstName, lastName, address, email, mobile, password, role } =
+    req.body;
+
   try {
+    // Validate required fields
+    if (!firstName || !lastName || !address || !email || !mobile || !password) {
+      return res.status(400).json({
+        message:
+          "All fields are required (firstName, lastName, address, email, mobile, password)",
+      });
+    }
+
     if (password.length < 8) {
       return res
         .status(400)
@@ -14,15 +24,22 @@ export const signup = async (req, res) => {
     const user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "Email already exists" });
 
+    const mobileExists = await User.findOne({ mobile });
+    if (mobileExists)
+      return res.status(400).json({ message: "Mobile number already exists" });
+
     const salt = await bcrypt.genSalt(10);
     const hash_password = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      fullname,
+      firstName,
+      lastName,
+      address,
       email,
       mobile,
       password: hash_password,
-      role,
+      role: role || "Resident",
+      idUpload: req.file ? req.file.filename : null,
     });
 
     if (newUser) {
@@ -31,7 +48,9 @@ export const signup = async (req, res) => {
 
       res.status(201).json({
         _id: newUser._id,
-        fullname: newUser.fullname,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        address: newUser.address,
         email: newUser.email,
         mobile: newUser.mobile,
         role: newUser.role,
@@ -80,8 +99,11 @@ export const login = async (req, res) => {
     generateToken(user._id, res);
     res.status(200).json({
       _id: user._id,
-      fullname: user.fullname,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      address: user.address,
       email: user.email,
+      mobile: user.mobile,
       role: user.role,
     });
   } catch (error) {

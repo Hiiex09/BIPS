@@ -9,9 +9,66 @@ import {
   ShieldUser,
   Upload,
 } from "lucide-react";
+import { signupAuthUsers } from "../hooks/UseAuthRouteHooks";
 
 export const Signup = () => {
   const [mode, setMode] = useState("signup");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    mobile: "",
+    email: "",
+    password: "",
+    idUpload: null,
+  });
+
+  const { mutate: signup, isPending, error } = signupAuthUsers();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      idUpload: file || null,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const submitData = new FormData();
+    submitData.append("firstName", formData.firstName);
+    submitData.append("lastName", formData.lastName);
+    submitData.append("address", formData.address);
+    submitData.append("mobile", formData.mobile);
+    submitData.append("email", formData.email);
+    submitData.append("password", formData.password);
+    if (formData.idUpload) {
+      submitData.append("idUpload", formData.idUpload);
+    }
+
+    signup(submitData, {
+      onSuccess: () => {
+        setFormData({
+          firstName: "",
+          lastName: "",
+          address: "",
+          mobile: "",
+          email: "",
+          password: "",
+          idUpload: null,
+        });
+      },
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
@@ -33,21 +90,29 @@ export const Signup = () => {
         <div className="flex flex-col gap-3 mb-6">
           <p className="inline-flex gap-3 items-center">
             <BadgeCheck fill="white" color="#3b82f6" size={22} />
-            <span className="text-white text-sm">Official Government Record Access</span>
+            <span className="text-white text-sm">
+              Official Government Record Access
+            </span>
           </p>
           <p className="inline-flex gap-3 items-center">
             <BadgeCheck fill="white" color="#3b82f6" size={22} />
-            <span className="text-white text-sm">Fast Document Processing (Barangay Clearance)</span>
+            <span className="text-white text-sm">
+              Fast Document Processing (Barangay Clearance)
+            </span>
           </p>
           <p className="inline-flex gap-3 items-center">
             <BadgeCheck fill="white" color="#3b82f6" size={22} />
-            <span className="text-white text-sm">Secure Identity Verification</span>
+            <span className="text-white text-sm">
+              Secure Identity Verification
+            </span>
           </p>
         </div>
 
         <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg">
           <LockKeyhole size={20} className="text-white shrink-0" />
-          <span className="text-white text-sm">End-to-End Encrypted & Secure Database</span>
+          <span className="text-white text-sm">
+            End-to-End Encrypted & Secure Database
+          </span>
         </div>
       </div>
 
@@ -84,23 +149,41 @@ export const Signup = () => {
             </p>
 
             {/* FORM */}
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              {error && (
+                <div className="alert alert-error">
+                  <span>
+                    {error.message || "An error occurred during signup"}
+                  </span>
+                </div>
+              )}
+
               {/* First + Last Name */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <span className="text-sm font-medium">First Name</span>
                   <input
                     type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
                     placeholder="Juan"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
                 <div>
                   <span className="text-sm font-medium">Last Name</span>
                   <input
                     type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
                     placeholder="Dela Cruz"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
               </div>
@@ -109,8 +192,13 @@ export const Signup = () => {
               <div>
                 <span className="text-sm font-medium">Full Home Address</span>
                 <textarea
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
                   className="textarea textarea-bordered w-full mt-1"
                   placeholder="Bldg No., Street, Barangay, City/Municipality"
+                  required
+                  disabled={isPending}
                 ></textarea>
               </div>
 
@@ -120,38 +208,82 @@ export const Signup = () => {
                   <span className="text-sm font-medium">Contact Number</span>
                   <input
                     type="tel"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleInputChange}
                     placeholder="+63 912 345 6789"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
                 <div>
                   <span className="text-sm font-medium">Email Address</span>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="juan@example.com"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
+              </div>
+
+              {/* Password */}
+              <div>
+                <span className="text-sm font-medium">Password</span>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="At least 8 characters"
+                  className="input input-bordered w-full mt-1"
+                  required
+                  minLength="8"
+                  disabled={isPending}
+                />
               </div>
 
               {/* ID Upload */}
               <div>
                 <span className="text-sm font-medium">
-                  Resident ID Upload (Valid ID)
+                  Resident ID Upload (Valid ID){" "}
+                  <span className="text-gray-400 text-xs">(Optional)</span>
                 </span>
                 <label className="border border-dashed rounded-lg mt-2 p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-base-200 transition">
                   <Upload size={30} className="mb-2 text-blue-600" />
                   <p className="text-sm font-semibold">
                     Click to upload or drag and drop
                   </p>
-                  <p className="text-xs text-gray-500">PNG, JPG or PDF (Max 5MB)</p>
-                  <input type="file" hidden />
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG or PDF (Max 5MB)
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {formData.idUpload
+                      ? `Selected: ${formData.idUpload.name}`
+                      : "No file selected"}
+                  </p>
+                  <input
+                    type="file"
+                    hidden
+                    onChange={handleFileChange}
+                    accept=".png,.jpg,.jpeg,.pdf"
+                    disabled={isPending}
+                  />
                 </label>
               </div>
 
               {/* Submit */}
-              <button className="btn btn-primary w-full mt-4">
-                Register Account →
+              <button
+                type="submit"
+                disabled={isPending}
+                className="btn btn-primary w-full mt-4"
+              >
+                {isPending ? "Registering..." : "Register Account →"}
               </button>
             </form>
 
@@ -167,10 +299,14 @@ export const Signup = () => {
           <div className="border-t px-6 sm:px-8 py-5 text-center space-y-3">
             <p className="text-xs text-gray-500 leading-relaxed">
               By registering, you agree to our
-              <span className="text-blue-600 mx-1 cursor-pointer">Terms of Service</span>
+              <span className="text-blue-600 mx-1 cursor-pointer">
+                Terms of Service
+              </span>
               and
-              <span className="text-blue-600 mx-1 cursor-pointer">Privacy Policy</span>.
-              We process your data according to the Data Privacy Act of 2012.
+              <span className="text-blue-600 mx-1 cursor-pointer">
+                Privacy Policy
+              </span>
+              . We process your data according to the Data Privacy Act of 2012.
             </p>
           </div>
 

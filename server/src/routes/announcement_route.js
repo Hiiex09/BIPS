@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  deleteAnnouncement,
   getAnnoucementPost,
   PostAnnouncement,
 } from "../controllers/announcement_controller.js";
@@ -19,5 +20,20 @@ router.post(
 );
 
 router.get("/get-announcement", getAnnoucementPost);
+
+router.patch(
+  "/update-announcement/:id",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  validate(createAnnouncementSchema),
+  PostAnnouncement,
+);
+
+router.delete(
+  "/delete-announcement/:id",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  deleteAnnouncement,
+);
 
 export default router;
