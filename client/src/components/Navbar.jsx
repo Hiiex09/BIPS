@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar bg-base-100 shadow-sm w-screen px-3">
+      <div className="navbar bg-base-100 shadow-sm w-full px-3">
         {/* Left Section */}
         <div className="flex-1 flex items-center gap-3">
           <BrickWall size={30} />

@@ -30,48 +30,46 @@ const Login = () => {
   };
 
   return (
-    <div className="flex w-full flex-col lg:flex-row gap-5 pt-5 px-2">
-      <div className="card bg-blue-500 rounded-box grid min-h place-items-center w-1/4">
-        <div className="p-10">
-          <div className="w-1/4 h-24 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg my-5">
-            <ShieldUser size={60} className="text-white" />
-          </div>
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left Info Panel — hidden on mobile */}
+      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-blue-500 flex-col justify-center p-10 xl:p-14">
+        <div className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg mb-6">
+          <ShieldUser size={40} className="text-white" />
+        </div>
 
-          <h1 className="text-white text-5xl w-3/4 font-bold">
-            Digitalizing Barangay Services for a Better Community.
-          </h1>
-          <p className="w-3/4 my-5 text-white">
-            Access local permits, view community announcements, and securely
-            connect with your local officials from the comfort of your home.
-          </p>
+        <h1 className="text-white text-3xl xl:text-4xl font-bold mb-4 leading-tight">
+          Digitalizing Barangay Services for a Better Community.
+        </h1>
+        <p className="text-white/90 mb-6 text-sm xl:text-base">
+          Access local permits, view community announcements, and securely
+          connect with your local officials from the comfort of your home.
+        </p>
 
-          <p className="w-3/4 inline-flex gap-3 my-3">
-            <BadgeCheck fill="white" color="blue" size={25} />
-            <span className="text-white">
-              Official Government Record Access
-            </span>
+        <div className="flex flex-col gap-3 mb-6">
+          <p className="inline-flex gap-3 items-center">
+            <BadgeCheck fill="white" color="#3b82f6" size={22} />
+            <span className="text-white text-sm">Official Government Record Access</span>
           </p>
-          <p className="w-3/4 inline-flex gap-3 my-3">
-            <BadgeCheck fill="white" color="blue" size={25} />
-            <span className="text-white">
-              Fast Document Processing (Barangay Clearance)
-            </span>
+          <p className="inline-flex gap-3 items-center">
+            <BadgeCheck fill="white" color="#3b82f6" size={22} />
+            <span className="text-white text-sm">Fast Document Processing (Barangay Clearance)</span>
           </p>
-          <p className="w-3/4 inline-flex gap-3 my-3">
-            <BadgeCheck fill="white" color="blue" size={25} />
-            <span className="text-white">Secure Identity Verification</span>
-          </p>
-          <p className="w-md inline-flex gap-3 my-3 px-4 py-2 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg text-center">
-            <LockKeyhole size={25} />
-            <span className="text-white">
-              End-to-End Encrypted & Secure Database
-            </span>
+          <p className="inline-flex gap-3 items-center">
+            <BadgeCheck fill="white" color="#3b82f6" size={22} />
+            <span className="text-white text-sm">Secure Identity Verification</span>
           </p>
         </div>
+
+        <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg">
+          <LockKeyhole size={20} className="text-white shrink-0" />
+          <span className="text-white text-sm">End-to-End Encrypted & Secure Database</span>
+        </div>
       </div>
-      <div className="min-h-screen flex items-center justify-center bg-base-200 px-4 w-full">
+
+      {/* Right Form Area */}
+      <div className="flex-1 flex items-center justify-center bg-base-200 px-4 py-8 sm:py-12">
         <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xl">
-          <div className="p-8">
+          <div className="p-6 sm:p-8">
             <div className="bg-base-200 rounded-lg p-1 flex mb-6">
               <Link
                 to={"/login"}
@@ -157,58 +155,35 @@ const Login = () => {
                 <LogIn size={18} />
               </button>
             </form>
-            {mode === "login" ? (
-              <>
-                <p className="text-sm text-center mt-3">
-                  No account?{" "}
-                  <Link
-                    to={"/signup"}
-                    onClick={() => setMode("signup")}
-                    className="text-blue-600 cursor-pointer"
-                  >
-                    Register here
-                  </Link>
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-center mt-3">
-                  Already have an account?{" "}
-                  <span
-                    onClick={() => setMode("login")}
-                    className="text-blue-600 cursor-pointer"
-                  >
-                    Login here
-                  </span>
-                </p>
-              </>
-            )}
+
+            <p className="text-sm text-center mt-3">
+              No account?{" "}
+              <Link to={"/signup"} className="text-blue-600 cursor-pointer">
+                Register here
+              </Link>
+            </p>
           </div>
 
           {/* Footer */}
-          <div className="border-t px-8 py-6 text-center space-y-3">
+          <div className="border-t px-6 sm:px-8 py-5 text-center space-y-3">
             <p className="font-semibold text-sm">Help & Support</p>
-
             <p className="text-xs text-gray-500 leading-relaxed">
               By logging in, you agree to our
-              <span className="text-blue-600 mx-1 cursor-pointer">
-                Terms of Service
-              </span>
+              <span className="text-blue-600 mx-1 cursor-pointer">Terms of Service</span>
               and
-              <span className="text-blue-600 mx-1 cursor-pointer">
-                Privacy Policy
-              </span>
-              . We process your data according to the Data Privacy Act of 2012.
+              <span className="text-blue-600 mx-1 cursor-pointer">Privacy Policy</span>.
+              We process your data according to the Data Privacy Act of 2012.
             </p>
           </div>
-          <div className="flex justify-evenly items-center py-5">
-            <span className="text-xs flex justify-evenly items-center gap-1">
-              <ShieldCheck size={20} fill="green" color="white" />
+
+          <div className="flex flex-wrap justify-evenly items-center py-4 px-4 gap-2">
+            <span className="text-xs flex items-center gap-1">
+              <ShieldCheck size={18} fill="green" color="white" />
               Official Barangay Tejero Portal
             </span>
-            <span className="text-xs flex justify-evenly items-center gap-1">
-              <CircleSmall size={15} fill="gray" color="white" />
-              Support:barangay.tejero@gmail.com
+            <span className="text-xs flex items-center gap-1">
+              <CircleSmall size={14} fill="gray" color="white" />
+              Support: barangay.tejero@gmail.com
             </span>
           </div>
         </div>
