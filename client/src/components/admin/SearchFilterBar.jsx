@@ -20,11 +20,11 @@ const SearchFilterBar = ({
       </div>
       
       {filters.length > 0 && (
-        <div className="flex gap-3 flex-wrap md:flex-nowrap">
+        <div className="flex gap-3 flex-wrap">
           {filters.map((filter, index) => (
             <select
               key={index}
-              className="select select-bordered w-full md:w-48"
+              className="select select-bordered w-full sm:w-44"
               onChange={(e) => filter.onChange?.(e.target.value)}
               defaultValue=""
             >

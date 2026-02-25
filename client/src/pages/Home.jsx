@@ -65,11 +65,11 @@ const Home = () => {
       {/* Hero Section - Asymmetric Offset Split */}
       <section className="relative bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-80 h-80 bg-secondary rounded-full blur-3xl"></div>
+          <div className="absolute top-10 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-primary rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 left-0 w-40 sm:w-80 h-40 sm:h-80 bg-secondary rounded-full blur-3xl"></div>
         </div>
         
-        <div className="container mx-auto px-6 py-20 relative">
+        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <div className="badge badge-primary badge-lg gap-2">
@@ -94,7 +94,7 @@ const Home = () => {
               </div>
               
               {/* Quick Stats */}
-              <div className="grid grid-cols-4 gap-4 pt-8">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8">
                 {stats.map((stat, index) => (
                   <div key={index} className="text-center">
                     <div className="text-2xl lg:text-3xl font-bold text-primary">{stat.value}</div>
@@ -144,9 +144,9 @@ const Home = () => {
       </section>
 
       {/* Services Section - Feature Grid */}
-      <section className="py-20 bg-base-100">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
             <h2 className="section-heading">Digital Services</h2>
             <p className="section-description">
               Everything you need, available at your fingertips. Fast, secure, and convenient.
@@ -169,9 +169,9 @@ const Home = () => {
       </section>
 
       {/* Features Section - Bento Grid */}
-      <section className="py-20 bg-base-200/50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-200/50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
             <h2 className="section-heading">Why Choose Us</h2>
             <p className="section-description">
               Modern solutions designed for our community's needs
@@ -195,8 +195,8 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-secondary text-primary-content">
-        <div className="container mx-auto px-6 text-center">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-primary to-secondary text-primary-content">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Ready to Get Started?
           </h2>
@@ -215,9 +215,9 @@ const Home = () => {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-base-100">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-12">
             <h2 className="section-heading">Visit Us</h2>
             <p className="section-description">
               Find us at the heart of our community

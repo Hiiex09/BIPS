@@ -3,11 +3,11 @@ import React from "react";
 const Hero = () => {
   return (
     <>
-      <div className="lg:col-span-8 bg-base-300 rounded-2xl p-8 min-h-65 flex flex-col justify-start">
-        <h1 className="text-5xl font-bold mb-3">
+      <div className="col-span-full lg:col-span-8 bg-base-300 rounded-2xl p-6 sm:p-8 flex flex-col justify-start">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold mb-3">
           Welcome to Barangay Official Portal of Barangay Tejero
         </h1>
-        <p className="opacity-80 mb-5 w-3/4">
+        <p className="opacity-80 mb-5 w-full sm:w-3/4">
           Digitalizing local governance for a better community. Access services,
           news, and officila documents from the comfort of your home. Empowering
           citizends through Transparency.
@@ -18,7 +18,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="lg:col-span-4 bg-blue-800 text-primary-content rounded-2xl p-6">
+      <div className="col-span-full lg:col-span-4 bg-blue-800 text-primary-content rounded-2xl p-6">
         <h2 className="font-bold mb-4">Emergency Hotlines</h2>
         <ul className="space-y-3 text-sm">
           <li>Barangay Desk — (02) 8888-1234</li>
