@@ -93,11 +93,11 @@ const Services = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-secondary/20 py-20">
-        <div className="container mx-auto px-6">
+      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-secondary/20 py-12 sm:py-16 lg:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="badge badge-primary badge-lg mb-6">Digital Services</div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6">
               All Services in <span className="text-primary">One Place</span>
             </h1>
             <p className="text-xl opacity-80 mb-8">
@@ -108,10 +108,10 @@ const Services = () => {
       </section>
 
       {/* Primary Services */}
-      <section className="py-20 bg-base-100">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Most Requested Services</h2>
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Most Requested Services</h2>
             <p className="text-lg opacity-70 max-w-2xl mx-auto">
               Quick access to our most popular services
             </p>
@@ -126,10 +126,10 @@ const Services = () => {
       </section>
 
       {/* How it Works */}
-      <section className="py-20 bg-base-200/50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">How It Works</h2>
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-200/50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">How It Works</h2>
             <p className="text-lg opacity-70">Simple 4-step process to get your documents</p>
           </div>
 
@@ -159,10 +159,10 @@ const Services = () => {
       </section>
 
       {/* Additional Services */}
-      <section className="py-20 bg-base-100">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Other Services</h2>
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Other Services</h2>
             <p className="text-lg opacity-70">More ways we can help you</p>
           </div>
 
@@ -175,10 +175,10 @@ const Services = () => {
       </section>
 
       {/* Requirements Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="container mx-auto px-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-12">General Requirements</h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-10 sm:mb-12">General Requirements</h2>
             
             <div className="grid md:grid-cols-2 gap-8">
               <div className="card bg-base-100 shadow-lg">
@@ -228,9 +228,9 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-content">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-primary text-primary-content">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6">
             Need Help with Your Request?
           </h2>
           <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">

@@ -65,15 +65,15 @@ const Announcements = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-accent/20 py-20">
-        <div className="container mx-auto px-6">
+      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-accent/20 py-12 sm:py-16 lg:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
                 <Megaphone size={40} className="text-primary" />
               </div>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6">
               Community <span className="text-primary">Announcements</span>
             </h1>
             <p className="text-xl opacity-80 mb-8">
@@ -84,8 +84,8 @@ const Announcements = () => {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-12 bg-base-100 sticky top-0 z-10 shadow-md">
-        <div className="container mx-auto px-6">
+      <section className="py-4 sm:py-6 bg-base-100 sticky top-0 z-10 shadow-md">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4">
               {/* Search */}
@@ -118,8 +118,8 @@ const Announcements = () => {
       </section>
 
       {/* Announcements Grid */}
-      <section className="py-12 bg-base-200/30">
-        <div className="container mx-auto px-6">
+      <section className="py-10 sm:py-12 bg-base-200/30">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             {/* Urgent Announcements */}
             {filteredAnnouncements.some(a => a.urgent) && (
@@ -162,8 +162,8 @@ const Announcements = () => {
       </section>
 
       {/* Subscribe Section */}
-      <section className="py-20 bg-primary text-primary-content">
-        <div className="container mx-auto px-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-primary text-primary-content">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-6">
               Never Miss an Update

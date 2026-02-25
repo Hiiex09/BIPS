@@ -59,10 +59,10 @@ const About = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-secondary/20 py-20">
-        <div className="container mx-auto px-6">
+      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-secondary/20 py-12 sm:py-16 lg:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6">
               About <span className="text-primary">Barangay San Jose</span>
             </h1>
             <p className="text-xl opacity-80 mb-8">
@@ -73,9 +73,9 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-base-100">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
             <div className="card bg-primary/5 shadow-lg">
               <div className="card-body">
                 <h2 className="card-title text-3xl mb-4 text-primary">Our Vision</h2>
@@ -102,10 +102,10 @@ const About = () => {
       </section>
 
       {/* Core Values */}
-      <section className="py-20 bg-base-200/50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Our Core Values</h2>
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-200/50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Our Core Values</h2>
             <p className="text-lg opacity-70">The principles that guide our work</p>
           </div>
 
@@ -129,10 +129,10 @@ const About = () => {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 bg-base-100">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Our Journey</h2>
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Our Journey</h2>
             <p className="text-lg opacity-70">Key milestones in our history</p>
           </div>
 
@@ -161,10 +161,10 @@ const About = () => {
       </section>
 
       {/* Leadership Team */}
-      <section className="py-20 bg-base-200/50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Our Leadership Team</h2>
+      <section className="py-12 sm:py-16 lg:py-20 bg-base-200/50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Our Leadership Team</h2>
             <p className="text-lg opacity-70">
               Dedicated leaders serving our community
             </p>
@@ -179,12 +179,12 @@ const About = () => {
       </section>
 
       {/* Contact Information */}
-      <section className="py-20 bg-primary text-primary-content">
-        <div className="container mx-auto px-6">
+      <section className="py-12 sm:py-16 lg:py-20 bg-primary text-primary-content">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-12">Get in Touch</h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-10 sm:mb-12">Get in Touch</h2>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <MapPin size={32} />
