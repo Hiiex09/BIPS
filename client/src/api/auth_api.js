@@ -24,6 +24,19 @@ export const loginUser = async (data) => {
   }
 };
 
+export const signupUser = async (formData) => {
+  try {
+    const res = await axios.post(
+      "http://localhost:4000/api/v1/auth/signup",
+      formData,
+      { withCredentials: true },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const logout = async (data) => {
   try {
     const res = await axios.post(

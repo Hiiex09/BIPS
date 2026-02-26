@@ -7,7 +7,12 @@ const validateEmail = (email) => {
 
 export const userSchema = new Schema(
   {
-    fullname: { type: String, required: [true, "User fullname is required"] },
+    firstName: { type: String, required: [true, "First name is required"] },
+    lastName: { type: String, required: [true, "Last name is required"] },
+    address: {
+      type: String,
+      required: [true, "Full home address is required"],
+    },
     email: {
       type: String,
       required: [true, "User email is required"],
@@ -29,6 +34,10 @@ export const userSchema = new Schema(
       type: String,
       required: [true, "Password must be at least 8 character"],
       minlength: 8,
+    },
+    idUpload: {
+      type: String,
+      required: false,
     },
     role: {
       type: String,

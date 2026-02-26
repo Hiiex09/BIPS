@@ -10,7 +10,16 @@ import {
 
 const router = express.Router();
 
-router.get("/admin", protectRoute, authorizedRoles("Admin"), getAllResident);
+const getAllResidentRoute = (roles) =>
+  router.get(
+    `/admin${roles === "Admin" ? "" : "/staff"}`,
+    protectRoute,
+    authorizedRoles(...roles),
+    getAllResident,
+  );
+
+getAllResidentRoute(["Admin"]);
+getAllResidentRoute(["Admin", "Staff"]);
 
 router.get(
   "/admin/total",
@@ -21,12 +30,6 @@ router.get(
 
 router.get("/total/announcement", totalAnnouncement);
 
-router.get(
-  "/staff",
-  protectRoute,
-  authorizedRoles("Admin", "Staff"),
-  getAllResident,
-);
 router.get(
   "/resident",
   protectRoute,
