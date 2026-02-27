@@ -17,6 +17,7 @@ import DocumentsManagement from "./pages/AdminUI/pages/DocumentsManagement.jsx";
 import IncidentReports from "./pages/AdminUI/pages/IncidentReports.jsx";
 import AnnouncementsManagement from "./pages/AdminUI/pages/AnnouncementsManagement.jsx";
 import DemoPage from "./pages/AdminUI/DemoPage.jsx";
+import NotFound from "./pages/NotFound.jsx";
 
 const App = () => {
   const { user, isLoading, error } = checkAuthUsers();
@@ -114,6 +115,7 @@ const App = () => {
               )
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>
