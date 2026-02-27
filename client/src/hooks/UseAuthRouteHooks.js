@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { checkAuth, loginUser, logout } from "../api/auth_api.js";
+import { checkAuth, loginUser, logout, signupUser } from "../api/auth_api.js";
 import { useNavigate } from "react-router-dom";
 
 export const checkAuthUsers = () => {
@@ -31,6 +31,19 @@ export const loginAuthUsers = () => {
       } else {
         navigate("/Resident");
       }
+    },
+  });
+};
+
+export const signupAuthUsers = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: signupUser,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["users"]);
+      navigate("/login");
     },
   });
 };

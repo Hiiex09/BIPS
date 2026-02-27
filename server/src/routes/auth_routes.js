@@ -6,10 +6,11 @@ import {
   signup,
 } from "../controllers/auth_controller.js";
 import { protectRoute } from "../middlewares/auth_middleware.js";
+import upload from "../middlewares/upload.js";
 
 const router = express.Router();
 
-router.post("/signup", signup);
+router.post("/signup", upload.single("idUpload"), signup);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/checkAuth", protectRoute, checkAuth);

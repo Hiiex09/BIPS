@@ -9,60 +9,117 @@ import {
   ShieldUser,
   Upload,
 } from "lucide-react";
+import { signupAuthUsers } from "../hooks/UseAuthRouteHooks";
 
 export const Signup = () => {
   const [mode, setMode] = useState("signup");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    mobile: "",
+    email: "",
+    password: "",
+    idUpload: null,
+  });
+
+  const { mutate: signup, isPending, error } = signupAuthUsers();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      idUpload: file || null,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const submitData = new FormData();
+    submitData.append("firstName", formData.firstName);
+    submitData.append("lastName", formData.lastName);
+    submitData.append("address", formData.address);
+    submitData.append("mobile", formData.mobile);
+    submitData.append("email", formData.email);
+    submitData.append("password", formData.password);
+    if (formData.idUpload) {
+      submitData.append("idUpload", formData.idUpload);
+    }
+
+    signup(submitData, {
+      onSuccess: () => {
+        setFormData({
+          firstName: "",
+          lastName: "",
+          address: "",
+          mobile: "",
+          email: "",
+          password: "",
+          idUpload: null,
+        });
+      },
+    });
+  };
 
   return (
-    <div className="flex w-full flex-col lg:flex-row gap-5 pt-5 px-2">
-      {/* LEFT INFO PANEL */}
-      <div className="card bg-blue-500 rounded-box grid min-h place-items-center w-1/4">
-        <div className="p-10">
-          <div className="w-1/4 h-24 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg my-5">
-            <ShieldUser size={60} className="text-white" />
-          </div>
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left Info Panel — hidden on mobile */}
+      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-blue-500 flex-col justify-center p-10 xl:p-14">
+        <div className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg mb-6">
+          <ShieldUser size={40} className="text-white" />
+        </div>
 
-          <h1 className="text-white text-5xl w-3/4 font-bold">
-            Digitalizing Barangay Services for a Better Community.
-          </h1>
+        <h1 className="text-white text-3xl xl:text-4xl font-bold mb-4 leading-tight">
+          Digitalizing Barangay Services for a Better Community.
+        </h1>
 
-          <p className="w-3/4 my-5 text-white">
-            Access local permits, view community announcements, and securely
-            connect with your local officials from the comfort of your home.
-          </p>
+        <p className="text-white/90 mb-6 text-sm xl:text-base">
+          Access local permits, view community announcements, and securely
+          connect with your local officials from the comfort of your home.
+        </p>
 
-          <p className="w-3/4 inline-flex gap-3 my-3">
-            <BadgeCheck fill="white" color="blue" size={25} />
-            <span className="text-white">
+        <div className="flex flex-col gap-3 mb-6">
+          <p className="inline-flex gap-3 items-center">
+            <BadgeCheck fill="white" color="#3b82f6" size={22} />
+            <span className="text-white text-sm">
               Official Government Record Access
             </span>
           </p>
-
-          <p className="w-3/4 inline-flex gap-3 my-3">
-            <BadgeCheck fill="white" color="blue" size={25} />
-            <span className="text-white">
+          <p className="inline-flex gap-3 items-center">
+            <BadgeCheck fill="white" color="#3b82f6" size={22} />
+            <span className="text-white text-sm">
               Fast Document Processing (Barangay Clearance)
             </span>
           </p>
-
-          <p className="w-3/4 inline-flex gap-3 my-3">
-            <BadgeCheck fill="white" color="blue" size={25} />
-            <span className="text-white">Secure Identity Verification</span>
-          </p>
-
-          <p className="w-md inline-flex gap-3 my-3 px-4 py-2 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg text-center">
-            <LockKeyhole size={25} />
-            <span className="text-white">
-              End-to-End Encrypted & Secure Database
+          <p className="inline-flex gap-3 items-center">
+            <BadgeCheck fill="white" color="#3b82f6" size={22} />
+            <span className="text-white text-sm">
+              Secure Identity Verification
             </span>
           </p>
         </div>
+
+        <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg">
+          <LockKeyhole size={20} className="text-white shrink-0" />
+          <span className="text-white text-sm">
+            End-to-End Encrypted & Secure Database
+          </span>
+        </div>
       </div>
 
-      {/* RIGHT SIGNUP CARD */}
-      <div className="min-h-screen flex items-center justify-center bg-base-200 px-4 w-full">
+      {/* Right Signup Card */}
+      <div className="flex-1 flex items-center justify-center bg-base-200 px-4 py-8 sm:py-12">
         <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xl">
-          <div className="p-8">
+          <div className="p-6 sm:p-8">
             {/* Tabs */}
             <div className="bg-base-200 rounded-lg p-1 flex mb-6">
               <Link
@@ -74,7 +131,6 @@ export const Signup = () => {
               >
                 Login
               </Link>
-
               <Link
                 to={"/signup"}
                 onClick={() => setMode("signup")}
@@ -85,6 +141,7 @@ export const Signup = () => {
                 Register
               </Link>
             </div>
+
             {/* Title */}
             <h2 className="text-2xl font-bold mb-2">Create Resident Account</h2>
             <p className="text-gray-500 text-sm mb-6">
@@ -92,24 +149,41 @@ export const Signup = () => {
             </p>
 
             {/* FORM */}
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              {error && (
+                <div className="alert alert-error">
+                  <span>
+                    {error.message || "An error occurred during signup"}
+                  </span>
+                </div>
+              )}
+
               {/* First + Last Name */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <span className="text-sm font-medium">First Name</span>
                   <input
                     type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
                     placeholder="Juan"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
-
                 <div>
                   <span className="text-sm font-medium">Last Name</span>
                   <input
                     type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
                     placeholder="Dela Cruz"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
               </div>
@@ -118,38 +192,68 @@ export const Signup = () => {
               <div>
                 <span className="text-sm font-medium">Full Home Address</span>
                 <textarea
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
                   className="textarea textarea-bordered w-full mt-1"
                   placeholder="Bldg No., Street, Barangay, City/Municipality"
+                  required
+                  disabled={isPending}
                 ></textarea>
               </div>
 
               {/* Contact + Email */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <span className="text-sm font-medium">Contact Number</span>
                   <input
                     type="tel"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleInputChange}
                     placeholder="+63 912 345 6789"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
-
                 <div>
                   <span className="text-sm font-medium">Email Address</span>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="juan@example.com"
                     className="input input-bordered w-full mt-1"
+                    required
+                    disabled={isPending}
                   />
                 </div>
+              </div>
+
+              {/* Password */}
+              <div>
+                <span className="text-sm font-medium">Password</span>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="At least 8 characters"
+                  className="input input-bordered w-full mt-1"
+                  required
+                  minLength="8"
+                  disabled={isPending}
+                />
               </div>
 
               {/* ID Upload */}
               <div>
                 <span className="text-sm font-medium">
-                  Resident ID Upload (Valid ID)
+                  Resident ID Upload (Valid ID){" "}
+                  <span className="text-gray-400 text-xs">(Optional)</span>
                 </span>
-
                 <label className="border border-dashed rounded-lg mt-2 p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-base-200 transition">
                   <Upload size={30} className="mb-2 text-blue-600" />
                   <p className="text-sm font-semibold">
@@ -158,47 +262,41 @@ export const Signup = () => {
                   <p className="text-xs text-gray-500">
                     PNG, JPG or PDF (Max 5MB)
                   </p>
-                  <input type="file" hidden />
+                  <p className="text-xs text-gray-400 mt-1">
+                    {formData.idUpload
+                      ? `Selected: ${formData.idUpload.name}`
+                      : "No file selected"}
+                  </p>
+                  <input
+                    type="file"
+                    hidden
+                    onChange={handleFileChange}
+                    accept=".png,.jpg,.jpeg,.pdf"
+                    disabled={isPending}
+                  />
                 </label>
               </div>
 
               {/* Submit */}
-              <button className="btn btn-primary w-full mt-4">
-                Register Account →
+              <button
+                type="submit"
+                disabled={isPending}
+                className="btn btn-primary w-full mt-4"
+              >
+                {isPending ? "Registering..." : "Register Account →"}
               </button>
             </form>
-            {mode === "login" ? (
-              <>
-                <h2>Secure Resident Login</h2>
-                {/* LOGIN FORM HERE */}
-                <p className="text-sm text-center mt-3">
-                  No account?{" "}
-                  <span
-                    onClick={() => setMode("signup")}
-                    className="text-blue-600 cursor-pointer"
-                  >
-                    Register here
-                  </span>
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-center mt-3">
-                  Already have an account?{" "}
-                  <Link
-                    to={"/login"}
-                    onClick={() => setMode("login")}
-                    className="text-blue-600 cursor-pointer"
-                  >
-                    Login here
-                  </Link>
-                </p>
-              </>
-            )}
+
+            <p className="text-sm text-center mt-3">
+              Already have an account?{" "}
+              <Link to={"/login"} className="text-blue-600 cursor-pointer">
+                Login here
+              </Link>
+            </p>
           </div>
 
           {/* Footer */}
-          <div className="border-t px-8 py-6 text-center space-y-3">
+          <div className="border-t px-6 sm:px-8 py-5 text-center space-y-3">
             <p className="text-xs text-gray-500 leading-relaxed">
               By registering, you agree to our
               <span className="text-blue-600 mx-1 cursor-pointer">
@@ -212,14 +310,13 @@ export const Signup = () => {
             </p>
           </div>
 
-          <div className="flex justify-evenly items-center py-5">
-            <span className="text-xs flex gap-1">
-              <ShieldCheck size={20} fill="green" color="white" />
+          <div className="flex flex-wrap justify-evenly items-center py-4 px-4 gap-2">
+            <span className="text-xs flex items-center gap-1">
+              <ShieldCheck size={18} fill="green" color="white" />
               Official Barangay Tejero Portal
             </span>
-
-            <span className="text-xs flex gap-1">
-              <CircleSmall size={15} fill="gray" color="white" />
+            <span className="text-xs flex items-center gap-1">
+              <CircleSmall size={14} fill="gray" color="white" />
               Support: barangay.tejero@gmail.com
             </span>
           </div>
