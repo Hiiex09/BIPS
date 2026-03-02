@@ -7,7 +7,10 @@ import Services from "./pages/Services.jsx";
 import Announcements from "./pages/Announcements.jsx";
 import About from "./pages/About.jsx";
 import ResidentDashboard from "./pages/ResidentUI/ResidentDashboard.jsx";
+import ResidentDocuments from "./pages/ResidentUI/ResidentDocuments.jsx";
+import ResidentConcerns from "./pages/ResidentUI/ResidentConcerns.jsx";
 import PublicLayout from "./Layout/PublicLayout.jsx";
+import ResidentLayout from "./Layout/ResidentLayout.jsx";
 import AdminLayout from "./Layout/AdminLayout.jsx";
 import { checkAuthUsers } from "./hooks/UseAuthRouteHooks.js";
 import AdminHomepage from "./pages/AdminUI/AdminHomepage.jsx";
@@ -53,12 +56,7 @@ const App = () => {
 
             <Route path="/signup" element={<Signup />} />
             <Route path="/demo" element={<DemoPage />} />
-            <Route
-              path="/Resident"
-              element={
-                user ? <ResidentDashboard /> : <Navigate to={"/login"} />
-              }
-            />
+
           </Route>
 
           <Route
@@ -115,6 +113,16 @@ const App = () => {
               )
             }
           />
+          {/* Resident Routes with ResidentLayout */}
+          <Route
+            path="/Resident"
+            element={user ? <ResidentLayout /> : <Navigate to="/login" />}
+          >
+            <Route index element={<ResidentDashboard />} />
+            <Route path="documents" element={<ResidentDocuments />} />
+            <Route path="concerns" element={<ResidentConcerns />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
