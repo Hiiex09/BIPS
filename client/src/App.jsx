@@ -9,6 +9,10 @@ import About from "./pages/About.jsx";
 import ResidentDashboard from "./pages/ResidentUI/ResidentDashboard.jsx";
 import ResidentDocuments from "./pages/ResidentUI/ResidentDocuments.jsx";
 import ResidentConcerns from "./pages/ResidentUI/ResidentConcerns.jsx";
+import ResidentNews from "./pages/ResidentUI/ResidentNews.jsx";
+import ResidentHealth from "./pages/ResidentUI/ResidentHealth.jsx";
+import ResidentOrdinances from "./pages/ResidentUI/ResidentOrdinances.jsx";
+import ResidentEmergency from "./pages/ResidentUI/ResidentEmergency.jsx";
 import PublicLayout from "./Layout/PublicLayout.jsx";
 import ResidentLayout from "./Layout/ResidentLayout.jsx";
 import AdminLayout from "./Layout/AdminLayout.jsx";
@@ -121,6 +125,10 @@ const App = () => {
             <Route index element={<ResidentDashboard />} />
             <Route path="documents" element={<ResidentDocuments />} />
             <Route path="concerns" element={<ResidentConcerns />} />
+            <Route path="news" element={<ResidentNews />} />
+            <Route path="health" element={<ResidentHealth />} />
+            <Route path="ordinances" element={<ResidentOrdinances />} />
+            <Route path="emergency" element={<ResidentEmergency />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
