@@ -12,22 +12,26 @@ const pageTitles = {
   "/Resident/emergency": "Emergency Services",
 };
 
+const DRAWER_ID = "resident-drawer";
+
 const ResidentLayout = () => {
   const { pathname } = useLocation();
   const pageTitle = pageTitles[pathname] || "Resident Portal";
 
   return (
-    <div className="flex h-screen bg-base-200 overflow-hidden">
-      {/* Fixed Sidebar */}
-      <ResidentSidebar />
+    <div className="drawer lg:drawer-open">
+      <input id={DRAWER_ID} type="checkbox" className="drawer-toggle" />
 
-      {/* Main Content Area */}
-      <div className="flex flex-col flex-1 overflow-hidden">
-        <ResidentNavbar pageTitle={pageTitle} />
-        <main className="flex-1 overflow-y-auto p-6">
+      {/* Main Content */}
+      <div className="drawer-content flex flex-col h-screen overflow-hidden">
+        <ResidentNavbar pageTitle={pageTitle} drawerId={DRAWER_ID} />
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-base-200">
           <Outlet />
         </main>
       </div>
+
+      {/* Sidebar */}
+      <ResidentSidebar drawerId={DRAWER_ID} />
     </div>
   );
 };
