@@ -24,7 +24,7 @@ getAllResidentRoute(["Admin", "Staff"]);
 router.get(
   "/admin/total",
   protectRoute,
-  authorizedRoles("Admin"),
+  authorizedRoles(["Admin", "Staff"]),
   totalCertificateRequest,
 );
 
