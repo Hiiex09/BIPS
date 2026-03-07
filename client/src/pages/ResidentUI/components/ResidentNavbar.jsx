@@ -1,9 +1,9 @@
-import { Bell, LogOut, User } from "lucide-react";
+import { Bell, LogOut, User, Menu } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserInfo, logout as logoutApi } from "../../../api/auth_api.js";
 import { useNavigate } from "react-router-dom";
 
-const ResidentNavbar = ({ pageTitle }) => {
+const ResidentNavbar = ({ pageTitle, drawerId }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -22,8 +22,18 @@ const ResidentNavbar = ({ pageTitle }) => {
   });
 
   return (
-    <header className="h-14 bg-base-100 border-b border-base-300 flex items-center justify-between px-6 shrink-0">
-      <h1 className="text-base font-semibold text-base-content">{pageTitle}</h1>
+    <header className="h-14 bg-base-100 border-b border-base-300 flex items-center justify-between px-4 shrink-0">
+      {/* Hamburger — mobile only */}
+      <div className="flex items-center gap-3">
+        <label
+          htmlFor={drawerId}
+          aria-label="open sidebar"
+          className="btn btn-square btn-ghost btn-sm lg:hidden"
+        >
+          <Menu size={20} />
+        </label>
+        <h1 className="text-base font-semibold text-base-content">{pageTitle}</h1>
+      </div>
 
       <div className="flex items-center gap-3">
         {/* Notifications */}
