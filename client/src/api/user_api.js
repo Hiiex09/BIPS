@@ -1,9 +1,11 @@
-import axios from "axios";
+import { axiosInstance } from "./axios.js";
 
 export const countAllResident = async () => {
-  const res = await axios.get("http://localhost:4000/api/v1/users/admin", {
-    withCredentials: true,
-  });
-
-  return res.data.count;
+  try {
+    const res = await axiosInstance.get("/users/admin");
+    return res.data.count;
+  } catch (error) {
+    console.error("Failed to count residents:", error.message);
+    throw error;
+  }
 };

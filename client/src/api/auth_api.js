@@ -1,51 +1,41 @@
-import axios from "axios";
+import { axiosInstance } from "./axios.js";
 
 export const checkAuth = async () => {
   try {
-    const res = await axios.get("http://localhost:4000/api/v1/auth/checkAuth", {
-      withCredentials: true,
-    });
+    const res = await axiosInstance.get("/auth/checkAuth");
     return res.data;
   } catch (error) {
+    console.error("Auth check failed:", error.message);
     return null;
   }
 };
 
 export const loginUser = async (data) => {
   try {
-    const res = await axios.post(
-      "http://localhost:4000/api/v1/auth/login",
-      data, // 1️⃣ payload goes here
-      { withCredentials: true }, // 2️⃣ config goes here
-    );
+    const res = await axiosInstance.post("/auth/login", data);
     return res.data;
   } catch (error) {
-    throw error; // optional, so React Query knows it failed
+    console.error("Login failed:", error.message);
+    throw error;
   }
 };
 
 export const signupUser = async (formData) => {
   try {
-    const res = await axios.post(
-      "http://localhost:4000/api/v1/auth/signup",
-      formData,
-      { withCredentials: true },
-    );
+    const res = await axiosInstance.post("/auth/signup", formData);
     return res.data;
   } catch (error) {
+    console.error("Signup failed:", error.message);
     throw error;
   }
 };
 
-export const logout = async (data) => {
+export const logout = async () => {
   try {
-    const res = await axios.post(
-      "http://localhost:4000/api/v1/auth/logout",
-      { data },
-      { withCredentials: true },
-    );
+    const res = await axiosInstance.post("/auth/logout");
     return res.data;
   } catch (error) {
+    console.error("Logout failed:", error.message);
     throw error;
   }
 };
