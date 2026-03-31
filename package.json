@@ -4,8 +4,11 @@
   "description": "The **Barangay Information Portal System** is a web-based application designed to digitize and centralize barangay services in the Philippines. It aims to improve communication between barangay officials and residents, reduce manual processes, and promote transparency, efficiency, and accessibility in local governance.",
   "main": "index.js",
   "scripts": {
-    "build":"npm install --prefix server && npm install --prefix client && npm run build --prefix client",
-    "start":"npm run start --prefix server"
+    "dev": "npm run dev --prefix client",
+    "build": "npm install --prefix client && npm run build --prefix client && npm install --prefix server",
+    "start": "node server/src/index.js",
+    "server": "npm start --prefix server",
+    "client": "npm run dev --prefix client"
   },
   "repository": {
     "type": "git",
