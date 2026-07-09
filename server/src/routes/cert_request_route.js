@@ -5,6 +5,9 @@ import { validateCertificateRequest } from "../middlewares/certificate_validatio
 import {
   approveRequest,
   createCertificateRequest,
+  getAllCertificateRequests,
+  getMyCertificateRequests,
+  rejectRequest,
   requestReady,
 } from "../controllers/cert_request_controller.js";
 
@@ -16,6 +19,20 @@ router.post(
   authorizedRoles("Resident"),
   validateCertificateRequest,
   createCertificateRequest,
+);
+
+router.get(
+  "/my-requests",
+  protectRoute,
+  authorizedRoles("Resident"),
+  getMyCertificateRequests,
+);
+
+router.get(
+  "/requests",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  getAllCertificateRequests,
 );
 
 router.patch(
@@ -30,5 +47,12 @@ router.patch(
   protectRoute,
   authorizedRoles("Admin", "Staff"),
   requestReady,
+);
+
+router.patch(
+  "/request/:id/reject",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  rejectRequest,
 );
 export default router;

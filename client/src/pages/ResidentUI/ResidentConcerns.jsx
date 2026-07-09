@@ -1,25 +1,34 @@
 import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UploadCloud, MapPin, Send, ChevronDown, ChevronUp, ListChecks } from "lucide-react";
 import toast from "react-hot-toast";
-import { concernCategories, submissionHistory } from "../../data/residentMockData";
+import { concernCategories } from "../../data/residentMockData";
+import { createIncidentApi, getMyIncidentsApi } from "../../api/incident_api";
 
-/* ── Status badge helper ──────────────────────────── */
+const formatDate = (date) =>
+  date ? new Date(date).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" }) : "N/A";
+
+const displayStatus = (status) => {
+  if (status === "Open") return "UNDER REVIEW";
+  if (status === "In Progress") return "IN PROGRESS";
+  return status?.toUpperCase() || "UNDER REVIEW";
+};
+
 const StatusBadge = ({ status }) => {
+  const label = displayStatus(status);
   const map = {
     RESOLVED: "badge-success badge-soft",
+    CLOSED: "badge-neutral badge-soft",
     "IN PROGRESS": "badge-info badge-soft",
     "UNDER REVIEW": "badge-warning badge-soft",
   };
-  return (
-    <span className={`badge badge-sm font-semibold ${map[status] || "badge-ghost"}`}>
-      {status}
-    </span>
-  );
+  return <span className={`badge badge-sm font-semibold ${map[label] || "badge-ghost"}`}>{label}</span>;
 };
 
-/* ── History Item ─────────────────────────────────── */
 const HistoryItem = ({ item }) => {
   const [open, setOpen] = useState(false);
+  const label = displayStatus(item.status);
+
   return (
     <div className="border border-base-300 rounded-xl overflow-hidden">
       <button
@@ -27,13 +36,14 @@ const HistoryItem = ({ item }) => {
         className="w-full flex items-center justify-between px-4 py-3 bg-base-100 hover:bg-base-200 transition-colors"
       >
         <div className="flex items-center gap-3 text-left">
-          <div className={`w-2 h-2 rounded-full shrink-0 ${
-            item.status === "RESOLVED" ? "bg-success" :
-            item.status === "IN PROGRESS" ? "bg-info" : "bg-warning"
-          }`} />
+          <div
+            className={`w-2 h-2 rounded-full shrink-0 ${
+              label === "RESOLVED" ? "bg-success" : label === "IN PROGRESS" ? "bg-info" : "bg-warning"
+            }`}
+          />
           <div>
-            <p className="text-sm font-semibold text-base-content">{item.title}</p>
-            <p className="text-xs text-muted">Submitted: {item.submittedDate}</p>
+            <p className="text-sm font-semibold text-base-content">{item.subject}</p>
+            <p className="text-xs text-muted">Submitted: {formatDate(item.createdAt)}</p>
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
@@ -43,17 +53,12 @@ const HistoryItem = ({ item }) => {
       </button>
       {open && (
         <div className="px-4 py-3 bg-base-50 border-t border-base-300 text-xs text-muted space-y-1">
-          <p><span className="font-semibold text-base-content">Reference ID:</span> BRG-{2023000 + item.id}</p>
-          <p><span className="font-semibold text-base-content">Status:</span> {item.status}</p>
-          <p><span className="font-semibold text-base-content">Last Updated:</span> {item.submittedDate}</p>
-          {item.status === "RESOLVED" && (
-            <p className="text-success font-medium mt-1">✓ This concern has been resolved by barangay officials.</p>
-          )}
-          {item.status === "IN PROGRESS" && (
-            <p className="text-info font-medium mt-1">↻ Barangay staff are currently addressing this concern.</p>
-          )}
-          {item.status === "UNDER REVIEW" && (
-            <p className="text-warning font-medium mt-1">⏳ Your concern is being reviewed. You will be notified soon.</p>
+          <p><span className="font-semibold text-base-content">Reference ID:</span> BRG-{item._id?.slice(-8).toUpperCase()}</p>
+          <p><span className="font-semibold text-base-content">Category:</span> {item.category}</p>
+          <p><span className="font-semibold text-base-content">Location:</span> {item.location || "Not specified"}</p>
+          <p><span className="font-semibold text-base-content">Details:</span> {item.description}</p>
+          {item.resolutionNotes && (
+            <p><span className="font-semibold text-base-content">Notes:</span> {item.resolutionNotes}</p>
           )}
         </div>
       )}
@@ -61,8 +66,8 @@ const HistoryItem = ({ item }) => {
   );
 };
 
-/* ── Main Page ────────────────────────────────────── */
 const ResidentConcerns = () => {
+  const queryClient = useQueryClient();
   const [form, setForm] = useState({
     category: "",
     subject: "",
@@ -70,6 +75,24 @@ const ResidentConcerns = () => {
     location: "",
   });
   const [photoName, setPhotoName] = useState("");
+
+  const { data: incidents = [], isLoading } = useQuery({
+    queryKey: ["my-incidents"],
+    queryFn: getMyIncidentsApi,
+  });
+
+  const mutation = useMutation({
+    mutationFn: createIncidentApi,
+    onSuccess: () => {
+      toast.success("Concern submitted successfully. We'll get back to you soon.");
+      queryClient.invalidateQueries({ queryKey: ["my-incidents"] });
+      setForm({ category: "", subject: "", description: "", location: "" });
+      setPhotoName("");
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to submit concern.");
+    },
+  });
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -81,22 +104,18 @@ const ResidentConcerns = () => {
       toast.error("Please fill in all required fields.");
       return;
     }
-    toast.success("Concern submitted successfully! We'll get back to you soon.");
-    setForm({ category: "", subject: "", description: "", location: "" });
-    setPhotoName("");
+    mutation.mutate(form);
   };
 
   return (
     <div className="space-y-8 max-w-3xl">
-      {/* Header */}
       <div>
         <h2 className="text-xl font-bold text-base-content">Resident Concern Submission</h2>
         <p className="text-sm text-muted mt-1">
-          Your voice matters. Submit community issues and track their progress in real-time.
+          Submit community issues and track their progress in real time.
         </p>
       </div>
 
-      {/* New Concern Form */}
       <div className="card bg-base-100 border border-base-300 shadow-sm">
         <div className="card-body p-6 gap-5">
           <div className="flex items-center gap-2">
@@ -105,28 +124,16 @@ const ResidentConcerns = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Category + Subject */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="fieldset gap-1.5">
-                <legend className="fieldset-legend text-xs font-semibold">
-                  Category <span className="text-error">*</span>
-                </legend>
-                <select
-                  name="category"
-                  value={form.category}
-                  onChange={handleChange}
-                  className="select select-bordered w-full"
-                >
+                <legend className="fieldset-legend text-xs font-semibold">Category <span className="text-error">*</span></legend>
+                <select name="category" value={form.category} onChange={handleChange} className="select select-bordered w-full">
                   <option value="" disabled>Select concern category</option>
-                  {concernCategories.map((cat) => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
+                  {concernCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
                 </select>
               </div>
               <div className="fieldset gap-1.5">
-                <legend className="fieldset-legend text-xs font-semibold">
-                  Subject <span className="text-error">*</span>
-                </legend>
+                <legend className="fieldset-legend text-xs font-semibold">Subject <span className="text-error">*</span></legend>
                 <input
                   type="text"
                   name="subject"
@@ -138,11 +145,8 @@ const ResidentConcerns = () => {
               </div>
             </div>
 
-            {/* Description */}
             <div className="fieldset gap-1.5">
-              <legend className="fieldset-legend text-xs font-semibold">
-                Detailed Description <span className="text-error">*</span>
-              </legend>
+              <legend className="fieldset-legend text-xs font-semibold">Detailed Description <span className="text-error">*</span></legend>
               <textarea
                 name="description"
                 value={form.description}
@@ -152,7 +156,6 @@ const ResidentConcerns = () => {
               />
             </div>
 
-            {/* Supporting Photos */}
             <div className="fieldset gap-1.5">
               <legend className="fieldset-legend text-xs font-semibold">Supporting Photos</legend>
               <label className="border-2 border-dashed border-base-300 rounded-xl p-6 flex flex-col items-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors">
@@ -163,16 +166,10 @@ const ResidentConcerns = () => {
                 </div>
                 <p className="text-xs text-muted">PNG, JPG or PDF (Max 5MB)</p>
                 {photoName && <p className="text-xs text-success font-medium">{photoName}</p>}
-                <input
-                  type="file"
-                  accept="image/*,.pdf"
-                  className="hidden"
-                  onChange={(e) => setPhotoName(e.target.files?.[0]?.name || "")}
-                />
+                <input type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setPhotoName(e.target.files?.[0]?.name || "")} />
               </label>
             </div>
 
-            {/* Location */}
             <div className="fieldset gap-1.5">
               <legend className="fieldset-legend text-xs font-semibold">Location / Landmark</legend>
               <label className="input input-bordered flex items-center gap-2 w-full">
@@ -188,36 +185,33 @@ const ResidentConcerns = () => {
               </label>
             </div>
 
-            {/* Submit */}
             <div className="flex justify-end">
-              <button type="submit" className="btn btn-primary gap-2">
-                Submit Concern <Send size={15} />
+              <button type="submit" className="btn btn-primary gap-2" disabled={mutation.isPending}>
+                {mutation.isPending ? "Submitting..." : "Submit Concern"} <Send size={15} />
               </button>
             </div>
           </form>
         </div>
       </div>
 
-      {/* Submission History */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <ListChecks size={16} className="text-primary" />
             <h3 className="font-semibold text-sm text-base-content">Submission History</h3>
           </div>
-          <span className="badge badge-ghost badge-sm">{submissionHistory.length} Total Records</span>
+          <span className="badge badge-ghost badge-sm">{incidents.length} Total Records</span>
         </div>
-        <div className="space-y-3">
-          {submissionHistory.map((item) => (
-            <HistoryItem key={item.id} item={item} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="p-6 text-sm text-muted">Loading concerns...</div>
+        ) : incidents.length > 0 ? (
+          <div className="space-y-3">
+            {incidents.map((item) => <HistoryItem key={item._id} item={item} />)}
+          </div>
+        ) : (
+          <div className="p-6 text-sm text-muted border border-base-300 rounded-xl">No concerns submitted yet.</div>
+        )}
       </div>
-
-      {/* Footer */}
-      <p className="text-center text-xs text-muted pb-2">
-        © 2023 Barangay Digital Office. Service First, Community Always.
-      </p>
     </div>
   );
 };

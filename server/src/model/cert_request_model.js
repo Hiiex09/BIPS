@@ -14,15 +14,16 @@ const certRequestSchema = new Schema({
   purpose: { type: String, required: true },
   status: {
     type: String,
-    enum: ["Pending", "Approved", "Ready for Pickup"],
+    enum: ["Pending", "Approved", "Ready for Pickup", "Rejected"],
     required: true,
   },
   dateRequested: { type: Date },
   dateApproved: { type: Date },
+  dateReady: { type: Date },
   processedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   remarks: { type: String },
   contactNumber: { type: String },
-});
+}, { timestamps: true });
 
 const Certificate = mongoose.model("Certificate", certRequestSchema);
 export default Certificate;
