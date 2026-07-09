@@ -1,30 +1,24 @@
-import axios from "axios";
+import { axiosInstance } from "./axios.js";
 
 export const createAnnouncementApi = async (data) => {
   try {
-    const res = await axios.post(
-      "http://localhost:4000/api/v1/announcement/create-announcement",
+    const res = await axiosInstance.post(
+      "/announcement/create-announcement",
       data,
-      { withCredentials: true },
     );
-
     return res.data;
   } catch (error) {
-    console.error("API Error:", error);
+    console.error("Create announcement error:", error.message);
     throw error;
   }
 };
 
-export const getAnnouncementApi = async (data) => {
+export const getAnnouncementApi = async () => {
   try {
-    const res = await axios.get(
-      "http://localhost:4000/api/v1/announcement/get-announcement",
-      data,
-    );
-
+    const res = await axiosInstance.get("/announcement/get-announcement");
     return res.data.allAnnouncementData;
   } catch (error) {
-    console.error("API Error:", error);
+    console.error("Get announcement error:", error.message);
     throw error;
   }
 };

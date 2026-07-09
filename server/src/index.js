@@ -9,8 +9,11 @@ import certificateRoutes from "./routes/cert_request_route.js";
 import incidentRoutes from "./routes/incident_route.js";
 import cors from "cors";
 
+import path from "path";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+const __dirname = path.resolve();
 
 app.use(
   cors({
@@ -27,6 +30,14 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/announcement", announcementRoutes);
 app.use("/api/v1/certificate", certificateRoutes);
 app.use("/api/v1/incidents", incidentRoutes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+  });
+}
 
 const startServer = async () => {
   await connectDB();
