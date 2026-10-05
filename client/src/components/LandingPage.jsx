@@ -1,4 +1,3 @@
-import bgImage from "../assets/Barangay Hall and community park scene.png";
 import { DigitalServices } from "./DigitalServices";
 import Footer from "./Footer";
 import Hero from "./Hero";

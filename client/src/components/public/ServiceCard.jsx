@@ -16,10 +16,10 @@ const ServiceCard = ({ icon: Icon, title, description, color = "primary", link }
         </div>
         <h3 className="card-title text-2xl mb-3">{title}</h3>
         <p className="opacity-80 mb-4">{description}</p>
-        <button className="btn btn-ghost btn-sm gap-2 group-hover:gap-4 transition-all">
+        <a href={link || "#"} className="btn btn-ghost btn-sm gap-2 group-hover:gap-4 transition-all">
           Learn More
           <ArrowRight size={16} />
-        </button>
+        </a>
       </div>
     </div>
   );

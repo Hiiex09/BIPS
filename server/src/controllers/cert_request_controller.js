@@ -45,7 +45,7 @@ export const getMyCertificateRequests = async (req, res) => {
 
 export const getAllCertificateRequests = async (req, res) => {
   try {
-    const { status, certificate_type, search } = req.query;
+    const { status, certificate_type, search, page = 1, limit } = req.query;
     const filter = {};
 
     if (status && status !== "all") filter.status = status;
@@ -53,22 +53,28 @@ export const getAllCertificateRequests = async (req, res) => {
       filter.certificate_type = certificate_type;
     }
 
-    let requests = await populateRequest(Certificate.find(filter).sort({ createdAt: -1 }));
-
     if (search) {
-      const term = search.toLowerCase();
-      requests = requests.filter((request) => {
-        const resident = request.residentId;
-        const fullName = `${resident?.firstName || ""} ${resident?.lastName || ""}`.toLowerCase();
-        return (
-          fullName.includes(term) ||
-          request.purpose.toLowerCase().includes(term) ||
-          request.certificate_type.toLowerCase().includes(term)
-        );
-      });
+      const q = new RegExp(search.trim(), "i");
+      filter.$or = [{ purpose: q }, { certificate_type: q }, { contactNumber: q }];
     }
 
-    res.status(200).json({ requests });
+    const total = await Certificate.countDocuments(filter);
+    const query = Certificate.find(filter).sort({ createdAt: -1 });
+
+    if (limit) {
+      const pageNum = Math.max(1, parseInt(page));
+      const limitNum = Math.max(1, parseInt(limit));
+      query.skip((pageNum - 1) * limitNum).limit(limitNum);
+    }
+
+    const requests = await populateRequest(query);
+
+    res.status(200).json({
+      requests,
+      total,
+      page: parseInt(page) || 1,
+      totalPages: limit ? Math.ceil(total / parseInt(limit)) : 1,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Failed to fetch requests",

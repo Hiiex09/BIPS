@@ -52,30 +52,40 @@ export const getMyIncidents = async (req, res) => {
 
 export const getAllIncidents = async (req, res) => {
   try {
-    const { status, category, priority, search } = req.query;
+    const { status, category, priority, search, page = 1, limit } = req.query;
     const filter = {};
 
     if (status && status !== "all") filter.status = status;
     if (category && category !== "all") filter.category = category;
     if (priority && priority !== "all") filter.priority = priority;
 
-    let incidents = await populateIncident(Incident.find(filter).sort({ createdAt: -1 }));
-
     if (search) {
-      const term = search.toLowerCase();
-      incidents = incidents.filter((incident) => {
-        const resident = incident.residentId;
-        const fullName = `${resident?.firstName || ""} ${resident?.lastName || ""}`.toLowerCase();
-        return (
-          fullName.includes(term) ||
-          incident.subject.toLowerCase().includes(term) ||
-          incident.description.toLowerCase().includes(term) ||
-          incident.location?.toLowerCase().includes(term)
-        );
-      });
+      const q = new RegExp(search.trim(), "i");
+      filter.$or = [
+        { subject: q },
+        { description: q },
+        { location: q },
+        { category: q },
+      ];
     }
 
-    res.status(200).json({ incidents });
+    const total = await Incident.countDocuments(filter);
+    const query = Incident.find(filter).sort({ createdAt: -1 });
+
+    if (limit) {
+      const pageNum = Math.max(1, parseInt(page));
+      const limitNum = Math.max(1, parseInt(limit));
+      query.skip((pageNum - 1) * limitNum).limit(limitNum);
+    }
+
+    const incidents = await populateIncident(query);
+
+    res.status(200).json({
+      incidents,
+      total,
+      page: parseInt(page) || 1,
+      totalPages: limit ? Math.ceil(total / parseInt(limit)) : 1,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Failed to fetch incidents",
