@@ -1,32 +1,21 @@
-import axios from "axios";
-
-const BASE_URL = "http://localhost:4000/api/v1/incidents";
+import { axiosInstance } from "./axios.js";
 
 export const createIncidentApi = async (data) => {
-  const res = await axios.post(BASE_URL, data, {
-    withCredentials: true,
-  });
+  const res = await axiosInstance.post("/incidents", data);
   return res.data;
 };
 
 export const getMyIncidentsApi = async () => {
-  const res = await axios.get(`${BASE_URL}/my-incidents`, {
-    withCredentials: true,
-  });
+  const res = await axiosInstance.get("/incidents/my-incidents");
   return res.data.incidents;
 };
 
 export const getIncidentsApi = async (params = {}) => {
-  const res = await axios.get(BASE_URL, {
-    params,
-    withCredentials: true,
-  });
-  return res.data.incidents;
+  const res = await axiosInstance.get("/incidents", { params });
+  return res.data;
 };
 
 export const updateIncidentApi = async ({ id, data }) => {
-  const res = await axios.patch(`${BASE_URL}/${id}`, data, {
-    withCredentials: true,
-  });
+  const res = await axiosInstance.patch(`/incidents/${id}`, data);
   return res.data;
 };

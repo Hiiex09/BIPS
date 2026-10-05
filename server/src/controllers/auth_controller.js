@@ -38,7 +38,7 @@ export const signup = async (req, res) => {
       email,
       mobile,
       password: hash_password,
-      role: role || "Resident",
+      role: "Resident",
       idUpload: req.file ? req.file.filename : null,
     });
 
@@ -118,7 +118,7 @@ export const logout = (req, res) => {
     res.cookie("refresh_token", "", { maxAge: 0 });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    console.log("Error in logout controller", error.messsage);
+    console.log("Error in logout controller", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -128,6 +128,6 @@ export const checkAuth = (req, res) => {
     res.status(200).json(req.user);
   } catch (error) {
     console.log("Error in checkAuth controller", error);
-    res.status(500).json({ messsage: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
