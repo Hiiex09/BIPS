@@ -8,3 +8,6 @@ export const createAnnouncementSchema = z.object({
   status: z.enum(["Draft", "Published"]).optional(),
   expiresAt: z.string().optional(),
 });
+
+export const updateAnnouncementSchema = createAnnouncementSchema.partial();
+
