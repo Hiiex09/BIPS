@@ -39,7 +39,7 @@ const Sidebar = () => {
       tooltip: "Incident Reports"
     },
     {
-      path: "/announcements",
+      path: "/announcement-management",
       icon: Megaphone,
       label: "Announcements",
       tooltip: "Announcements"

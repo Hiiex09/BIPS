@@ -4,6 +4,7 @@ import { authorizedRoles } from "../middlewares/auth_roles.js";
 import { getUserInfo } from "../controllers/user_controller.js";
 import {
   getAllResident,
+  getUsersList,
   totalAnnouncement,
   totalCertificateRequest,
 } from "../controllers/admin_controller.js";
@@ -22,6 +23,13 @@ router.get(
   protectRoute,
   authorizedRoles("Admin", "Staff"),
   getAllResident,
+);
+
+router.get(
+  "/admin/list",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  getUsersList,
 );
 
 router.get(

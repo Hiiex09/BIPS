@@ -108,7 +108,7 @@ const App = () => {
           />
 
           <Route
-            path="/announcements"
+            path="/announcement-management"
             element={
               user && (user.role === "Admin" || user.role === "Staff") ? (
                 <AnnouncementsManagement />
