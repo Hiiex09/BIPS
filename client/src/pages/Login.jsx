@@ -11,22 +11,18 @@ import {
   ShieldUser,
   User,
 } from "lucide-react";
-import { loginAuthUsers } from "../hooks/UseAuthRouteHooks";
-import { useQueryClient } from "@tanstack/react-query";
+import { useLogin } from "../hooks/UseAuthRouteHooks";
 
 const Login = () => {
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const queryClient = useQueryClient();
 
-  const { mutate } = loginAuthUsers();
+  const { mutate, isPending } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     mutate({ email, password });
-    queryClient.invalidateQueries(["users"]);
-    navigate("/welcome");
   };
 
   return (
@@ -149,9 +145,10 @@ const Login = () => {
               {/* Button */}
               <button
                 type="submit"
+                disabled={isPending}
                 className="btn btn-primary w-full mt-3 flex gap-2"
               >
-                Login to Account
+                {isPending ? "Logging in..." : "Login to Account"}
                 <LogIn size={18} />
               </button>
             </form>

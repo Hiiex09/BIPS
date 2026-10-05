@@ -11,42 +11,21 @@ export const checkAuth = async () => {
 };
 
 export const loginUser = async (data) => {
-  try {
-    const res = await axiosInstance.post("/auth/login", data);
-    return res.data;
-  } catch (error) {
-    console.error("Login failed:", error.message);
-    throw error;
-  }
+  const res = await axiosInstance.post("/auth/login", data);
+  return res.data;
 };
 
 export const signupUser = async (formData) => {
-  try {
-    const res = await axiosInstance.post("/auth/signup", formData);
-    return res.data;
-  } catch (error) {
-    console.error("Signup failed:", error.message);
-    throw error;
-  }
+  const res = await axiosInstance.post("/auth/signup", formData);
+  return res.data;
 };
 
 export const logout = async () => {
-  try {
-    const res = await axiosInstance.post("/auth/logout");
-    return res.data;
-  } catch (error) {
-    console.error("Logout failed:", error.message);
-    throw error;
-  }
+  const res = await axiosInstance.post("/auth/logout");
+  return res.data;
 };
 
 export const getUserInfo = async () => {
-  try {
-    const res = await axios.get("http://localhost:4000/api/v1/resident", {
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (error) {
-    throw error;
-  }
+  const res = await axiosInstance.get("/users/resident");
+  return res.data;
 };

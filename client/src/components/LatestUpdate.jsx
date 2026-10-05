@@ -1,7 +1,7 @@
-import { getAnnouncement } from "../hooks/UseAnnouncementRouteHooks";
+import { useAnnouncements } from "../hooks/UseAnnouncementRouteHooks";
 
 export const LatestUpdate = () => {
-  const { data = [], isLoading, error } = getAnnouncement();
+  const { data = [] } = useAnnouncements();
 
   return (
     <div className="lg:col-span-8 mx-2 text-2xl font-semibold py-4">

@@ -4,22 +4,21 @@ import {
   getAnnouncementApi,
 } from "../api/announcement_api.js";
 
-export const createAnnouncement = () => {
+export const useCreateAnnouncement = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createAnnouncementApi,
     onSuccess: () => {
-      console.log("New announcement created");
       queryClient.invalidateQueries({ queryKey: ["announcements"] });
     },
     onError: (err) => {
-      console.error("Create failed:", err);
+      console.error("Create announcement failed:", err);
     },
   });
 };
 
-export const getAnnouncement = () => {
+export const useAnnouncements = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["announcements"],
     queryFn: getAnnouncementApi,
@@ -27,3 +26,7 @@ export const getAnnouncement = () => {
 
   return { data, isLoading, error };
 };
+
+// Backwards compatibility aliases
+export const createAnnouncement = useCreateAnnouncement;
+export const getAnnouncement = useAnnouncements;

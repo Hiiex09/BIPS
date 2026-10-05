@@ -1,8 +1,8 @@
 import { Megaphone } from "lucide-react";
-import { getAnnouncement } from "../hooks/UseAnnouncementRouteHooks";
+import { useAnnouncements } from "../hooks/UseAnnouncementRouteHooks";
 
 const AlertBar = () => {
-  const { data, isLoading, error } = getAnnouncement();
+  const { data = [], isLoading, error } = useAnnouncements();
 
   if (isLoading) {
     return <p>Loading please wait</p>;

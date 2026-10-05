@@ -1,12 +1,12 @@
 import { BrickWall, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
-import { checkAuthUsers, logoutAuthUsers } from "../hooks/UseAuthRouteHooks.js";
+import { useCheckAuth, useLogout } from "../hooks/UseAuthRouteHooks.js";
 const Navbar = () => {
-  const { user, isLoading, error } = checkAuthUsers();
-  const { mutate } = logoutAuthUsers();
+  const { user } = useCheckAuth();
+  const { mutate: logoutUser } = useLogout();
 
   const handleLogout = () => {
-    mutate();
+    logoutUser();
   };
 
   return (

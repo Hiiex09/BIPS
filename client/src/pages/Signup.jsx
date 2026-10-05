@@ -9,7 +9,7 @@ import {
   ShieldUser,
   Upload,
 } from "lucide-react";
-import { signupAuthUsers } from "../hooks/UseAuthRouteHooks";
+import { useSignup } from "../hooks/UseAuthRouteHooks";
 
 export const Signup = () => {
   const [mode, setMode] = useState("signup");
@@ -23,7 +23,7 @@ export const Signup = () => {
     idUpload: null,
   });
 
-  const { mutate: signup, isPending, error } = signupAuthUsers();
+  const { mutate: signup, isPending, error } = useSignup();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

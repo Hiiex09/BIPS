@@ -16,7 +16,7 @@ import ResidentEmergency from "./pages/ResidentUI/ResidentEmergency.jsx";
 import PublicLayout from "./Layout/PublicLayout.jsx";
 import ResidentLayout from "./Layout/ResidentLayout.jsx";
 import AdminLayout from "./Layout/AdminLayout.jsx";
-import { checkAuthUsers } from "./hooks/UseAuthRouteHooks.js";
+import { useCheckAuth } from "./hooks/UseAuthRouteHooks.js";
 import AdminHomepage from "./pages/AdminUI/AdminHomepage.jsx";
 import AdminLandingPage from "./pages/AdminUI/AdminLandingPage.jsx";
 import UserManagement from "./pages/AdminUI/pages/UserManagement.jsx";
@@ -27,7 +27,7 @@ import DemoPage from "./pages/AdminUI/DemoPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 const App = () => {
-  const { user, isLoading, error } = checkAuthUsers();
+  const { user, isLoading } = useCheckAuth();
 
   if (isLoading) {
     return <div className="p-10 text-center">Loading...</div>;
