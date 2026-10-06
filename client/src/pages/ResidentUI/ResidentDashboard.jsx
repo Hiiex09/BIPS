@@ -8,14 +8,17 @@ import {
   localOrdinances,
 } from "../../data/residentMockData";
 
-/* ── Stat Card ─────────────────────────────────────── */
+/* ── Stat Card (Swiss Tabular Indicator) ───────────── */
 const StatCard = ({ icon, label, value, detail, detailColor }) => (
-  <div className="card bg-base-100 shadow-sm border border-base-300">
+  <div className="card bg-base-100 border border-base-300 rounded-xs shadow-2xs hover:border-primary/40 transition-colors">
     <div className="card-body p-4 gap-1">
-      <span className="material-symbols-outlined text-2xl text-primary">{icon}</span>
-      <p className="text-xs text-muted font-medium uppercase tracking-wide">{label}</p>
-      <p className="text-xl font-bold text-base-content">{value}</p>
-      <p className={`text-xs ${detailColor}`}>{detail}</p>
+      <div className="flex items-center justify-between">
+        <span className="material-symbols-outlined text-xl text-primary">{icon}</span>
+        <span className="text-[10px] font-mono text-muted uppercase">LIVE RECORD</span>
+      </div>
+      <p className="text-xs text-muted font-semibold uppercase tracking-wider mt-1">{label}</p>
+      <p className="text-2xl font-extrabold text-base-content tabular-nums tracking-tight">{value}</p>
+      <p className={`text-xs font-medium ${detailColor}`}>{detail}</p>
     </div>
   </div>
 );
