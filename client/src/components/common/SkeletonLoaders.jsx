@@ -111,7 +111,7 @@ export const FormSkeleton = ({ fields = 4 }) => (
  * - Map Integration Card
  */
 export const ResidentDashboardSkeleton = () => (
-  <div className="space-y-6 max-w-6xl animate-pulse">
+  <div className="space-y-6 max-w-6xl">
     {/* Hero Banner */}
     <div className="card bg-base-100 border border-base-300 rounded-2xl p-6 md:p-8 min-h-44 flex flex-col justify-center space-y-3">
       <div className="skeleton h-5 w-28 rounded-full"></div>
@@ -211,7 +211,7 @@ export const ResidentDashboardSkeleton = () => (
  * - My Active Requests List (cards with header badge, step progress tracker, details box)
  */
 export const ResidentDocumentsSkeleton = () => (
-  <div className="space-y-8 max-w-5xl animate-pulse">
+  <div className="space-y-8 max-w-5xl">
     {/* Page Header */}
     <div className="space-y-2">
       <div className="skeleton h-7 w-60 rounded-md"></div>
@@ -297,7 +297,7 @@ export const ResidentDocumentsSkeleton = () => (
  * - Submission History Accordion List
  */
 export const ResidentConcernsSkeleton = () => (
-  <div className="space-y-8 max-w-3xl animate-pulse">
+  <div className="space-y-8 max-w-3xl">
     {/* Page Header */}
     <div className="space-y-2">
       <div className="skeleton h-7 w-64 rounded-md"></div>
@@ -371,7 +371,7 @@ export const ResidentConcernsSkeleton = () => (
  * - Right Content (Header, Large Featured Hero Card, Sort selector, 3-Card News Grid)
  */
 export const ResidentNewsSkeleton = () => (
-  <div className="flex flex-col lg:flex-row gap-6 max-w-6xl animate-pulse">
+  <div className="flex flex-col lg:flex-row gap-6 max-w-6xl">
     {/* Left Sidebar */}
     <aside className="w-full lg:w-56 shrink-0 space-y-5">
       <div className="skeleton h-9 w-full rounded-lg"></div>
@@ -457,7 +457,7 @@ export const ResidentNewsSkeleton = () => (
  * - CTA Card
  */
 export const ResidentHealthSkeleton = () => (
-  <div className="space-y-6 max-w-5xl animate-pulse">
+  <div className="space-y-6 max-w-5xl">
     {/* Page Header */}
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
       <div className="space-y-2">
@@ -547,7 +547,7 @@ export const ResidentHealthSkeleton = () => (
  * - List of Accordion Rows
  */
 export const ResidentOrdinancesSkeleton = () => (
-  <div className="space-y-6 max-w-4xl animate-pulse">
+  <div className="space-y-6 max-w-4xl">
     {/* Header */}
     <div className="text-center space-y-2 max-w-xl mx-auto flex flex-col items-center">
       <div className="skeleton h-6 w-52 rounded"></div>
@@ -596,7 +596,7 @@ export const ResidentOrdinancesSkeleton = () => (
  *    - Right: Nearest Emergency Facilities (Tags + Map) + Emergency Procedures accordion list
  */
 export const ResidentEmergencySkeleton = () => (
-  <div className="space-y-5 max-w-5xl animate-pulse">
+  <div className="space-y-5 max-w-5xl">
     {/* Page Header */}
     <div className="space-y-2">
       <div className="skeleton h-7 w-48 rounded-md"></div>
