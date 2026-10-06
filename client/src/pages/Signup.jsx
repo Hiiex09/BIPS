@@ -73,7 +73,7 @@ export const Signup = () => {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Info Panel — hidden on mobile */}
-      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-blue-500 flex-col justify-center p-10 xl:p-14">
+      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-primary text-primary-content flex-col justify-center p-10 xl:p-14">
         <div className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg mb-6">
           <ShieldUser size={40} className="text-white" />
         </div>
@@ -299,11 +299,11 @@ export const Signup = () => {
           <div className="border-t px-6 sm:px-8 py-5 text-center space-y-3">
             <p className="text-xs text-gray-500 leading-relaxed">
               By registering, you agree to our
-              <span className="text-blue-600 mx-1 cursor-pointer">
+              <span className="link link-primary mx-1 cursor-pointer">
                 Terms of Service
               </span>
               and
-              <span className="text-blue-600 mx-1 cursor-pointer">
+              <span className="link link-primary mx-1 cursor-pointer">
                 Privacy Policy
               </span>
               . We process your data according to the Data Privacy Act of 2012.

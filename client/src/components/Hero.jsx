@@ -18,7 +18,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="col-span-full lg:col-span-4 bg-blue-800 text-primary-content rounded-2xl p-6">
+      <div className="col-span-full lg:col-span-4 bg-neutral text-neutral-content rounded-2xl p-6">
         <h2 className="font-bold mb-4">Emergency Hotlines</h2>
         <ul className="space-y-3 text-sm">
           <li>Barangay Desk — (02) 8888-1234</li>

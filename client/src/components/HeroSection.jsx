@@ -11,7 +11,7 @@ const HeroSection = () => {
       <div className="hero-content text-neutral-content max-w-xl">
         <div>
           <h1 className="text-4xl font-black mb-4">
-            Official Portal of Barangay San Jose
+            Official Portal of Barangay Tejero
           </h1>
           <p className="mb-6">
             Access barangay services, announcements, and official documents

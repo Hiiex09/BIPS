@@ -158,7 +158,7 @@ const ResidentDashboard = () => {
             <div className="aspect-[16/6] bg-base-200 rounded-xl flex items-center justify-center">
               <div className="text-center text-muted">
                 <MapPin size={32} className="mx-auto mb-2 opacity-30" />
-                <p className="text-sm opacity-50">Map integration — Barangay San Jose</p>
+                <p className="text-sm opacity-50">Map integration — Barangay Tejero</p>
               </div>
             </div>
           </div>

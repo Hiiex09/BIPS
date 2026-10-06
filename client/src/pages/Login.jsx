@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Info Panel — hidden on mobile */}
-      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-blue-500 flex-col justify-center p-10 xl:p-14">
+      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-primary text-primary-content flex-col justify-center p-10 xl:p-14">
         <div className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg mb-6">
           <ShieldUser size={40} className="text-white" />
         </div>
@@ -118,7 +118,7 @@ const Login = () => {
               <div>
                 <div className="flex justify-between text-sm font-medium">
                   <span>Password</span>
-                  <a href="#" className="text-blue-600 hover:underline">
+                  <a href="#" className="link link-primary">
                     Forgot Password?
                   </a>
                 </div>
@@ -138,7 +138,7 @@ const Login = () => {
 
               {/* Remember */}
               <label className="flex items-center gap-2 text-sm text-gray-500">
-                <input type="checkbox" className="checkbox checkbox-sm" />
+                <input type="checkbox" className="checkbox checkbox-sm checkbox-primary" />
                 Remember me on this device
               </label>
 
@@ -155,7 +155,7 @@ const Login = () => {
 
             <p className="text-sm text-center mt-3">
               No account?{" "}
-              <Link to={"/signup"} className="text-blue-600 cursor-pointer">
+              <Link to={"/signup"} className="link link-primary font-semibold">
                 Register here
               </Link>
             </p>

@@ -49,7 +49,7 @@ const About = () => {
   ];
 
   const milestones = [
-    { year: "1985", event: "Barangay San Jose established" },
+    { year: "1985", event: "Barangay Tejero established" },
     { year: "2010", event: "New barangay hall inaugurated" },
     { year: "2018", event: "First digital services launched" },
     { year: "2022", event: "Current administration began" },
@@ -63,7 +63,7 @@ const About = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6">
-              About <span className="text-primary">Barangay San Jose</span>
+              About <span className="text-primary">Barangay Tejero</span>
             </h1>
             <p className="text-xl opacity-80 mb-8">
               A thriving community committed to progress, unity, and service to all residents
@@ -191,7 +191,7 @@ const About = () => {
                 </div>
                 <h3 className="font-bold text-xl mb-2">Visit Us</h3>
                 <p className="opacity-90">
-                  Barangay Hall, San Jose<br />
+                  Barangay Hall, Tejero<br />
                   Metro Manila, Philippines
                 </p>
               </div>

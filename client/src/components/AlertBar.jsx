@@ -13,7 +13,7 @@ const AlertBar = () => {
   }
 
   return (
-    <div className="w-full overflow-hidden bg-blue-300 shadow">
+    <div className="w-full overflow-hidden bg-secondary text-secondary-content shadow">
       <div className="flex items-center gap-3 px-4 py-2">
         <Megaphone size={18} className="shrink-0" />
         {/* Mobile: show first announcement only, truncated */}

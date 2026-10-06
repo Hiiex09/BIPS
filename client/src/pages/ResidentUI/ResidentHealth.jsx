@@ -158,7 +158,7 @@ const ResidentHealth = () => {
           <MapPin size={16} className="text-primary mt-0.5 shrink-0" />
           <div>
             <p className="text-xs font-semibold text-base-content">Location</p>
-            <p className="text-xs text-muted">Barangay Health Center,<br />Purok 3, San Jose</p>
+            <p className="text-xs text-muted">Barangay Health Center,<br />Purok 3, Tejero</p>
           </div>
         </div>
         <div className="flex items-start gap-3 p-4 rounded-xl bg-base-100 border border-base-300">

@@ -231,7 +231,7 @@ const Home = () => {
                   <MapPin size={24} className="text-primary" />
                   <div>
                     <h3 className="font-bold text-lg">Barangay Hall</h3>
-                    <p className="opacity-70">San Jose, Metro Manila</p>
+                    <p className="opacity-70">Tejero, Metro Manila</p>
                   </div>
                 </div>
                 <div className="aspect-video bg-base-300 rounded-xl flex items-center justify-center">

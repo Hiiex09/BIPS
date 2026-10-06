@@ -9,7 +9,7 @@ export const mockUsers = [
     status: "Active",
     verified: "Verified",
     joinDate: "2024-01-15",
-    address: "123 Rizal Street, Brgy. San Jose"
+    address: "123 Rizal Street, Brgy. Tejero"
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ export const mockUsers = [
     status: "Active",
     verified: "Verified",
     joinDate: "2024-02-20",
-    address: "456 Bonifacio Ave, Brgy. San Jose"
+    address: "456 Bonifacio Ave, Brgy. Tejero"
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ export const mockUsers = [
     status: "Pending",
     verified: "Pending",
     joinDate: "2024-11-10",
-    address: "789 Mabini Street, Brgy. San Jose"
+    address: "789 Mabini Street, Brgy. Tejero"
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ export const mockUsers = [
     status: "Active",
     verified: "Verified",
     joinDate: "2023-06-01",
-    address: "321 Luna Road, Brgy. San Jose"
+    address: "321 Luna Road, Brgy. Tejero"
   },
   {
     id: 5,
@@ -49,7 +49,7 @@ export const mockUsers = [
     status: "Active",
     verified: "Verified",
     joinDate: "2024-03-12",
-    address: "654 Aguinaldo Street, Brgy. San Jose"
+    address: "654 Aguinaldo Street, Brgy. Tejero"
   },
   {
     id: 6,
@@ -59,7 +59,7 @@ export const mockUsers = [
     status: "Inactive",
     verified: "Verified",
     joinDate: "2023-08-22",
-    address: "987 Del Pilar Ave, Brgy. San Jose"
+    address: "987 Del Pilar Ave, Brgy. Tejero"
   },
   {
     id: 7,
@@ -69,7 +69,7 @@ export const mockUsers = [
     status: "Suspended",
     verified: "Rejected",
     joinDate: "2024-05-30",
-    address: "147 Lapu-Lapu Street, Brgy. San Jose"
+    address: "147 Lapu-Lapu Street, Brgy. Tejero"
   },
   {
     id: 8,
@@ -79,7 +79,7 @@ export const mockUsers = [
     status: "Active",
     verified: "Verified",
     joinDate: "2022-01-10",
-    address: "258 Quezon Blvd, Brgy. San Jose"
+    address: "258 Quezon Blvd, Brgy. Tejero"
   }
 ];
 
@@ -156,7 +156,7 @@ export const mockIncidents = [
     dateReported: "2024-02-17",
     status: "Open",
     priority: "Medium",
-    location: "Market Street, Brgy. San Jose",
+    location: "Market Street, Brgy. Tejero",
     assignedTo: "Ana Garcia"
   },
   {
