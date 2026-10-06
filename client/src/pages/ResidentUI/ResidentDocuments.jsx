@@ -18,6 +18,7 @@ import {
   createCertificateRequestApi,
   getMyCertificateRequestsApi,
 } from "../../api/certificate_api";
+import { TableSkeleton } from "../../components/common/SkeletonLoaders";
 
 const certificateTypeMap = {
   "Barangay Clearance": "Barangay Clearance",
@@ -275,7 +276,7 @@ const ResidentDocuments = () => {
           <span className="badge badge-ghost badge-sm">{data.length} Total Records</span>
         </div>
         {isLoading ? (
-          <div className="p-6 text-sm text-muted">Loading requests...</div>
+          <TableSkeleton rows={3} columns={4} />
         ) : activeRequests.length > 0 ? (
           <div className="space-y-4">
             {activeRequests.map((request) => (

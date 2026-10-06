@@ -4,6 +4,7 @@ import { UploadCloud, MapPin, Send, ChevronDown, ChevronUp, ListChecks } from "l
 import toast from "react-hot-toast";
 import { concernCategories } from "../../data/residentMockData";
 import { createIncidentApi, getMyIncidentsApi } from "../../api/incident_api";
+import { TableSkeleton } from "../../components/common/SkeletonLoaders";
 
 const formatDate = (date) =>
   date ? new Date(date).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" }) : "N/A";
@@ -203,7 +204,7 @@ const ResidentConcerns = () => {
           <span className="badge badge-ghost badge-sm">{incidents.length} Total Records</span>
         </div>
         {isLoading ? (
-          <div className="p-6 text-sm text-muted">Loading concerns...</div>
+          <TableSkeleton rows={3} columns={3} />
         ) : incidents.length > 0 ? (
           <div className="space-y-3">
             {incidents.map((item) => <HistoryItem key={item._id} item={item} />)}
