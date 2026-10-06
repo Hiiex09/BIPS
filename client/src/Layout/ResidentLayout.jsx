@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import ResidentSidebar from "../pages/ResidentUI/components/ResidentSidebar";
 import ResidentNavbar from "../pages/ResidentUI/components/ResidentNavbar";
+import PageLoader from "../components/common/PageLoader";
 
 const pageTitles = {
   "/Resident": "Resident Information Dashboard",
@@ -26,7 +28,9 @@ const ResidentLayout = () => {
       <div className="drawer-content flex flex-col h-screen overflow-hidden">
         <ResidentNavbar pageTitle={pageTitle} drawerId={DRAWER_ID} />
         <main className="flex-1 overflow-y-auto p-4 md:p-6 bg-base-200">
-          <Outlet />
+          <Suspense fallback={<PageLoader message="Loading portal section..." />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
 
