@@ -171,7 +171,7 @@ const DocumentsManagement = () => {
         />
 
         {/* Documents Table */}
-        <div className="card bg-base-100 shadow-md">
+        <div className="card bg-base-100 shadow-2xs">
           <div className="card-body p-0">
             {isLoading ? (
               <div className="flex justify-center items-center p-12 gap-3">

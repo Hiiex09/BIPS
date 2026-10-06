@@ -61,7 +61,7 @@ const ResidentNavbar = ({ pageTitle, drawerId }) => {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu menu-sm bg-base-100 rounded-box z-50 mt-2 w-48 p-2 shadow-lg border border-base-300"
+            className="dropdown-content menu menu-sm bg-base-100 rounded-box z-50 mt-2 w-48 p-2 shadow-2xs border border-base-300"
           >
             <li>
               <a className="text-sm">

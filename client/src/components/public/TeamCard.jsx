@@ -1,6 +1,6 @@
 const TeamCard = ({ name, position, image, description }) => {
   return (
-    <div className="card bg-base-100 shadow-lg hover:shadow-2xl transition-all duration-300">
+    <div className="card bg-base-100 shadow-2xs hover:shadow-2xs transition-all duration-300">
       <figure className="px-6 pt-6">
         <div className="w-48 h-48 rounded-full overflow-hidden bg-base-200">
           {image ? (

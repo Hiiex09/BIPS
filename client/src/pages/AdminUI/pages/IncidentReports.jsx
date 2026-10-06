@@ -207,7 +207,7 @@ const IncidentReports = () => {
                 : "Resident";
 
               return (
-                <div key={incidentId} className="card bg-base-100 shadow-md">
+                <div key={incidentId} className="card bg-base-100 shadow-2xs">
                   <div className="card-body">
                     {/* Header */}
                     <div className="flex items-start justify-between gap-4">

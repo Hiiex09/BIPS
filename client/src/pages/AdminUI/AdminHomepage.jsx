@@ -51,7 +51,7 @@ const AdminHomepage = () => {
       {/* Recent Activity Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Recent Documents */}
-        <div className="card bg-base-100 shadow-md">
+        <div className="card bg-base-100 shadow-2xs">
           <div className="card-body">
             <h2 className="card-title text-lg mb-4">Recent Document Requests</h2>
             <div className="space-y-3">
@@ -81,7 +81,7 @@ const AdminHomepage = () => {
         </div>
 
         {/* Recent Incidents */}
-        <div className="card bg-base-100 shadow-md">
+        <div className="card bg-base-100 shadow-2xs">
           <div className="card-body">
             <h2 className="card-title text-lg mb-4">Recent Incident Reports</h2>
             <div className="space-y-3">
@@ -112,7 +112,7 @@ const AdminHomepage = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="card bg-base-100 shadow-md mt-6">
+      <div className="card bg-base-100 shadow-2xs mt-6">
         <div className="card-body">
           <h2 className="card-title text-lg mb-4">Quick Actions</h2>
           <div className="flex flex-wrap gap-3">

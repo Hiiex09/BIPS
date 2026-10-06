@@ -14,7 +14,7 @@ const procedureIcons = {
 const HotlineButton = ({ hotline }) => (
   <a
     href={`tel:${hotline.number}`}
-    className={`flex items-center justify-between px-4 py-3 rounded-xl ${hotline.colorClass} transition-opacity hover:opacity-90`}
+    className={`flex items-center justify-between px-4 py-3 rounded-xs ${hotline.colorClass} transition-opacity hover:opacity-90`}
   >
     <div className="flex items-center gap-3">
       <Phone size={18} />
@@ -33,7 +33,7 @@ const ProcedureItem = ({ proc, defaultOpen = false }) => {
   const Icon = procedureIcons[proc.id] || ShieldAlert;
 
   return (
-    <div className="border border-base-300 rounded-xl overflow-hidden">
+    <div className="border border-base-300 rounded-xs overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between px-4 py-3 bg-base-100 hover:bg-base-200 transition-colors text-left"
@@ -143,7 +143,7 @@ const ResidentEmergency = () => {
                 ))}
               </div>
               {/* Map Placeholder */}
-              <div className="aspect-[16/7] bg-base-200 rounded-xl flex items-center justify-center border border-base-300">
+              <div className="aspect-[16/7] bg-base-200 rounded-xs flex items-center justify-center border border-base-300">
                 <div className="text-center text-muted">
                   <MapPin size={32} className="mx-auto mb-2 opacity-30" />
                   <p className="text-xs opacity-50">Map — Nearest Emergency Facilities</p>
@@ -170,7 +170,7 @@ const ResidentEmergency = () => {
           {/* Download Evacuation Plan */}
           <div className="card bg-primary/5 border border-primary/20 shadow-sm">
             <div className="card-body p-4 flex-row items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <div className="w-12 h-12 rounded-xs bg-primary/10 flex items-center justify-center shrink-0">
                 <Download size={22} className="text-primary" />
               </div>
               <div className="flex-1 min-w-0">

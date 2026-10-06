@@ -31,7 +31,7 @@ const HistoryItem = ({ item }) => {
   const label = displayStatus(item.status);
 
   return (
-    <div className="border border-base-300 rounded-xl overflow-hidden">
+    <div className="border border-base-300 rounded-xs overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between px-4 py-3 bg-base-100 hover:bg-base-200 transition-colors"
@@ -162,7 +162,7 @@ const ResidentConcerns = () => {
 
                 <div className="fieldset gap-1.5">
                   <legend className="fieldset-legend text-xs font-semibold">Supporting Photos</legend>
-                  <label className="border-2 border-dashed border-base-300 rounded-xl p-6 flex flex-col items-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors">
+                  <label className="border-2 border-dashed border-base-300 rounded-xs p-6 flex flex-col items-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors">
                     <UploadCloud size={28} className="text-muted" />
                     <div className="text-center">
                       <span className="link link-primary text-sm font-medium">Click to upload</span>

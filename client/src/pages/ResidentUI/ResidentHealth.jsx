@@ -63,7 +63,7 @@ const ResidentHealth = () => {
         <h3 className="font-bold text-base text-base-content mb-4">Our Specialized Services</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {healthServices.map((service) => (
-            <div key={service.id} className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+            <div key={service.id} className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-2xs transition-shadow overflow-hidden">
               <figure className="h-40 overflow-hidden">
                 <img
                   src={service.image}
@@ -145,7 +145,7 @@ const ResidentHealth = () => {
                 </button>
               </div>
             </div>
-            <div className="hidden md:flex w-32 h-28 bg-base-100 rounded-xl border border-base-300 items-center justify-center shrink-0">
+            <div className="hidden md:flex w-32 h-28 bg-base-100 rounded-xs border border-base-300 items-center justify-center shrink-0">
               <CalendarDays size={48} className="text-primary/30" />
             </div>
           </div>
@@ -154,21 +154,21 @@ const ResidentHealth = () => {
 
       {/* Footer Info */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-base-100 border border-base-300">
+        <div className="flex items-start gap-3 p-4 rounded-xs bg-base-100 border border-base-300">
           <MapPin size={16} className="text-primary mt-0.5 shrink-0" />
           <div>
             <p className="text-xs font-semibold text-base-content">Location</p>
             <p className="text-xs text-muted">Barangay Health Center,<br />Purok 3, Tejero</p>
           </div>
         </div>
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-base-100 border border-base-300">
+        <div className="flex items-start gap-3 p-4 rounded-xs bg-base-100 border border-base-300">
           <Phone size={16} className="text-primary mt-0.5 shrink-0" />
           <div>
             <p className="text-xs font-semibold text-base-content">Contact</p>
             <p className="text-xs text-muted">(555) 123-4567<br />health@barangay.gov</p>
           </div>
         </div>
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-error/5 border border-error/20">
+        <div className="flex items-start gap-3 p-4 rounded-xs bg-error/5 border border-error/20">
           <AlertCircle size={16} className="text-error mt-0.5 shrink-0" />
           <div>
             <p className="text-xs font-semibold text-base-content">Emergency</p>

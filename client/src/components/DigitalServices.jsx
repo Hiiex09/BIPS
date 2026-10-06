@@ -11,7 +11,7 @@ export const DigitalServices = () => {
         ].map((service) => (
           <div
             key={service}
-            className="bg-base-200 rounded-2xl p-5 hover:shadow transition"
+            className="bg-base-200 rounded-xs p-5 hover:shadow transition"
           >
             <h3 className="font-semibold">{service}</h3>
             <p className="text-sm opacity-70 mt-2">Fast and easy processing.</p>

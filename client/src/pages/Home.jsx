@@ -110,14 +110,14 @@ const Home = () => {
                 <img
                   src="https://images.pexels.com/photos/34692362/pexels-photo-34692362.jpeg"
                   alt="Community gathering"
-                  className="rounded-3xl shadow-2xl w-full"
+                  className="rounded-xs shadow-2xs w-full"
                 />
               </div>
               
               {/* Floating Feature Cards */}
-              <div className="absolute -top-6 -left-6 bg-base-100 rounded-2xl shadow-lg p-4 max-w-xs z-20">
+              <div className="absolute -top-6 -left-6 bg-base-100 rounded-xs shadow-2xs p-4 max-w-xs z-20">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-success/10 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-success/10 rounded-xs flex items-center justify-center">
                     <CheckCircle size={24} className="text-success" />
                   </div>
                   <div>
@@ -127,9 +127,9 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="absolute -bottom-6 -right-6 bg-base-100 rounded-2xl shadow-lg p-4 max-w-xs z-20">
+              <div className="absolute -bottom-6 -right-6 bg-base-100 rounded-xs shadow-2xs p-4 max-w-xs z-20">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xs flex items-center justify-center">
                     <Users size={24} className="text-primary" />
                   </div>
                   <div>
@@ -182,7 +182,7 @@ const Home = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="card bg-base-100 shadow-md hover:shadow-xl transition-shadow"
+                className="card bg-base-100 shadow-2xs hover:shadow-xl transition-shadow"
               >
                 <div className="card-body items-center text-center">
                   <CheckCircle size={32} className="text-success mb-2" />
@@ -234,7 +234,7 @@ const Home = () => {
                     <p className="opacity-70">Tejero, Metro Manila</p>
                   </div>
                 </div>
-                <div className="aspect-video bg-base-300 rounded-xl flex items-center justify-center">
+                <div className="aspect-video bg-base-300 rounded-xs flex items-center justify-center">
                   <p className="opacity-50">Map integration placeholder</p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 mt-4">

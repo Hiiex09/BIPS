@@ -81,7 +81,7 @@ const ResidentSidebar = ({ drawerId }) => {
         </nav>
 
         {/* Need Help */}
-        <div className="mx-3 mb-4 p-4 bg-primary/8 rounded-xl border border-primary/20">
+        <div className="mx-3 mb-4 p-4 bg-primary/8 rounded-xs border border-primary/20">
           <p className="text-xs font-semibold text-base-content mb-1">Need help?</p>
           <p className="text-xs text-muted mb-3 leading-snug">
             Contact the helpdesk for any concerns or certificate requests.

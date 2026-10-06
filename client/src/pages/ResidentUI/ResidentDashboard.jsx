@@ -101,14 +101,14 @@ const ResidentDashboard = () => {
     <div className="space-y-6 w-full">
       {/* Hero Announcement Banner */}
       <div
-        className="relative rounded-2xl overflow-hidden min-h-44"
+        className="relative rounded-xs overflow-hidden min-h-44"
         style={{
           backgroundImage: `url(${latestAnnouncement.image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-neutral/85 via-neutral/70 to-neutral/30 rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-r from-neutral/85 via-neutral/70 to-neutral/30 rounded-xs" />
         <div className="relative p-6 md:p-8 max-w-2xl">
           <span className="badge badge-primary badge-sm font-bold tracking-wider mb-3">
             {latestAnnouncement.badge}
@@ -158,7 +158,7 @@ const ResidentDashboard = () => {
         </div>
         <div className="card bg-base-100 shadow-sm border border-base-300">
           <div className="card-body p-4">
-            <div className="aspect-[16/6] bg-base-200 rounded-xl flex items-center justify-center">
+            <div className="aspect-[16/6] bg-base-200 rounded-xs flex items-center justify-center">
               <div className="text-center text-muted">
                 <MapPin size={32} className="mx-auto mb-2 opacity-30" />
                 <p className="text-sm opacity-50">Map integration — Barangay Tejero</p>

@@ -84,7 +84,7 @@ const Announcements = () => {
       </section>
 
       {/* Search and Filter Section */}
-      <section className="py-4 sm:py-6 bg-base-100 sticky top-0 z-10 shadow-md">
+      <section className="py-4 sm:py-6 bg-base-100 sticky top-0 z-10 shadow-2xs">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4">

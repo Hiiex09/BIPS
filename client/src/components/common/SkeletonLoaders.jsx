@@ -105,7 +105,7 @@ export const FormSkeleton = ({ fields = 4 }) => (
 /**
  * 1. ResidentDashboardSkeleton
  * Structure:
- * - Hero Announcement Banner (min-h-44 rounded-2xl)
+ * - Hero Announcement Banner (min-h-44 rounded-xs)
  * - 4-Column Stat Cards Row
  * - Community Updates (3 Cards: News Card, Health Schedule, Ordinances)
  * - Map Integration Card
@@ -113,7 +113,7 @@ export const FormSkeleton = ({ fields = 4 }) => (
 export const ResidentDashboardSkeleton = () => (
   <div className="space-y-6 w-full">
     {/* Hero Banner */}
-    <div className="card bg-base-100 border border-base-300 rounded-2xl p-6 md:p-8 min-h-44 flex flex-col justify-center space-y-3">
+    <div className="card bg-base-100 border border-base-300 rounded-xs p-6 md:p-8 min-h-44 flex flex-col justify-center space-y-3">
       <div className="skeleton h-5 w-28 rounded-full"></div>
       <div className="skeleton h-7 md:h-8 w-3/4 max-w-lg rounded-md"></div>
       <div className="skeleton h-4 w-full max-w-md rounded"></div>
@@ -197,7 +197,7 @@ export const ResidentDashboardSkeleton = () => (
         <div className="skeleton h-4 w-20 rounded"></div>
       </div>
       <div className="card bg-base-100 shadow-sm border border-base-300 p-4">
-        <div className="aspect-[16/6] skeleton w-full rounded-xl"></div>
+        <div className="aspect-[16/6] skeleton w-full rounded-xs"></div>
       </div>
     </div>
   </div>
@@ -227,7 +227,7 @@ export const ResidentDocumentsSkeleton = () => (
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="card bg-base-100 border border-base-300 shadow-sm p-5 flex flex-col items-center text-center space-y-3">
-            <div className="skeleton w-14 h-14 rounded-2xl"></div>
+            <div className="skeleton w-14 h-14 rounded-xs"></div>
             <div className="skeleton h-5 w-36 rounded"></div>
             <div className="skeleton h-3 w-44 rounded"></div>
             <div className="skeleton h-3 w-32 rounded"></div>
@@ -325,12 +325,12 @@ export const ResidentConcernsSkeleton = () => (
           </div>
           <div className="space-y-1.5">
             <div className="skeleton h-3.5 w-32 rounded"></div>
-            <div className="skeleton h-28 w-full rounded-xl"></div>
+            <div className="skeleton h-28 w-full rounded-xs"></div>
           </div>
           {/* Upload Dropzone */}
           <div className="space-y-1.5">
             <div className="skeleton h-3.5 w-28 rounded"></div>
-            <div className="skeleton h-28 w-full rounded-xl"></div>
+            <div className="skeleton h-28 w-full rounded-xs"></div>
           </div>
           {/* Location */}
           <div className="space-y-1.5">
@@ -578,7 +578,7 @@ export const ResidentOrdinancesSkeleton = () => (
     {/* List of Ordinance Rows */}
     <div className="space-y-3">
       {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="border border-base-300 rounded-xl p-4 bg-base-100 flex items-center justify-between">
+        <div key={i} className="border border-base-300 rounded-xs p-4 bg-base-100 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="skeleton w-9 h-9 rounded-lg shrink-0"></div>
             <div className="space-y-1">
@@ -629,7 +629,7 @@ export const ResidentEmergencySkeleton = () => (
           {/* Big Hotline Buttons */}
           <div className="space-y-3">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="skeleton h-16 w-full rounded-xl"></div>
+              <div key={i} className="skeleton h-16 w-full rounded-xs"></div>
             ))}
           </div>
           {/* Non-emergency divider */}
@@ -656,7 +656,7 @@ export const ResidentEmergencySkeleton = () => (
               <div key={i} className="skeleton h-6 w-28 rounded-full"></div>
             ))}
           </div>
-          <div className="aspect-[16/7] skeleton w-full rounded-xl mt-1"></div>
+          <div className="aspect-[16/7] skeleton w-full rounded-xs mt-1"></div>
         </div>
 
         {/* Emergency Procedures Accordions */}
@@ -664,7 +664,7 @@ export const ResidentEmergencySkeleton = () => (
           <div className="skeleton h-5 w-60 rounded"></div>
           <div className="space-y-2.5">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="border border-base-300 rounded-xl p-3 bg-base-100 flex items-center justify-between">
+              <div key={i} className="border border-base-300 rounded-xs p-3 bg-base-100 flex items-center justify-between">
                 <div className="skeleton h-4 w-48 rounded"></div>
                 <div className="skeleton w-4 h-4 rounded"></div>
               </div>

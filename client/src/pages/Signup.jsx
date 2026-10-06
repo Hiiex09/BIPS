@@ -74,7 +74,7 @@ export const Signup = () => {
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Info Panel — hidden on mobile */}
       <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-primary text-primary-content flex-col justify-center p-10 xl:p-14">
-        <div className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg mb-6">
+        <div className="w-16 h-16 rounded-xs flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-2xs mb-6">
           <ShieldUser size={40} className="text-white" />
         </div>
 
@@ -108,7 +108,7 @@ export const Signup = () => {
           </p>
         </div>
 
-        <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg">
+        <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xs backdrop-blur-md bg-white/10 border border-white/20 shadow-2xs">
           <LockKeyhole size={20} className="text-white shrink-0" />
           <span className="text-white text-sm">
             End-to-End Encrypted & Secure Database
@@ -118,7 +118,7 @@ export const Signup = () => {
 
       {/* Right Signup Card */}
       <div className="flex-1 flex items-center justify-center bg-base-200 px-4 py-8 sm:py-12">
-        <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xl">
+        <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xs">
           <div className="p-6 sm:p-8">
             {/* Tabs */}
             <div className="bg-base-200 rounded-lg p-1 flex mb-6">

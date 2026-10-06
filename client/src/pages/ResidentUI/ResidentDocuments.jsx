@@ -48,7 +48,7 @@ const statusBadge = (status) => {
 };
 
 const DocIcon = ({ type }) => {
-  const cls = "w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3";
+  const cls = "w-14 h-14 rounded-xs flex items-center justify-center mx-auto mb-3";
   if (type === "clearance")
     return <div className={`${cls} bg-primary/10`}><ShieldCheck size={28} className="text-primary" /></div>;
   if (type === "residency")
@@ -57,7 +57,7 @@ const DocIcon = ({ type }) => {
 };
 
 const DocumentCard = ({ doc, onRequest }) => (
-  <div className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-shadow">
+  <div className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-2xs transition-shadow">
     <div className="card-body p-5 text-center gap-2">
       <DocIcon type={doc.iconType} />
       <h3 className="font-bold text-sm">{doc.title}</h3>

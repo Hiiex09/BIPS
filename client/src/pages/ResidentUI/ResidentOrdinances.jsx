@@ -15,7 +15,7 @@ const OrdinanceRow = ({ ord }) => {
   const [open, setOpen] = useState(ord.id === "2023-01");
 
   return (
-    <div className="border border-base-300 rounded-xl overflow-hidden">
+    <div className="border border-base-300 rounded-xs overflow-hidden">
       {/* Header */}
       <button
         onClick={() => setOpen((o) => !o)}

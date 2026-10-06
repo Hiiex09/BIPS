@@ -18,7 +18,7 @@ const EventItem = ({ event }) => (
 
 /* ── News Card ──────────────────────────────────────── */
 const NewsCard = ({ article }) => (
-  <div className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+  <div className="card bg-base-100 border border-base-300 shadow-sm hover:shadow-2xs transition-shadow overflow-hidden">
     <figure className="h-40 overflow-hidden">
       <img
         src={article.image}

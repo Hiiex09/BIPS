@@ -76,7 +76,7 @@ const About = () => {
       <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
-            <div className="card bg-primary/5 shadow-lg">
+            <div className="card bg-primary/5 shadow-2xs">
               <div className="card-body">
                 <h2 className="card-title text-3xl mb-4 text-primary">Our Vision</h2>
                 <p className="text-lg leading-relaxed">
@@ -87,7 +87,7 @@ const About = () => {
               </div>
             </div>
 
-            <div className="card bg-secondary/5 shadow-lg">
+            <div className="card bg-secondary/5 shadow-2xs">
               <div className="card-body">
                 <h2 className="card-title text-3xl mb-4 text-secondary">Our Mission</h2>
                 <p className="text-lg leading-relaxed">
@@ -113,7 +113,7 @@ const About = () => {
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
-                <div key={index} className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
+                <div key={index} className="card bg-base-100 shadow-2xs hover:shadow-xl transition-shadow">
                   <div className="card-body items-center text-center">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                       <Icon size={32} className="text-primary" />
@@ -148,7 +148,7 @@ const About = () => {
                       <div className="w-0.5 h-full bg-primary/20 my-2"></div>
                     )}
                   </div>
-                  <div className="card bg-base-200 shadow-md flex-1 group-hover:shadow-lg transition-shadow">
+                  <div className="card bg-base-200 shadow-2xs flex-1 group-hover:shadow-2xs transition-shadow">
                     <div className="card-body">
                       <p className="text-lg">{milestone.event}</p>
                     </div>
