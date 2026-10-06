@@ -9,37 +9,37 @@
   prefersdark: false;
   color-scheme: light;
 
-  /* Color Tokens - Bright, Welcoming, Civic Theme */
+  /* Color Tokens - Option 2: Deep Civic Forest (Barangay Tejero) */
   --color-base-100: oklch(100% 0 0);
-  --color-base-200: oklch(98% 0.002 240);
-  --color-base-300: oklch(95% 0.004 240);
-  --color-base-content: oklch(25% 0.015 240);
+  --color-base-200: oklch(98% 0.005 145);
+  --color-base-300: oklch(93% 0.015 145);
+  --color-base-content: oklch(20% 0.02 145);
   
-  /* Bright Sky - Optimistic primary */
-  --color-primary: oklch(69% 0.17 220);
+  /* Forest Emerald - Deep Civic Primary (#15803d) */
+  --color-primary: oklch(52% 0.17 145);
   --color-primary-content: oklch(100% 0 0);
   
-  /* Deep Saffron - Energizing accent */
-  --color-secondary: oklch(70% 0.18 65);
-  --color-secondary-content: oklch(100% 0 0);
+  /* Sunburst Amber/Gold - Energetic Civic Accent (#f59e0b) */
+  --color-secondary: oklch(75% 0.17 75);
+  --color-secondary-content: oklch(20% 0.05 75);
   
-  /* Goldenrod - Heritage wisdom */
-  --color-accent: oklch(71% 0.13 85);
-  --color-accent-content: oklch(20% 0.015 85);
+  /* Deep Pine Anchor (#0d2818) */
+  --color-accent: oklch(28% 0.06 145);
+  --color-accent-content: oklch(98% 0.01 145);
   
-  --color-neutral: oklch(30% 0.02 240);
-  --color-neutral-content: oklch(98% 0.01 240);
+  --color-neutral: oklch(22% 0.03 145);
+  --color-neutral-content: oklch(98% 0.01 145);
   
-  --color-info: oklch(69% 0.17 220);
+  --color-info: oklch(58% 0.18 240);
   --color-info-content: oklch(100% 0 0);
   
-  --color-success: oklch(65% 0.22 150);
-  --color-success-content: oklch(98% 0.01 150);
+  --color-success: oklch(52% 0.17 145);
+  --color-success-content: oklch(100% 0 0);
   
-  --color-warning: oklch(75% 0.2 80);
-  --color-warning-content: oklch(20% 0.05 80);
+  --color-warning: oklch(75% 0.17 75);
+  --color-warning-content: oklch(20% 0.05 75);
   
-  --color-error: oklch(60% 0.25 25);
+  --color-error: oklch(58% 0.22 25);
   --color-error-content: oklch(98% 0.01 25);
 
   /* Border Radius */

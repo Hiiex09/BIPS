@@ -23,11 +23,11 @@ const ResidentSidebar = ({ drawerId }) => {
         {/* Logo */}
         <div className="flex items-center gap-3 px-5 py-5 border-b border-base-300">
           <div className="w-9 h-9 bg-primary rounded-lg flex items-center justify-center">
-            <BrickWall size={20} className="text-primary-content" />
+            <span className="material-symbols-outlined text-primary-content text-xl">shield</span>
           </div>
           <div>
-            <div className="font-bold text-sm leading-tight">Barangay</div>
-            <div className="text-xs text-muted">Digital Portal</div>
+            <div className="font-bold text-sm leading-tight text-base-content">Barangay Tejero</div>
+            <div className="text-xs text-muted">Resident Portal</div>
           </div>
         </div>
 
