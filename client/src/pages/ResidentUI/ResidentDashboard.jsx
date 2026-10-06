@@ -9,10 +9,10 @@ import {
 } from "../../data/residentMockData";
 
 /* ── Stat Card ─────────────────────────────────────── */
-const StatCard = ({ emoji, label, value, detail, detailColor }) => (
+const StatCard = ({ icon, label, value, detail, detailColor }) => (
   <div className="card bg-base-100 shadow-sm border border-base-300">
     <div className="card-body p-4 gap-1">
-      <span className="text-2xl">{emoji}</span>
+      <span className="material-symbols-outlined text-2xl text-primary">{icon}</span>
       <p className="text-xs text-muted font-medium uppercase tracking-wide">{label}</p>
       <p className="text-xl font-bold text-base-content">{value}</p>
       <p className={`text-xs ${detailColor}`}>{detail}</p>
@@ -95,7 +95,7 @@ const OrdinancesCard = ({ ordinances }) => (
 /* ── Main Dashboard ──────────────────────────────── */
 const ResidentDashboard = () => {
   return (
-    <div className="space-y-6 max-w-6xl">
+    <div className="space-y-6 w-full">
       {/* Hero Announcement Banner */}
       <div
         className="relative rounded-2xl overflow-hidden min-h-44"

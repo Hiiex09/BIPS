@@ -247,7 +247,7 @@ const ResidentDocuments = () => {
   );
 
   return (
-    <div className="space-y-8 max-w-5xl">
+    <div className="space-y-8 w-full">
       <div>
         <h2 className="text-xl font-bold text-base-content">Document Request Portal</h2>
         <p className="text-sm text-muted mt-1">

@@ -7,7 +7,7 @@ export const residentStats = [
     value: "12,450",
     detail: "-2.6% from last year",
     detailColor: "text-error",
-    emoji: "👥",
+    icon: "groups",
   },
   {
     id: "weather",
@@ -15,7 +15,7 @@ export const residentStats = [
     value: "31°C Sunny",
     detail: "Humidity 55%",
     detailColor: "text-muted",
-    emoji: "☀️",
+    icon: "wb_sunny",
   },
   {
     id: "programs",
@@ -23,7 +23,7 @@ export const residentStats = [
     value: "8",
     detail: "3 Ongoing this week",
     detailColor: "text-muted",
-    emoji: "🏃",
+    icon: "directions_run",
   },
   {
     id: "volunteers",
@@ -31,7 +31,7 @@ export const residentStats = [
     value: "156",
     detail: "New this month: 20",
     detailColor: "text-success",
-    emoji: "🤝",
+    icon: "handshake",
   },
 ];
 
@@ -214,9 +214,9 @@ export const newsArticles = [
 
 // ── Health Center ─────────────────────────────────────
 export const healthCenterStats = [
-  { label: "Monthly Patients", value: "1,200+", trend: "+12% from last month", icon: "👥" },
-  { label: "Vaccinations", value: "850", trend: "-3% from last month", icon: "💉" },
-  { label: "On-duty Staff", value: "14", trend: "2 new doctors joined", icon: "🩺" },
+  { label: "Monthly Patients", value: "1,200+", trend: "+12% from last month", icon: "group" },
+  { label: "Vaccinations", value: "850", trend: "-3% from last month", icon: "vaccines" },
+  { label: "On-duty Staff", value: "14", trend: "2 new doctors joined", icon: "stethoscope" },
 ];
 
 export const healthServices = [

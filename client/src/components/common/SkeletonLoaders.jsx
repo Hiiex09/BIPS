@@ -111,7 +111,7 @@ export const FormSkeleton = ({ fields = 4 }) => (
  * - Map Integration Card
  */
 export const ResidentDashboardSkeleton = () => (
-  <div className="space-y-6 max-w-6xl">
+  <div className="space-y-6 w-full">
     {/* Hero Banner */}
     <div className="card bg-base-100 border border-base-300 rounded-2xl p-6 md:p-8 min-h-44 flex flex-col justify-center space-y-3">
       <div className="skeleton h-5 w-28 rounded-full"></div>
@@ -211,7 +211,7 @@ export const ResidentDashboardSkeleton = () => (
  * - My Active Requests List (cards with header badge, step progress tracker, details box)
  */
 export const ResidentDocumentsSkeleton = () => (
-  <div className="space-y-8 max-w-5xl">
+  <div className="space-y-8 w-full">
     {/* Page Header */}
     <div className="space-y-2">
       <div className="skeleton h-7 w-60 rounded-md"></div>
@@ -297,69 +297,76 @@ export const ResidentDocumentsSkeleton = () => (
  * - Submission History Accordion List
  */
 export const ResidentConcernsSkeleton = () => (
-  <div className="space-y-8 max-w-3xl">
+  <div className="space-y-6 w-full">
     {/* Page Header */}
     <div className="space-y-2">
       <div className="skeleton h-7 w-64 rounded-md"></div>
       <div className="skeleton h-4 w-80 max-w-full rounded"></div>
     </div>
 
-    {/* Form Card */}
-    <div className="card bg-base-100 border border-base-300 shadow-sm p-6 space-y-5">
-      <div className="flex items-center gap-2">
-        <div className="skeleton h-5 w-5 rounded"></div>
-        <div className="skeleton h-5 w-36 rounded"></div>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-1.5">
-          <div className="skeleton h-3.5 w-20 rounded"></div>
-          <div className="skeleton h-10 w-full rounded-lg"></div>
-        </div>
-        <div className="space-y-1.5">
-          <div className="skeleton h-3.5 w-16 rounded"></div>
-          <div className="skeleton h-10 w-full rounded-lg"></div>
-        </div>
-      </div>
-      <div className="space-y-1.5">
-        <div className="skeleton h-3.5 w-32 rounded"></div>
-        <div className="skeleton h-28 w-full rounded-xl"></div>
-      </div>
-      {/* Upload Dropzone */}
-      <div className="space-y-1.5">
-        <div className="skeleton h-3.5 w-28 rounded"></div>
-        <div className="skeleton h-28 w-full rounded-xl"></div>
-      </div>
-      {/* Location */}
-      <div className="space-y-1.5">
-        <div className="skeleton h-3.5 w-32 rounded"></div>
-        <div className="skeleton h-10 w-full rounded-lg"></div>
-      </div>
-      <div className="flex justify-end pt-2">
-        <div className="skeleton h-10 w-36 rounded-lg"></div>
-      </div>
-    </div>
-
-    {/* Submission History List */}
-    <div className="space-y-3">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
-          <div className="skeleton h-5 w-5 rounded"></div>
-          <div className="skeleton h-5 w-40 rounded"></div>
-        </div>
-        <div className="skeleton h-5 w-24 rounded-full"></div>
-      </div>
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="card bg-base-100 border border-base-300 p-4 flex flex-row items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="skeleton w-2.5 h-2.5 rounded-full shrink-0"></div>
-            <div className="space-y-1">
-              <div className="skeleton h-4 w-48 rounded"></div>
-              <div className="skeleton h-3 w-32 rounded"></div>
+    {/* 2-Column Responsive Layout */}
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Left Column: Form Card (7 cols) */}
+      <div className="lg:col-span-7">
+        <div className="card bg-base-100 border border-base-300 shadow-sm p-6 space-y-5">
+          <div className="flex items-center gap-2">
+            <div className="skeleton h-5 w-5 rounded"></div>
+            <div className="skeleton h-5 w-36 rounded"></div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-1.5">
+              <div className="skeleton h-3.5 w-20 rounded"></div>
+              <div className="skeleton h-10 w-full rounded-lg"></div>
+            </div>
+            <div className="space-y-1.5">
+              <div className="skeleton h-3.5 w-16 rounded"></div>
+              <div className="skeleton h-10 w-full rounded-lg"></div>
             </div>
           </div>
-          <div className="skeleton h-6 w-24 rounded-full"></div>
+          <div className="space-y-1.5">
+            <div className="skeleton h-3.5 w-32 rounded"></div>
+            <div className="skeleton h-28 w-full rounded-xl"></div>
+          </div>
+          {/* Upload Dropzone */}
+          <div className="space-y-1.5">
+            <div className="skeleton h-3.5 w-28 rounded"></div>
+            <div className="skeleton h-28 w-full rounded-xl"></div>
+          </div>
+          {/* Location */}
+          <div className="space-y-1.5">
+            <div className="skeleton h-3.5 w-32 rounded"></div>
+            <div className="skeleton h-10 w-full rounded-lg"></div>
+          </div>
+          <div className="flex justify-end pt-2">
+            <div className="skeleton h-10 w-36 rounded-lg"></div>
+          </div>
         </div>
-      ))}
+      </div>
+
+      {/* Right Column: Submission History (5 cols) */}
+      <div className="lg:col-span-5 space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="skeleton h-5 w-5 rounded"></div>
+            <div className="skeleton h-5 w-40 rounded"></div>
+          </div>
+          <div className="skeleton h-5 w-24 rounded-full"></div>
+        </div>
+        <div className="space-y-3">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="card bg-base-100 border border-base-300 p-4 flex flex-row items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="skeleton w-2.5 h-2.5 rounded-full shrink-0"></div>
+                <div className="space-y-1">
+                  <div className="skeleton h-4 w-40 rounded"></div>
+                  <div className="skeleton h-3 w-28 rounded"></div>
+                </div>
+              </div>
+              <div className="skeleton h-6 w-20 rounded-full"></div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 );
@@ -371,7 +378,7 @@ export const ResidentConcernsSkeleton = () => (
  * - Right Content (Header, Large Featured Hero Card, Sort selector, 3-Card News Grid)
  */
 export const ResidentNewsSkeleton = () => (
-  <div className="flex flex-col lg:flex-row gap-6 max-w-6xl">
+  <div className="flex flex-col lg:flex-row gap-6 w-full">
     {/* Left Sidebar */}
     <aside className="w-full lg:w-56 shrink-0 space-y-5">
       <div className="skeleton h-9 w-full rounded-lg"></div>
@@ -457,7 +464,7 @@ export const ResidentNewsSkeleton = () => (
  * - CTA Card
  */
 export const ResidentHealthSkeleton = () => (
-  <div className="space-y-6 max-w-5xl">
+  <div className="space-y-6 w-full">
     {/* Page Header */}
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
       <div className="space-y-2">
@@ -547,7 +554,7 @@ export const ResidentHealthSkeleton = () => (
  * - List of Accordion Rows
  */
 export const ResidentOrdinancesSkeleton = () => (
-  <div className="space-y-6 max-w-4xl">
+  <div className="space-y-6 w-full">
     {/* Header */}
     <div className="text-center space-y-2 max-w-xl mx-auto flex flex-col items-center">
       <div className="skeleton h-6 w-52 rounded"></div>
@@ -596,7 +603,7 @@ export const ResidentOrdinancesSkeleton = () => (
  *    - Right: Nearest Emergency Facilities (Tags + Map) + Emergency Procedures accordion list
  */
 export const ResidentEmergencySkeleton = () => (
-  <div className="space-y-5 max-w-5xl">
+  <div className="space-y-5 w-full">
     {/* Page Header */}
     <div className="space-y-2">
       <div className="skeleton h-7 w-48 rounded-md"></div>

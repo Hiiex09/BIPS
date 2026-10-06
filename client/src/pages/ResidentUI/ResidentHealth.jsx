@@ -7,7 +7,7 @@ const StatCard = ({ stat }) => (
     <div className="card-body p-4 gap-1">
       <p className="text-xs text-muted font-medium uppercase tracking-wide">{stat.label}</p>
       <div className="flex items-end gap-2">
-        <span className="text-2xl">{stat.icon}</span>
+        <span className="material-symbols-outlined text-2xl text-primary">{stat.icon}</span>
         <p className="text-2xl font-bold text-base-content">{stat.value}</p>
       </div>
       <p className="text-xs text-muted">{stat.trend}</p>
@@ -29,7 +29,7 @@ const StatusBadge = ({ status }) => {
 /* ── Main Page ──────────────────────────────────────── */
 const ResidentHealth = () => {
   return (
-    <div className="space-y-6 max-w-5xl">
+    <div className="space-y-6 w-full">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>

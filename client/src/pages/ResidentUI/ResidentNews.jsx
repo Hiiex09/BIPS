@@ -47,7 +47,7 @@ const ResidentNews = () => {
   const [activeFilter, setActiveFilter] = useState("All News");
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 max-w-6xl">
+    <div className="flex flex-col lg:flex-row gap-6 w-full">
       {/* ── Left Sidebar ── */}
       <aside className="w-full lg:w-56 shrink-0 space-y-5">
         {/* Submit a Story */}

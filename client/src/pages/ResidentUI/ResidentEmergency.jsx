@@ -67,7 +67,7 @@ const ResidentEmergency = () => {
   const [alertDismissed, setAlertDismissed] = useState(false);
 
   return (
-    <div className="space-y-5 max-w-5xl">
+    <div className="space-y-5 w-full">
       {/* Page Header */}
       <div>
         <h2 className="text-xl font-bold text-base-content">Emergency Services</h2>

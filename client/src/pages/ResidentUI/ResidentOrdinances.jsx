@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Search, Download, ChevronDown, ChevronUp, BookOpen, Filter, HelpCircle } from "lucide-react";
 import { ordinanceCategories, ordinancesList } from "../../data/residentMockData";
 
-/* ── Category icon colors per category ─────────────── */
+/* ── Category Google Material icon mapper ───────────── */
 const categoryIcon = {
-  Environment: "🌿",
-  "Peace & Order": "🛡️",
-  "Business & Permits": "🏪",
-  "Health & Safety": "🐾",
+  Environment: "eco",
+  "Peace & Order": "shield",
+  "Business & Permits": "storefront",
+  "Health & Safety": "pets",
 };
 
 /* ── Ordinance Row (accordion) ──────────────────────── */
@@ -22,8 +22,10 @@ const OrdinanceRow = ({ ord }) => {
         className="w-full flex items-center justify-between px-5 py-4 bg-base-100 hover:bg-base-200 transition-colors text-left"
       >
         <div className="flex items-center gap-3">
-          <div className={`w-9 h-9 rounded-lg flex items-center justify-center text-lg ${ord.iconBg} shrink-0`}>
-            {categoryIcon[ord.category] || "📄"}
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${ord.iconBg} shrink-0`}>
+            <span className="material-symbols-outlined text-xl">
+              {categoryIcon[ord.category] || "description"}
+            </span>
           </div>
           <div>
             <p className="text-sm font-bold text-base-content leading-snug">{ord.number}: {ord.title}</p>
@@ -75,7 +77,7 @@ const ResidentOrdinances = () => {
   });
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 w-full">
       {/* Header */}
       <div className="text-center space-y-1">
         <div className="flex items-center justify-center gap-2 mb-2">

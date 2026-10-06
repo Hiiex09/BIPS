@@ -109,7 +109,7 @@ const ResidentConcerns = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-3xl">
+    <div className="space-y-6 w-full">
       <div>
         <h2 className="text-xl font-bold text-base-content">Resident Concern Submission</h2>
         <p className="text-sm text-muted mt-1">
@@ -117,101 +117,110 @@ const ResidentConcerns = () => {
         </p>
       </div>
 
-      <div className="card bg-base-100 border border-base-300 shadow-sm">
-        <div className="card-body p-6 gap-5">
-          <div className="flex items-center gap-2">
-            <Send size={15} className="text-primary" />
-            <h3 className="font-semibold text-sm">New Concern Form</h3>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="fieldset gap-1.5">
-                <legend className="fieldset-legend text-xs font-semibold">Category <span className="text-error">*</span></legend>
-                <select name="category" value={form.category} onChange={handleChange} className="select select-bordered w-full">
-                  <option value="" disabled>Select concern category</option>
-                  {concernCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
-                </select>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: New Concern Form (7 Cols on LG) */}
+        <div className="lg:col-span-7">
+          <div className="card bg-base-100 border border-base-300 shadow-sm">
+            <div className="card-body p-6 gap-5">
+              <div className="flex items-center gap-2">
+                <Send size={15} className="text-primary" />
+                <h3 className="font-semibold text-sm">New Concern Form</h3>
               </div>
-              <div className="fieldset gap-1.5">
-                <legend className="fieldset-legend text-xs font-semibold">Subject <span className="text-error">*</span></legend>
-                <input
-                  type="text"
-                  name="subject"
-                  value={form.subject}
-                  onChange={handleChange}
-                  className="input input-bordered w-full"
-                  placeholder="Brief title of your concern"
-                />
-              </div>
-            </div>
 
-            <div className="fieldset gap-1.5">
-              <legend className="fieldset-legend text-xs font-semibold">Detailed Description <span className="text-error">*</span></legend>
-              <textarea
-                name="description"
-                value={form.description}
-                onChange={handleChange}
-                className="textarea textarea-bordered w-full h-28 resize-none"
-                placeholder="Provide as much detail as possible about the issue..."
-              />
-            </div>
-
-            <div className="fieldset gap-1.5">
-              <legend className="fieldset-legend text-xs font-semibold">Supporting Photos</legend>
-              <label className="border-2 border-dashed border-base-300 rounded-xl p-6 flex flex-col items-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors">
-                <UploadCloud size={28} className="text-muted" />
-                <div className="text-center">
-                  <span className="link link-primary text-sm font-medium">Click to upload</span>
-                  <span className="text-sm text-muted"> or drag and drop</span>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="fieldset gap-1.5">
+                    <legend className="fieldset-legend text-xs font-semibold">Category <span className="text-error">*</span></legend>
+                    <select name="category" value={form.category} onChange={handleChange} className="select select-bordered w-full">
+                      <option value="" disabled>Select concern category</option>
+                      {concernCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+                    </select>
+                  </div>
+                  <div className="fieldset gap-1.5">
+                    <legend className="fieldset-legend text-xs font-semibold">Subject <span className="text-error">*</span></legend>
+                    <input
+                      type="text"
+                      name="subject"
+                      value={form.subject}
+                      onChange={handleChange}
+                      className="input input-bordered w-full"
+                      placeholder="Brief title of your concern"
+                    />
+                  </div>
                 </div>
-                <p className="text-xs text-muted">PNG, JPG or PDF (Max 5MB)</p>
-                {photoName && <p className="text-xs text-success font-medium">{photoName}</p>}
-                <input type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setPhotoName(e.target.files?.[0]?.name || "")} />
-              </label>
-            </div>
 
-            <div className="fieldset gap-1.5">
-              <legend className="fieldset-legend text-xs font-semibold">Location / Landmark</legend>
-              <label className="input input-bordered flex items-center gap-2 w-full">
-                <MapPin size={14} className="text-muted shrink-0" />
-                <input
-                  type="text"
-                  name="location"
-                  value={form.location}
-                  onChange={handleChange}
-                  placeholder="Street name, house number, or nearby landmark"
-                  className="flex-1 bg-transparent outline-none text-sm"
-                />
-              </label>
-            </div>
+                <div className="fieldset gap-1.5">
+                  <legend className="fieldset-legend text-xs font-semibold">Detailed Description <span className="text-error">*</span></legend>
+                  <textarea
+                    name="description"
+                    value={form.description}
+                    onChange={handleChange}
+                    className="textarea textarea-bordered w-full h-28 resize-none"
+                    placeholder="Provide as much detail as possible about the issue..."
+                  />
+                </div>
 
-            <div className="flex justify-end">
-              <button type="submit" className="btn btn-primary gap-2" disabled={mutation.isPending}>
-                {mutation.isPending ? "Submitting..." : "Submit Concern"} <Send size={15} />
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+                <div className="fieldset gap-1.5">
+                  <legend className="fieldset-legend text-xs font-semibold">Supporting Photos</legend>
+                  <label className="border-2 border-dashed border-base-300 rounded-xl p-6 flex flex-col items-center gap-2 cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors">
+                    <UploadCloud size={28} className="text-muted" />
+                    <div className="text-center">
+                      <span className="link link-primary text-sm font-medium">Click to upload</span>
+                      <span className="text-sm text-muted"> or drag and drop</span>
+                    </div>
+                    <p className="text-xs text-muted">PNG, JPG or PDF (Max 5MB)</p>
+                    {photoName && <p className="text-xs text-success font-medium">{photoName}</p>}
+                    <input type="file" accept="image/*,.pdf" className="hidden" onChange={(e) => setPhotoName(e.target.files?.[0]?.name || "")} />
+                  </label>
+                </div>
 
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <ListChecks size={16} className="text-primary" />
-            <h3 className="font-semibold text-sm text-base-content">Submission History</h3>
+                <div className="fieldset gap-1.5">
+                  <legend className="fieldset-legend text-xs font-semibold">Location / Landmark</legend>
+                  <label className="input input-bordered flex items-center gap-2 w-full">
+                    <MapPin size={14} className="text-muted shrink-0" />
+                    <input
+                      type="text"
+                      name="location"
+                      value={form.location}
+                      onChange={handleChange}
+                      placeholder="Street name, house number, or nearby landmark"
+                      className="flex-1 bg-transparent outline-none text-sm"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex justify-end">
+                  <button type="submit" className="btn btn-primary gap-2" disabled={mutation.isPending}>
+                    {mutation.isPending ? "Submitting..." : "Submit Concern"} <Send size={15} />
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-          <span className="badge badge-ghost badge-sm">{incidents.length} Total Records</span>
         </div>
-        {isLoading ? (
-          <TableSkeleton rows={3} columns={3} />
-        ) : incidents.length > 0 ? (
-          <div className="space-y-3">
-            {incidents.map((item) => <HistoryItem key={item._id} item={item} />)}
+
+        {/* Right Column: Submission History (5 Cols on LG) */}
+        <div className="lg:col-span-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ListChecks size={16} className="text-primary" />
+              <h3 className="font-semibold text-sm text-base-content">Submission History</h3>
+            </div>
+            <span className="badge badge-ghost badge-sm">{incidents.length} Total Records</span>
           </div>
-        ) : (
-          <div className="p-6 text-sm text-muted border border-base-300 rounded-xl">No concerns submitted yet.</div>
-        )}
+
+          {isLoading ? (
+            <TableSkeleton rows={3} columns={3} />
+          ) : incidents.length > 0 ? (
+            <div className="space-y-3">
+              {incidents.map((item) => <HistoryItem key={item._id} item={item} />)}
+            </div>
+          ) : (
+            <div className="card bg-base-100 border border-base-300 p-6 text-center text-sm text-muted">
+              No concerns submitted yet.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
