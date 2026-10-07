@@ -12,6 +12,10 @@ import {
 import { Link } from "react-router-dom";
 import ServiceCard from "../components/public/ServiceCard";
 
+// Google Maps search query for the barangay hall. Replace with exact
+// coordinates (e.g. "14.6211,121.0189") for a precise pin.
+const BARANGAY_MAP_QUERY = "Barangay Tejero Hall";
+
 const Home = () => {
   const services = [
     {
@@ -234,9 +238,24 @@ const Home = () => {
                     <p className="opacity-70">Tejero, Metro Manila</p>
                   </div>
                 </div>
-                <div className="aspect-video bg-base-300 rounded-xs flex items-center justify-center">
-                  <p className="opacity-50">Map integration placeholder</p>
+                <div className="aspect-video bg-base-300 rounded-xs overflow-hidden border border-base-300">
+                  <iframe
+                    title="Barangay Tejero Hall location"
+                    src={`https://www.google.com/maps?q=${encodeURIComponent(BARANGAY_MAP_QUERY)}&output=embed`}
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
                 </div>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(BARANGAY_MAP_QUERY)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-sm self-start mt-3 gap-2"
+                >
+                  <MapPin size={14} /> Get Directions
+                </a>
                 <div className="grid md:grid-cols-2 gap-4 mt-4">
                   <div>
                     <h4 className="font-semibold mb-2">Office Hours</h4>
