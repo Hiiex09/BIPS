@@ -4,6 +4,7 @@ import {
   ClipboardList,
   Eye,
   Loader2,
+  X
 } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -19,7 +20,7 @@ const UserManagement = () => {
   const [roleFilter, setRoleFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedUser, setSelectedUser] = useState(null);
-  const itemsPerPage = 8;
+  const itemsPerPage = 10;
 
   const { data: users = [], isLoading, error } = useQuery({
     queryKey: ["usersList", { search, role: roleFilter, status: statusFilter }],
@@ -55,47 +56,78 @@ const UserManagement = () => {
     { label: "Deactivated", value: "Deactivated" },
   ];
 
-  const getStatusBadgeClass = (status) => {
-    const classes = {
-      Active: "badge-success",
-      Suspended: "badge-error",
-      Deactivated: "badge-neutral",
-    };
-    return classes[status] || "badge-neutral";
+  const getRoleBadge = (role) => {
+    switch (role) {
+      case "Admin":
+        return (
+          <span className="inline-block px-1.5 py-0.2 rounded-2xs text-[9px] font-black uppercase text-primary bg-primary/10 border border-primary/20">
+            Admin
+          </span>
+        );
+      case "Staff":
+        return (
+          <span className="inline-block px-1.5 py-0.2 rounded-2xs text-[9px] font-black uppercase text-amber-600 bg-amber-500/10 border border-amber-500/20">
+            Staff
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-block px-1.5 py-0.2 rounded-2xs text-[9px] font-black uppercase text-base-content/60 bg-base-200 border border-base-300">
+            Resident
+          </span>
+        );
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "Active":
+        return (
+          <span className="inline-block px-1.5 py-0.2 rounded-2xs text-[9px] font-black uppercase text-teal-700 bg-teal-600/10 border border-teal-600/20">
+            Active
+          </span>
+        );
+      case "Suspended":
+        return (
+          <span className="inline-block px-1.5 py-0.2 rounded-2xs text-[9px] font-black uppercase text-red-700 bg-red-500/10 border border-red-500/20">
+            Suspended
+          </span>
+        );
+      default:
+        return (
+          <span className="inline-block px-1.5 py-0.2 rounded-2xs text-[9px] font-black uppercase text-base-content/50 bg-base-200 border border-base-300">
+            {status || "Inactive"}
+          </span>
+        );
+    }
   };
 
   return (
-    <PageLayout title="User Management">
-      <div className="space-y-6">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <PageLayout title="User Directory & Identity Records">
+      <div className="space-y-5">
+        {/* ── KPI Ledger Strip ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <StatsCard
-            title="Total Residents"
+            title="Registered Residents"
             value={totalResidents}
-            subtitle="Registered residents"
+            subtitle="Citizen verified accounts"
             icon={Users}
-            iconColor="text-primary"
-            iconBg="bg-primary/10"
           />
           <StatsCard
-            title="Active Accounts"
+            title="Active Standing Accounts"
             value={activeUsers}
-            subtitle="In good standing"
+            subtitle="Authorized identity records"
             icon={ShieldCheck}
-            iconColor="text-success"
-            iconBg="bg-success/10"
           />
           <StatsCard
-            title="Barangay Personnel"
+            title="Appointed Personnel"
             value={totalStaff}
-            subtitle="Admins & Staff members"
+            subtitle="Admins & authorized staff"
             icon={ClipboardList}
-            iconColor="text-warning"
-            iconBg="bg-warning/10"
           />
         </div>
 
-        {/* Search and Filters */}
+        {/* ── Search & Filter Controls ── */}
         <SearchFilterBar
           searchPlaceholder="Search by name, email, or mobile..."
           onSearchChange={(val) => {
@@ -122,152 +154,163 @@ const UserManagement = () => {
           ]}
         />
 
-        {/* Users Table */}
-        <div className="card bg-base-100 shadow-2xs">
-          <div className="card-body p-0">
-            {isLoading ? (
-              <div className="flex justify-center items-center p-12 gap-3">
-                <Loader2 className="animate-spin text-primary" size={24} />
-                <span>Loading users...</span>
-              </div>
-            ) : error ? (
-              <div className="alert alert-error m-4">
-                <span>Failed to load users.</span>
-              </div>
-            ) : users.length === 0 ? (
-              <div className="text-center p-12 text-base-content/60">
-                No users found.
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="table table-zebra">
-                  <thead className="bg-base-200">
-                    <tr>
-                      <th className="w-16">#</th>
-                      <th>Full Name</th>
-                      <th>Email</th>
-                      <th>Mobile</th>
-                      <th>Address</th>
-                      <th>Role</th>
-                      <th>Status</th>
-                      <th className="text-center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentUsers.map((u, index) => (
-                      <tr key={u._id || index} className="hover">
-                        <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                        <td className="font-semibold">
-                          {u.firstName} {u.lastName}
-                        </td>
-                        <td className="text-sm">{u.email}</td>
-                        <td className="text-sm">{u.mobile}</td>
-                        <td className="text-sm max-w-xs truncate">{u.address}</td>
-                        <td>
-                          <span
-                            className={`badge badge-sm ${
-                              u.role === "Admin"
-                                ? "badge-error"
-                                : u.role === "Staff"
-                                  ? "badge-warning"
-                                  : "badge-ghost"
-                            }`}
-                          >
-                            {u.role}
-                          </span>
-                        </td>
-                        <td>
-                          <span className={`badge badge-sm ${getStatusBadgeClass(u.status)}`}>
-                            {u.status || "Active"}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="flex justify-center gap-1">
-                            <button
-                              className="btn btn-ghost btn-xs"
-                              title="View user details"
-                              onClick={() => setSelectedUser(u)}
-                            >
-                              <Eye size={16} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+        {/* ── Swiss Ledger Table (Layout 01) ── */}
+        <div className="bg-base-100 border border-base-300 rounded-xs shadow-2xs overflow-hidden">
+          <div className="p-3 border-b border-base-300 bg-base-200/40 flex items-center justify-between">
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+              Directory Ledger ({users.length} Records)
+            </span>
+            <span className="text-[11px] font-semibold text-base-content/60">
+              Page {currentPage} of {totalPages}
+            </span>
           </div>
+
+          {isLoading ? (
+            <div className="p-12 flex justify-center items-center gap-3 text-xs font-bold text-base-content/60">
+              <Loader2 className="animate-spin text-primary" size={20} />
+              <span>Loading resident records...</span>
+            </div>
+          ) : error ? (
+            <div className="alert alert-error rounded-xs m-4 text-xs">
+              <span>Failed to load directory.</span>
+            </div>
+          ) : users.length === 0 ? (
+            <div className="p-12 text-center text-xs text-base-content/60 font-semibold">
+              No matching records found.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="border-b border-base-300 text-[10px] uppercase tracking-wider text-base-content/50 bg-base-200/20">
+                    <th className="py-2.5 px-4 font-bold w-12">#</th>
+                    <th className="py-2.5 px-4 font-bold">Resident / Staff Name</th>
+                    <th className="py-2.5 px-4 font-bold">Email</th>
+                    <th className="py-2.5 px-4 font-bold">Mobile</th>
+                    <th className="py-2.5 px-4 font-bold">Registered Address</th>
+                    <th className="py-2.5 px-4 font-bold">Role</th>
+                    <th className="py-2.5 px-4 font-bold">Status</th>
+                    <th className="py-2.5 px-4 font-bold text-right">Inspect</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-base-300 font-medium">
+                  {currentUsers.map((u, index) => (
+                    <tr
+                      key={u._id || index}
+                      className="hover:bg-base-200/40 transition-colors"
+                    >
+                      <td className="py-3 px-4 font-mono text-[11px] text-base-content/50">
+                        {String((currentPage - 1) * itemsPerPage + index + 1).padStart(2, "0")}
+                      </td>
+                      <td className="py-3 px-4 font-bold text-base-content">
+                        {u.firstName} {u.lastName}
+                      </td>
+                      <td className="py-3 px-4 text-base-content/70 font-mono text-[11px]">
+                        {u.email}
+                      </td>
+                      <td className="py-3 px-4 text-base-content/70 font-mono text-[11px]">
+                        {u.mobile}
+                      </td>
+                      <td className="py-3 px-4 text-base-content/70 max-w-xs truncate">
+                        {u.address}
+                      </td>
+                      <td className="py-3 px-4">{getRoleBadge(u.role)}</td>
+                      <td className="py-3 px-4">{getStatusBadge(u.status)}</td>
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          type="button"
+                          className="btn btn-2xs btn-ghost border border-base-300 hover:border-primary rounded-xs text-[10px] font-bold cursor-pointer"
+                          onClick={() => setSelectedUser(u)}
+                        >
+                          <Eye size={12} />
+                          <span>View</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Pagination Footer */}
+          {users.length > 0 && (
+            <div className="p-3 border-t border-base-300 bg-base-100 flex justify-end">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalItems={users.length}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
         </div>
 
-        {/* View User Modal */}
+        {/* ── Swiss Inspection Modal ── */}
         {selectedUser && (
-          <div className="modal modal-open">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg mb-3">User Details</h3>
-              <div className="space-y-2 text-sm">
-                <p>
-                  <strong>Name:</strong> {selectedUser.firstName} {selectedUser.lastName}
-                </p>
-                <p>
-                  <strong>Email:</strong> {selectedUser.email}
-                </p>
-                <p>
-                  <strong>Mobile:</strong> {selectedUser.mobile}
-                </p>
-                <p>
-                  <strong>Address:</strong> {selectedUser.address}
-                </p>
-                <p>
-                  <strong>Role:</strong> {selectedUser.role}
-                </p>
-                <p>
-                  <strong>Status:</strong> {selectedUser.status || "Active"}
-                </p>
-                <p>
-                  <strong>Member Since:</strong>{" "}
-                  {selectedUser.createdAt
-                    ? new Date(selectedUser.createdAt).toLocaleDateString()
-                    : "N/A"}
-                </p>
-                {selectedUser.idUpload && (
-                  <div>
-                    <strong>ID Attachment:</strong>
-                    <div className="mt-1">
-                      <a
-                        href={`/uploads/${selectedUser.idUpload}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="link link-primary"
-                      >
-                        View Uploaded ID
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className="modal-action">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+            <div className="bg-base-100 border border-base-300 rounded-xs shadow-xl w-full max-w-md p-5 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-start justify-between pb-3 border-b border-base-300">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                    Identity Dossier
+                  </span>
+                  <h3 className="text-base font-black text-base-content">
+                    {selectedUser.firstName} {selectedUser.lastName}
+                  </h3>
+                </div>
                 <button
-                  className="btn btn-sm"
+                  type="button"
+                  onClick={() => setSelectedUser(null)}
+                  className="btn btn-xs btn-ghost btn-square"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+
+              <div className="bg-base-200/40 border border-base-300 rounded-xs divide-y divide-base-300 text-xs">
+                <div className="p-2.5 flex justify-between">
+                  <span className="text-base-content/60 font-semibold">Email</span>
+                  <span className="font-mono font-bold text-base-content">{selectedUser.email}</span>
+                </div>
+                <div className="p-2.5 flex justify-between">
+                  <span className="text-base-content/60 font-semibold">Mobile</span>
+                  <span className="font-mono font-bold text-base-content">{selectedUser.mobile}</span>
+                </div>
+                <div className="p-2.5 flex justify-between">
+                  <span className="text-base-content/60 font-semibold">Role</span>
+                  <span>{getRoleBadge(selectedUser.role)}</span>
+                </div>
+                <div className="p-2.5 flex justify-between">
+                  <span className="text-base-content/60 font-semibold">Status</span>
+                  <span>{getStatusBadge(selectedUser.status)}</span>
+                </div>
+                <div className="p-2.5 flex flex-col gap-1">
+                  <span className="text-base-content/60 font-semibold">Residential Address</span>
+                  <span className="font-medium text-base-content">{selectedUser.address}</span>
+                </div>
+                <div className="p-2.5 flex justify-between">
+                  <span className="text-base-content/60 font-semibold">Registered On</span>
+                  <span className="font-mono text-base-content">
+                    {selectedUser.createdAt
+                      ? new Date(selectedUser.createdAt).toLocaleDateString()
+                      : "N/A"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-ghost border border-base-300 rounded-xs font-bold text-xs"
                   onClick={() => setSelectedUser(null)}
                 >
-                  Close
+                  Close Dossier
                 </button>
               </div>
             </div>
           </div>
-        )}
-
-        {/* Pagination */}
-        {users.length > 0 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            totalItems={users.length}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
-          />
         )}
       </div>
     </PageLayout>

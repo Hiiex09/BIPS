@@ -1,11 +1,14 @@
 import {
   Megaphone,
-  Calendar,
   FileText,
+  AlertTriangle,
   Plus,
   Trash2,
   Eye,
   Loader2,
+  Calendar,
+  X,
+  Send
 } from "lucide-react";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -28,7 +31,7 @@ const AnnouncementsManagement = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
-  const itemsPerPage = 6;
+  const itemsPerPage = 8;
 
   const [formData, setFormData] = useState({
     title: "",
@@ -49,6 +52,7 @@ const AnnouncementsManagement = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["announcements"] });
       toast.success("Announcement deleted successfully");
+      setSelectedAnnouncement(null);
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "Failed to delete announcement");
@@ -117,200 +121,294 @@ const AnnouncementsManagement = () => {
     });
   };
 
+  const formatDateTile = (value) => {
+    const d = value ? new Date(value) : new Date();
+    return {
+      day: String(d.getDate()).padStart(2, "0"),
+      month: d.toLocaleString("en-US", { month: "short" }).toUpperCase(),
+    };
+  };
+
   return (
-    <PageLayout title="Announcements Management">
-      <div className="space-y-6">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <PageLayout 
+      title="Public Bulletins & Announcements"
+      onActionClick={() => setShowModal(true)}
+    >
+      <div className="space-y-5">
+        {/* Hidden anchor for Navbar primary action trigger */}
+        <button
+          id="create-announcement-btn"
+          className="hidden"
+          onClick={() => setShowModal(true)}
+          aria-hidden="true"
+        />
+
+        {/* ── KPI Ledger Strip ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <StatsCard
-            title="Published"
+            title="Active Bulletins"
             value={publishedCount}
-            subtitle="Live for residents"
+            subtitle="Visible on resident portal"
             icon={Megaphone}
-            iconColor="text-success"
-            iconBg="bg-success/10"
           />
           <StatsCard
-            title="Drafts"
+            title="Unpublished Drafts"
             value={draftCount}
-            subtitle="Unpublished posts"
+            subtitle="Pending clearance or review"
             icon={FileText}
-            iconColor="text-warning"
-            iconBg="bg-warning/10"
           />
           <StatsCard
             title="Urgent Alerts"
             value={urgentCount}
-            subtitle="High priority announcements"
-            icon={Calendar}
-            iconColor="text-error"
-            iconBg="bg-error/10"
+            subtitle="High broadcast priority"
+            icon={AlertTriangle}
           />
         </div>
 
-        {/* Action Bar */}
-        <div className="flex justify-between items-center">
-          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-            <Plus size={20} />
-            Create Announcement
+        {/* ── Search & Filter Controls ── */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="flex-1">
+            <SearchFilterBar
+              searchPlaceholder="Search bulletin titles, body text..."
+              onSearchChange={(val) => {
+                setSearch(val);
+                setCurrentPage(1);
+              }}
+              filters={[
+                {
+                  placeholder: "Filter Category",
+                  options: categoryFilters,
+                  onChange: (val) => setCategoryFilter(val),
+                },
+                {
+                  placeholder: "Filter Status",
+                  options: statusFilters,
+                  onChange: (val) => setStatusFilter(val),
+                },
+              ]}
+            />
+          </div>
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn btn-sm btn-primary rounded-xs font-bold text-xs gap-1.5 shadow-2xs mb-5 sm:mb-0 cursor-pointer"
+          >
+            <Plus size={14} />
+            <span>Create Announcement</span>
           </button>
         </div>
 
-        {/* Search and Filters */}
-        <SearchFilterBar
-          searchPlaceholder="Search by announcement title or content..."
-          onSearchChange={(val) => {
-            setSearch(val);
-            setCurrentPage(1);
-          }}
-          filters={[
-            {
-              placeholder: "Filter by Category",
-              options: categoryFilters,
-              onChange: (value) => {
-                setCategoryFilter(value);
-                setCurrentPage(1);
-              },
-            },
-            {
-              placeholder: "Filter by Status",
-              options: statusFilters,
-              onChange: (value) => {
-                setStatusFilter(value);
-                setCurrentPage(1);
-              },
-            },
-          ]}
-        />
-
-        {/* Announcements Table */}
-        <div className="card bg-base-100 shadow-2xs">
-          <div className="card-body p-0">
-            {isLoading ? (
-              <div className="flex justify-center items-center p-12 gap-3">
-                <Loader2 className="animate-spin text-primary" size={24} />
-                <span>Loading announcements...</span>
-              </div>
-            ) : error ? (
-              <div className="alert alert-error m-4">
-                <span>Failed to load announcements.</span>
-              </div>
-            ) : filtered.length === 0 ? (
-              <div className="text-center p-12 text-base-content/60">
-                No announcements found.
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="table table-zebra">
-                  <thead className="bg-base-200">
-                    <tr>
-                      <th className="w-16">#</th>
-                      <th>Title</th>
-                      <th>Category</th>
-                      <th>Priority</th>
-                      <th>Status</th>
-                      <th>Date Created</th>
-                      <th className="text-center">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentAnnouncements.map((item, index) => (
-                      <tr key={item._id || index} className="hover">
-                        <th>{(currentPage - 1) * itemsPerPage + index + 1}</th>
-                        <td className="font-semibold max-w-xs truncate">{item.title}</td>
-                        <td>
-                          <span className="badge badge-sm badge-ghost">{item.category}</span>
-                        </td>
-                        <td>
-                          <span
-                            className={`badge badge-sm ${
-                              item.priority === "Urgent"
-                                ? "badge-error"
-                                : item.priority === "Important"
-                                  ? "badge-warning"
-                                  : "badge-neutral"
-                            }`}
-                          >
-                            {item.priority || "Normal"}
-                          </span>
-                        </td>
-                        <td>
-                          <span
-                            className={`badge badge-sm ${
-                              item.status === "Published" ? "badge-success" : "badge-warning"
-                            }`}
-                          >
-                            {item.status || "Published"}
-                          </span>
-                        </td>
-                        <td className="text-sm">
-                          {item.createdAt
-                            ? new Date(item.createdAt).toLocaleDateString()
-                            : "N/A"}
-                        </td>
-                        <td>
-                          <div className="flex justify-center gap-1">
-                            <button
-                              className="btn btn-ghost btn-xs"
-                              title="View details"
-                              onClick={() => setSelectedAnnouncement(item)}
-                            >
-                              <Eye size={16} />
-                            </button>
-                            <button
-                              className="btn btn-ghost btn-xs text-error"
-                              title="Delete"
-                              disabled={deleteMutation.isPending}
-                              onClick={() => {
-                                if (confirm("Delete this announcement?")) {
-                                  deleteMutation.mutate(item._id);
-                                }
-                              }}
-                            >
-                              <Trash2 size={16} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+        {/* ── Full-Width Editorial Feed (Layout 03) ── */}
+        <div className="bg-base-100 border border-base-300 rounded-xs shadow-2xs overflow-hidden">
+          <div className="p-3 border-b border-base-300 bg-base-200/40 flex items-center justify-between">
+            <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+              Bulletin Feed ({filtered.length} Announcements)
+            </span>
+            <span className="text-[11px] font-semibold text-base-content/60">
+              Page {currentPage} of {totalPages}
+            </span>
           </div>
+
+          {isLoading ? (
+            <div className="p-12 flex justify-center items-center gap-3 text-xs font-bold text-base-content/60">
+              <Loader2 className="animate-spin text-primary" size={20} />
+              <span>Loading bulletins...</span>
+            </div>
+          ) : error ? (
+            <div className="alert alert-error rounded-xs m-4 text-xs">
+              <span>Failed to load announcements.</span>
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="p-12 text-center text-xs text-base-content/60 font-semibold">
+              No bulletin records match criteria.
+            </div>
+          ) : (
+            <div className="divide-y divide-base-300">
+              {currentAnnouncements.map((item, idx) => {
+                const dateTile = formatDateTile(item.createdAt || item.date);
+                const isUrgent = item.priority === "Urgent";
+
+                return (
+                  <div
+                    key={item._id || idx}
+                    className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-base-200/30 transition-colors"
+                  >
+                    {/* Date Tile Element (matching public banner style) */}
+                    <div className="flex items-start gap-4 flex-1 min-w-0">
+                      <div className="shrink-0 w-12 text-center border-r border-base-300 pr-4">
+                        <span className="block font-black text-2xl text-primary font-mono leading-none">
+                          {dateTile.day}
+                        </span>
+                        <span className="block text-[9px] font-black tracking-widest text-base-content/50 uppercase mt-0.5">
+                          {dateTile.month}
+                        </span>
+                      </div>
+
+                      <div className="min-w-0 space-y-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-2xs bg-primary/10 text-primary border border-primary/20">
+                            {item.category || "General"}
+                          </span>
+                          {isUrgent && (
+                            <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-2xs bg-red-500/10 text-red-700 border border-red-500/20">
+                              Urgent Broadcast
+                            </span>
+                          )}
+                          <span className="text-[10px] font-bold uppercase text-base-content/40">
+                            Status: {item.status}
+                          </span>
+                        </div>
+
+                        <h3 className="text-sm font-black text-base-content truncate">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-base-content/70 line-clamp-1 max-w-2xl">
+                          {item.content}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Quick Row Actions */}
+                    <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedAnnouncement(item)}
+                        className="btn btn-xs btn-ghost border border-base-300 hover:border-primary rounded-xs text-[11px] font-bold cursor-pointer"
+                      >
+                        <Eye size={12} />
+                        <span>Inspect</span>
+                      </button>
+                      <button
+                        type="button"
+                        disabled={deleteMutation.isPending}
+                        onClick={() => {
+                          if (window.confirm(`Delete bulletin "${item.title}"?`)) {
+                            deleteMutation.mutate(item._id);
+                          }
+                        }}
+                        className="btn btn-xs btn-ghost border border-base-300 hover:border-error hover:text-error rounded-xs text-[11px] font-bold cursor-pointer"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Pagination Footer */}
+          {filtered.length > 0 && (
+            <div className="p-3 border-t border-base-300 bg-base-100 flex justify-end">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalItems={filtered.length}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          )}
         </div>
 
-        {/* Create Modal */}
-        {showModal && (
-          <div className="modal modal-open">
-            <div className="modal-box max-w-lg">
-              <h3 className="font-bold text-lg mb-4">Create New Announcement</h3>
-              <form onSubmit={handleCreateSubmit} className="space-y-4">
+        {/* ── Inspect Announcement Modal ── */}
+        {selectedAnnouncement && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+            <div className="bg-base-100 border border-base-300 rounded-xs shadow-xl w-full max-w-lg p-5 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-start justify-between pb-3 border-b border-base-300">
                 <div>
-                  <label className="label">
-                    <span className="label-text font-medium">Title</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                    Bulletin Preview
+                  </span>
+                  <h3 className="text-base font-black text-base-content">
+                    {selectedAnnouncement.title}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedAnnouncement(null)}
+                  className="btn btn-xs btn-ghost btn-square"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+
+              <div className="space-y-3 text-xs">
+                <div className="flex gap-2">
+                  <span className="px-1.5 py-0.5 rounded-2xs text-[9px] font-black uppercase bg-primary/10 text-primary border border-primary/20">
+                    {selectedAnnouncement.category}
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded-2xs text-[9px] font-black uppercase bg-base-200 border border-base-300">
+                    Priority: {selectedAnnouncement.priority}
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded-2xs text-[9px] font-black uppercase bg-base-200 border border-base-300">
+                    Status: {selectedAnnouncement.status}
+                  </span>
+                </div>
+
+                <div className="p-3 bg-base-200/40 border border-base-300 rounded-xs max-h-60 overflow-y-auto whitespace-pre-wrap leading-relaxed text-base-content">
+                  {selectedAnnouncement.content}
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <button
+                  type="button"
+                  className="btn btn-sm btn-ghost border border-base-300 rounded-xs font-bold text-xs"
+                  onClick={() => setSelectedAnnouncement(null)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Create Announcement Modal ── */}
+        {showModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+            <div className="bg-base-100 border border-base-300 rounded-xs shadow-xl w-full max-w-lg p-5 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-start justify-between pb-3 border-b border-base-300">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                    Publishing Console
+                  </span>
+                  <h3 className="text-base font-black text-base-content">
+                    Draft New Public Bulletin
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="btn btn-xs btn-ghost btn-square"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+
+              <form onSubmit={handleCreateSubmit} className="space-y-3.5 text-xs">
+                <div>
+                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    Bulletin Title
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="Enter announcement title..."
-                    className="input input-bordered w-full"
+                    placeholder="e.g., Scheduled Water Interruption in Purok 4"
+                    className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <label className="label">
-                      <span className="label-text font-medium">Category</span>
+                    <label className="block text-[10px] font-bold text-base-content/70 mb-1">
+                      Category
                     </label>
                     <select
-                      className="select select-bordered w-full"
+                      className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.category}
-                      onChange={(e) =>
-                        setFormData({ ...formData, category: e.target.value })
-                      }
+                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     >
                       <option value="General">General</option>
                       <option value="Meeting">Meeting</option>
@@ -321,93 +419,68 @@ const AnnouncementsManagement = () => {
                   </div>
 
                   <div>
-                    <label className="label">
-                      <span className="label-text font-medium">Priority</span>
+                    <label className="block text-[10px] font-bold text-base-content/70 mb-1">
+                      Broadcast Priority
                     </label>
                     <select
-                      className="select select-bordered w-full"
+                      className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.priority}
-                      onChange={(e) =>
-                        setFormData({ ...formData, priority: e.target.value })
-                      }
+                      onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                     >
                       <option value="Normal">Normal</option>
-                      <option value="Important">Important</option>
                       <option value="Urgent">Urgent</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold text-base-content/70 mb-1">
+                      Initial Status
+                    </label>
+                    <select
+                      className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
+                      value={formData.status}
+                      onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                    >
+                      <option value="Published">Published</option>
+                      <option value="Draft">Draft</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="label">
-                    <span className="label-text font-medium">Content</span>
+                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    Announcement Details / Body
                   </label>
                   <textarea
                     required
                     rows={4}
-                    placeholder="Write announcement details..."
-                    className="textarea textarea-bordered w-full"
+                    placeholder="Provide full details, schedules, requirements or contact persons..."
+                    className="textarea textarea-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={formData.content}
-                    onChange={(e) =>
-                      setFormData({ ...formData, content: e.target.value })
-                    }
-                  ></textarea>
+                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                  />
                 </div>
 
-                <div className="modal-action">
+                <div className="pt-2 border-t border-base-300 flex justify-end gap-2">
                   <button
                     type="button"
-                    className="btn btn-ghost"
                     onClick={() => setShowModal(false)}
+                    className="btn btn-sm btn-ghost border border-base-300 rounded-xs text-xs font-bold"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="btn btn-primary"
                     disabled={createMutation.isPending}
+                    className="btn btn-sm btn-primary rounded-xs text-xs font-bold gap-1 shadow-2xs"
                   >
-                    {createMutation.isPending ? "Publishing..." : "Publish Announcement"}
+                    <Send size={12} />
+                    <span>Publish Announcement</span>
                   </button>
                 </div>
               </form>
             </div>
           </div>
-        )}
-
-        {/* View Details Modal */}
-        {selectedAnnouncement && (
-          <div className="modal modal-open">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg mb-2">{selectedAnnouncement.title}</h3>
-              <div className="flex gap-2 mb-4">
-                <span className="badge badge-primary">{selectedAnnouncement.category}</span>
-                <span className="badge badge-ghost">{selectedAnnouncement.priority}</span>
-              </div>
-              <p className="text-sm whitespace-pre-line text-base-content/80">
-                {selectedAnnouncement.content}
-              </p>
-              <div className="modal-action">
-                <button
-                  className="btn btn-sm"
-                  onClick={() => setSelectedAnnouncement(null)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Pagination */}
-        {filtered.length > 0 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            totalItems={filtered.length}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
-          />
         )}
       </div>
     </PageLayout>
