@@ -15,6 +15,11 @@ export const loginUser = async (data) => {
   return res.data;
 };
 
+export const googleLoginUser = async (data) => {
+  const res = await axiosInstance.post("/auth/google", data);
+  return res.data;
+};
+
 export const signupUser = async (formData) => {
   const res = await axiosInstance.post("/auth/signup", formData);
   return res.data;

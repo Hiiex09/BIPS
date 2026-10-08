@@ -1,6 +1,7 @@
 import express from "express";
 import {
   checkAuth,
+  googleLogin,
   login,
   logout,
   signup,
@@ -19,6 +20,7 @@ router.post(
   signup,
 );
 router.post("/login", validate(loginSchema), login);
+router.post("/google", googleLogin);
 router.post("/logout", logout);
 router.get("/checkAuth", protectRoute, checkAuth);
 

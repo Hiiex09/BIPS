@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { checkAuth, loginUser, logout, signupUser } from "../api/auth_api.js";
+import { checkAuth, googleLoginUser, loginUser, logout, signupUser } from "../api/auth_api.js";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -37,6 +37,30 @@ export const useLogin = () => {
     },
     onError: (err) => {
       const message = err.response?.data?.message || "Login failed. Please check your credentials.";
+      toast.error(message);
+    },
+  });
+};
+
+export const useGoogleLogin = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: googleLoginUser,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      toast.success("Signed in with Google successfully!");
+
+      const role = data?.role || data?.user?.role;
+      if (role === "Admin" || role === "Staff") {
+        navigate("/welcome");
+      } else {
+        navigate("/Resident");
+      }
+    },
+    onError: (err) => {
+      const message = err.response?.data?.message || "Google sign-in failed. Please try again.";
       toast.error(message);
     },
   });

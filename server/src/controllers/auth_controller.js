@@ -125,6 +125,53 @@ export const logout = (req, res) => {
   }
 };
 
+export const googleLogin = async (req, res) => {
+  const { email, firstName, lastName, googleId, avatar } = req.body;
+
+  try {
+    if (!email) {
+      return res.status(400).json({ message: "Google email is required" });
+    }
+
+    let user = await User.findOne({
+      $or: [{ email: email.toLowerCase() }, { googleId: googleId || "unknown" }],
+    });
+
+    if (user) {
+      if (googleId && !user.googleId) user.googleId = googleId;
+      if (avatar && !user.avatar) user.avatar = avatar;
+      await user.save();
+    } else {
+      user = new User({
+        firstName: firstName || "Google",
+        lastName: lastName || "User",
+        email: email.toLowerCase(),
+        address: "Barangay Tejero, Cebu City",
+        googleId: googleId || undefined,
+        avatar: avatar || "",
+        role: "Resident",
+        status: "Active",
+      });
+      await user.save();
+    }
+
+    generateToken(user._id, res);
+
+    return res.status(200).json({
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      mobile: user.mobile,
+      role: user.role,
+      avatar: user.avatar,
+    });
+  } catch (error) {
+    console.error(`Error in googleLogin controller: ${error.message}`);
+    return res.status(500).json({ message: "Google login failed: " + error.message });
+  }
+};
+
 export const checkAuth = (req, res) => {
   try {
     res.status(200).json(req.user);
@@ -133,3 +180,5 @@ export const checkAuth = (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
