@@ -6,21 +6,25 @@ const About = () => {
     {
       name: "Elena Cruz",
       position: "Barangay Captain",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
       description: "Leading our community towards progress and unity since 2022"
     },
     {
       name: "Ana Garcia",
       position: "Barangay Secretary",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80",
       description: "Ensuring efficient administration and record-keeping"
     },
     {
       name: "Carlos Mendoza",
       position: "Barangay Treasurer",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
       description: "Managing community resources with transparency"
     },
     {
       name: "Maria Santos",
       position: "Health Officer",
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80",
       description: "Dedicated to community health and wellness programs"
     }
   ];

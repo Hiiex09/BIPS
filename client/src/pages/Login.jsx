@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import {
   BadgeCheck,
   CircleSmall,
+  Eye,
+  EyeOff,
   Lock,
   LockKeyhole,
   LogIn,
@@ -17,6 +19,7 @@ const Login = () => {
   const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const { mutate, isPending } = useLogin();
 
@@ -123,16 +126,24 @@ const Login = () => {
                   </a>
                 </div>
 
-                <label className="input input-bordered mt-1 flex items-center gap-2 w-full">
-                  <Lock size={18} />
+                <label className="input input-bordered mt-1 flex items-center gap-2 w-full pr-2">
+                  <Lock size={18} className="shrink-0 text-base-content/60" />
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     required
                     placeholder="••••••••"
-                    className="w-full"
+                    className="w-full bg-transparent focus:outline-none"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="btn btn-ghost btn-xs btn-circle text-base-content/60 hover:text-base-content"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
                 </label>
               </div>
 

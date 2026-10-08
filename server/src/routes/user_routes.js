@@ -5,6 +5,9 @@ import { getUserInfo } from "../controllers/user_controller.js";
 import {
   getAllResident,
   getUsersList,
+  createUserByAdmin,
+  updateUserByAdmin,
+  deleteUserByAdmin,
   totalAnnouncement,
   totalCertificateRequest,
 } from "../controllers/admin_controller.js";
@@ -30,6 +33,27 @@ router.get(
   protectRoute,
   authorizedRoles("Admin", "Staff"),
   getUsersList,
+);
+
+router.post(
+  "/admin/create",
+  protectRoute,
+  authorizedRoles("Admin"),
+  createUserByAdmin,
+);
+
+router.patch(
+  "/admin/:id",
+  protectRoute,
+  authorizedRoles("Admin"),
+  updateUserByAdmin,
+);
+
+router.delete(
+  "/admin/:id",
+  protectRoute,
+  authorizedRoles("Admin"),
+  deleteUserByAdmin,
 );
 
 router.get(

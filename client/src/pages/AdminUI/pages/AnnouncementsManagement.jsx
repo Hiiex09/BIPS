@@ -166,35 +166,26 @@ const AnnouncementsManagement = () => {
         </div>
 
         {/* ── Search & Filter Controls ── */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-          <div className="flex-1">
-            <SearchFilterBar
-              searchPlaceholder="Search bulletin titles, body text..."
-              onSearchChange={(val) => {
-                setSearch(val);
-                setCurrentPage(1);
-              }}
-              filters={[
-                {
-                  placeholder: "Filter Category",
-                  options: categoryFilters,
-                  onChange: (val) => setCategoryFilter(val),
-                },
-                {
-                  placeholder: "Filter Status",
-                  options: statusFilters,
-                  onChange: (val) => setStatusFilter(val),
-                },
-              ]}
-            />
-          </div>
-          <button
-            onClick={() => setShowModal(true)}
-            className="btn btn-sm btn-primary rounded-xs font-bold text-xs gap-1.5 shadow-2xs mb-5 sm:mb-0 cursor-pointer"
-          >
-            <Plus size={14} />
-            <span>Create Announcement</span>
-          </button>
+        <div className="w-full">
+          <SearchFilterBar
+            searchPlaceholder="Search bulletin titles, body text..."
+            onSearchChange={(val) => {
+              setSearch(val);
+              setCurrentPage(1);
+            }}
+            filters={[
+              {
+                placeholder: "Filter Category",
+                options: categoryFilters,
+                onChange: (val) => setCategoryFilter(val),
+              },
+              {
+                placeholder: "Filter Status",
+                options: statusFilters,
+                onChange: (val) => setStatusFilter(val),
+              },
+            ]}
+          />
         </div>
 
         {/* ── Full-Width Editorial Feed (Layout 03) ── */}

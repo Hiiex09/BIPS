@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import {
   BadgeCheck,
   CircleSmall,
+  Eye,
+  EyeOff,
   LockKeyhole,
   ShieldCheck,
   ShieldUser,
@@ -13,6 +15,7 @@ import { useSignup } from "../hooks/UseAuthRouteHooks";
 
 export const Signup = () => {
   const [mode, setMode] = useState("signup");
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -235,17 +238,27 @@ export const Signup = () => {
               {/* Password */}
               <div>
                 <span className="text-sm font-medium">Password</span>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  placeholder="At least 8 characters"
-                  className="input input-bordered w-full mt-1"
-                  required
-                  minLength="8"
-                  disabled={isPending}
-                />
+                <div className="relative mt-1">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    placeholder="At least 8 characters"
+                    className="input input-bordered w-full pr-10"
+                    required
+                    minLength="8"
+                    disabled={isPending}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 btn btn-ghost btn-xs btn-circle text-base-content/60 hover:text-base-content"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
 
               {/* ID Upload */}

@@ -12,9 +12,8 @@ import {
 import { Link } from "react-router-dom";
 import ServiceCard from "../components/public/ServiceCard";
 
-// Google Maps search query for the barangay hall. Replace with exact
-// coordinates (e.g. "14.6211,121.0189") for a precise pin.
-const BARANGAY_MAP_QUERY = "Barangay Tejero Hall";
+// Google Maps search query for the barangay hall (Plus Code: 8W25+PGJ, Cebu City, 6000 Cebu)
+const BARANGAY_MAP_QUERY = "8W25+PGJ, Cebu City, 6000 Cebu";
 
 const Home = () => {
   const services = [
@@ -235,7 +234,7 @@ const Home = () => {
                   <MapPin size={24} className="text-primary" />
                   <div>
                     <h3 className="font-bold text-lg">Barangay Hall</h3>
-                    <p className="opacity-70">Tejero, Metro Manila</p>
+                    <p className="opacity-70">Tejero, Cebu City, 6000 Cebu</p>
                   </div>
                 </div>
                 <div className="aspect-video bg-base-300 rounded-xs overflow-hidden border border-base-300">

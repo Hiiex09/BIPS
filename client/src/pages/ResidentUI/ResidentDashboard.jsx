@@ -153,16 +153,41 @@ const ResidentDashboard = () => {
           <div className="flex items-center gap-2">
             <MapPin size={16} className="text-primary" />
             <h2 className="text-base font-bold text-base-content">Important Locations</h2>
+            <span className="text-xs text-muted font-normal">— Barangay Tejero</span>
           </div>
-          <button className="link link-primary text-xs font-semibold">Expand Map</button>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=8W25%2BPGJ%2C+Cebu+City%2C+6000+Cebu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link link-primary text-xs font-semibold inline-flex items-center gap-1"
+          >
+            Expand Map <ArrowRight size={12} />
+          </a>
         </div>
-        <div className="card bg-base-100 shadow-sm border border-base-300">
-          <div className="card-body p-4">
-            <div className="aspect-[16/6] bg-base-200 rounded-xs flex items-center justify-center">
-              <div className="text-center text-muted">
-                <MapPin size={32} className="mx-auto mb-2 opacity-30" />
-                <p className="text-sm opacity-50">Map integration — Barangay Tejero</p>
+        <div className="card bg-base-100 shadow-2xs border border-base-300 rounded-xs overflow-hidden">
+          <div className="p-3">
+            <div className="aspect-[16/7] md:aspect-[21/9] w-full bg-base-200 rounded-xs overflow-hidden border border-base-300 relative">
+              <iframe
+                title="Barangay Tejero Hall Map"
+                src="https://www.google.com/maps?q=8W25%2BPGJ%2C+Cebu+City%2C+6000+Cebu&output=embed"
+                className="w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-3 px-1">
+              <div className="text-xs text-muted">
+                <span className="font-semibold text-base-content">Barangay Hall & Health Center:</span> Tejero, Cebu City, 6000 Cebu · Open Mon–Fri 8:00 AM – 5:00 PM
               </div>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=8W25%2BPGJ%2C+Cebu+City%2C+6000+Cebu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-xs btn-outline rounded-xs gap-1 font-semibold"
+              >
+                <MapPin size={12} /> Get Directions
+              </a>
             </div>
           </div>
         </div>
