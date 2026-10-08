@@ -381,9 +381,9 @@ export const ordinancesList = [
 
 // ── Emergency ─────────────────────────────────────────
 export const emergencyHotlines = [
-  { name: "Police", subtitle: "Crime & Protection", number: "117", colorClass: "bg-error text-error-content" },
-  { name: "Fire Dept", subtitle: "Fire & Rescue", number: "160", colorClass: "bg-warning text-warning-content" },
-  { name: "Ambulance", subtitle: "Medical Emergencies", number: "911", colorClass: "bg-info text-info-content" },
+  { name: "Police", subtitle: "Crime & Protection", number: "117", colorClass: "bg-accent text-accent-content" },
+  { name: "Fire Dept", subtitle: "Fire & Rescue", number: "160", colorClass: "bg-primary text-primary-content" },
+  { name: "Ambulance", subtitle: "Medical Emergencies", number: "911", colorClass: "bg-[#3D63D6] text-white" },
 ];
 
 export const nonEmergencyContacts = [

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, MapPin, Download, ChevronDown, ChevronUp, TriangleAlert, Flame, Cross, Zap, ShieldAlert, X } from "lucide-react";
+import { Phone, MapPin, Download, ChevronDown, ChevronUp, Flame, Cross, Zap, ShieldAlert, X } from "lucide-react";
 import { emergencyHotlines, nonEmergencyContacts, emergencyFacilities, emergencyProcedures } from "../../data/residentMockData";
 
 /* ── Procedure icon mapper ──────────────────────────── */
@@ -78,14 +78,12 @@ const ResidentEmergency = () => {
 
       {/* Weather / Active Warning Alert */}
       {!alertDismissed && (
-        <div role="alert" className="alert bg-error text-error-content shadow-sm">
-          <TriangleAlert size={18} />
+        <div role="alert" className="alert bg-accent text-accent-content shadow-sm">
           <div>
             <p className="font-bold text-sm">Active Weather Warning: Severe Thunderstorm</p>
             <p className="text-xs opacity-85">Take shelter immediately if outdoors. High winds expected until 10:00 PM.</p>
           </div>
           <div className="flex items-center gap-2 ml-auto shrink-0">
-            <button className="btn btn-sm bg-white/20 hover:bg-white/30 text-error-content border-0">Details</button>
             <button onClick={() => setAlertDismissed(true)} className="btn btn-sm btn-circle btn-ghost">
               <X size={14} />
             </button>
@@ -100,7 +98,7 @@ const ResidentEmergency = () => {
           <div className="card bg-base-100 border border-base-300 shadow-sm">
             <div className="card-body p-5 gap-4">
               <div className="flex items-center gap-2">
-                <Phone size={16} className="text-error" />
+                <Phone size={16} className="text-primary" />
                 <h3 className="font-bold text-sm text-base-content">Call Now</h3>
               </div>
               <div className="space-y-3">
