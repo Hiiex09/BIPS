@@ -6,21 +6,25 @@ const About = () => {
     {
       name: "Elena Cruz",
       position: "Barangay Captain",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
       description: "Leading our community towards progress and unity since 2022"
     },
     {
       name: "Ana Garcia",
       position: "Barangay Secretary",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80",
       description: "Ensuring efficient administration and record-keeping"
     },
     {
       name: "Carlos Mendoza",
       position: "Barangay Treasurer",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
       description: "Managing community resources with transparency"
     },
     {
       name: "Maria Santos",
       position: "Health Officer",
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80",
       description: "Dedicated to community health and wellness programs"
     }
   ];
@@ -49,7 +53,7 @@ const About = () => {
   ];
 
   const milestones = [
-    { year: "1985", event: "Barangay San Jose established" },
+    { year: "1985", event: "Barangay Tejero established" },
     { year: "2010", event: "New barangay hall inaugurated" },
     { year: "2018", event: "First digital services launched" },
     { year: "2022", event: "Current administration began" },
@@ -63,7 +67,7 @@ const About = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6">
-              About <span className="text-primary">Barangay San Jose</span>
+              About <span className="text-primary">Barangay Tejero</span>
             </h1>
             <p className="text-xl opacity-80 mb-8">
               A thriving community committed to progress, unity, and service to all residents
@@ -76,7 +80,7 @@ const About = () => {
       <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
-            <div className="card bg-primary/5 shadow-lg">
+            <div className="card bg-primary/5 shadow-2xs">
               <div className="card-body">
                 <h2 className="card-title text-3xl mb-4 text-primary">Our Vision</h2>
                 <p className="text-lg leading-relaxed">
@@ -87,7 +91,7 @@ const About = () => {
               </div>
             </div>
 
-            <div className="card bg-secondary/5 shadow-lg">
+            <div className="card bg-secondary/5 shadow-2xs">
               <div className="card-body">
                 <h2 className="card-title text-3xl mb-4 text-secondary">Our Mission</h2>
                 <p className="text-lg leading-relaxed">
@@ -113,7 +117,7 @@ const About = () => {
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
-                <div key={index} className="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow">
+                <div key={index} className="card bg-base-100 shadow-2xs hover:shadow-xl transition-shadow">
                   <div className="card-body items-center text-center">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                       <Icon size={32} className="text-primary" />
@@ -148,7 +152,7 @@ const About = () => {
                       <div className="w-0.5 h-full bg-primary/20 my-2"></div>
                     )}
                   </div>
-                  <div className="card bg-base-200 shadow-md flex-1 group-hover:shadow-lg transition-shadow">
+                  <div className="card bg-base-200 shadow-2xs flex-1 group-hover:shadow-2xs transition-shadow">
                     <div className="card-body">
                       <p className="text-lg">{milestone.event}</p>
                     </div>
@@ -191,7 +195,7 @@ const About = () => {
                 </div>
                 <h3 className="font-bold text-xl mb-2">Visit Us</h3>
                 <p className="opacity-90">
-                  Barangay Hall, San Jose<br />
+                  Barangay Hall, Tejero<br />
                   Metro Manila, Philippines
                 </p>
               </div>

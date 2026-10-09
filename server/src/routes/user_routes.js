@@ -4,27 +4,62 @@ import { authorizedRoles } from "../middlewares/auth_roles.js";
 import { getUserInfo } from "../controllers/user_controller.js";
 import {
   getAllResident,
+  getUsersList,
+  createUserByAdmin,
+  updateUserByAdmin,
+  deleteUserByAdmin,
   totalAnnouncement,
   totalCertificateRequest,
 } from "../controllers/admin_controller.js";
 
 const router = express.Router();
 
-const getAllResidentRoute = (roles) =>
-  router.get(
-    `/admin${roles === "Admin" ? "" : "/staff"}`,
-    protectRoute,
-    authorizedRoles(...roles),
-    getAllResident,
-  );
+router.get(
+  "/admin",
+  protectRoute,
+  authorizedRoles("Admin"),
+  getAllResident,
+);
 
-getAllResidentRoute(["Admin"]);
-getAllResidentRoute(["Admin", "Staff"]);
+router.get(
+  "/admin/staff",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  getAllResident,
+);
+
+router.get(
+  "/admin/list",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  getUsersList,
+);
+
+router.post(
+  "/admin/create",
+  protectRoute,
+  authorizedRoles("Admin"),
+  createUserByAdmin,
+);
+
+router.patch(
+  "/admin/:id",
+  protectRoute,
+  authorizedRoles("Admin"),
+  updateUserByAdmin,
+);
+
+router.delete(
+  "/admin/:id",
+  protectRoute,
+  authorizedRoles("Admin"),
+  deleteUserByAdmin,
+);
 
 router.get(
   "/admin/total",
   protectRoute,
-  authorizedRoles("Admin"),
+  authorizedRoles("Admin", "Staff"),
   totalCertificateRequest,
 );
 

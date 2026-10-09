@@ -1,0 +1,21 @@
+{
+  "projects": {
+    "client": {
+      "framework": "vite"
+    },
+    "server": {
+      "functions": {
+        "api/*.js": {
+          "runtime": "nodejs18.x"
+        }
+      }
+    }
+  },
+  "builds": [
+    { "src": "client/vite.config.js", "use": "@vercel/static-build" },
+    { "src": "server/api/**/*.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/server/api/$1.js" }
+  ]
+}

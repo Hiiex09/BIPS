@@ -1,0 +1,36 @@
+services:
+  # Backend API Service
+  - type: web
+    name: bips-api
+    env: node
+    plan: free
+    region: singapore
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLOUDINARY_NAME
+        sync: false
+      - key: CLOUDINARY_KEY
+        sync: false
+      - key: CLOUDINARY_SECRET
+        sync: false
+
+  # Frontend Static Site
+  - type: static
+    name: bips-client
+    rootDir: client
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    routes:
+      - path: "/*"
+        rewrite: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: "https://bips-api.onrender.com/api/v1"

@@ -25,15 +25,22 @@ export const userSchema = new Schema(
     },
     mobile: {
       type: String,
-      required: [true, "Mobile phone is required"],
+      required: false,
+      sparse: true,
       unique: true,
-      minlength: [11, "Mobile number must be 11 digits"],
-      maxlength: [11, "Mobile number must be 11 digits"],
     },
     password: {
       type: String,
-      required: [true, "Password must be at least 8 character"],
-      minlength: 8,
+      required: false,
+    },
+    googleId: {
+      type: String,
+      sparse: true,
+      unique: true,
+    },
+    avatar: {
+      type: String,
+      default: "",
     },
     idUpload: {
       type: String,

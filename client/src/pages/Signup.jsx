@@ -4,15 +4,18 @@ import { Link } from "react-router-dom";
 import {
   BadgeCheck,
   CircleSmall,
+  Eye,
+  EyeOff,
   LockKeyhole,
   ShieldCheck,
   ShieldUser,
   Upload,
 } from "lucide-react";
-import { signupAuthUsers } from "../hooks/UseAuthRouteHooks";
+import { useSignup } from "../hooks/UseAuthRouteHooks";
 
 export const Signup = () => {
   const [mode, setMode] = useState("signup");
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,7 +26,7 @@ export const Signup = () => {
     idUpload: null,
   });
 
-  const { mutate: signup, isPending, error } = signupAuthUsers();
+  const { mutate: signup, isPending, error } = useSignup();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -73,8 +76,8 @@ export const Signup = () => {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Info Panel — hidden on mobile */}
-      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-blue-500 flex-col justify-center p-10 xl:p-14">
-        <div className="w-16 h-16 rounded-xl flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-lg mb-6">
+      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-primary text-primary-content flex-col justify-center p-10 xl:p-14">
+        <div className="w-16 h-16 rounded-xs flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-2xs mb-6">
           <ShieldUser size={40} className="text-white" />
         </div>
 
@@ -108,7 +111,7 @@ export const Signup = () => {
           </p>
         </div>
 
-        <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xl backdrop-blur-md bg-white/10 border border-white/20 shadow-lg">
+        <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xs backdrop-blur-md bg-white/10 border border-white/20 shadow-2xs">
           <LockKeyhole size={20} className="text-white shrink-0" />
           <span className="text-white text-sm">
             End-to-End Encrypted & Secure Database
@@ -118,7 +121,7 @@ export const Signup = () => {
 
       {/* Right Signup Card */}
       <div className="flex-1 flex items-center justify-center bg-base-200 px-4 py-8 sm:py-12">
-        <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xl">
+        <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xs">
           <div className="p-6 sm:p-8">
             {/* Tabs */}
             <div className="bg-base-200 rounded-lg p-1 flex mb-6">
@@ -235,17 +238,27 @@ export const Signup = () => {
               {/* Password */}
               <div>
                 <span className="text-sm font-medium">Password</span>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  placeholder="At least 8 characters"
-                  className="input input-bordered w-full mt-1"
-                  required
-                  minLength="8"
-                  disabled={isPending}
-                />
+                <div className="relative mt-1">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    placeholder="At least 8 characters"
+                    className="input input-bordered w-full pr-10"
+                    required
+                    minLength="8"
+                    disabled={isPending}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 btn btn-ghost btn-xs btn-circle text-base-content/60 hover:text-base-content"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
               </div>
 
               {/* ID Upload */}
@@ -299,11 +312,11 @@ export const Signup = () => {
           <div className="border-t px-6 sm:px-8 py-5 text-center space-y-3">
             <p className="text-xs text-gray-500 leading-relaxed">
               By registering, you agree to our
-              <span className="text-blue-600 mx-1 cursor-pointer">
+              <span className="link link-primary mx-1 cursor-pointer">
                 Terms of Service
               </span>
               and
-              <span className="text-blue-600 mx-1 cursor-pointer">
+              <span className="link link-primary mx-1 cursor-pointer">
                 Privacy Policy
               </span>
               . We process your data according to the Data Privacy Act of 2012.

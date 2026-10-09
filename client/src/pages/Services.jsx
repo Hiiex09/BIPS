@@ -136,7 +136,7 @@ const Services = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {process.map((item, index) => (
               <div key={index} className="relative">
-                <div className="card bg-base-100 shadow-lg h-full">
+                <div className="card bg-base-100 shadow-2xs h-full">
                   <div className="card-body items-center text-center">
                     <div className="w-16 h-16 bg-primary text-primary-content rounded-full flex items-center justify-center text-2xl font-bold mb-4">
                       {item.step}
@@ -181,7 +181,7 @@ const Services = () => {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-10 sm:mb-12">General Requirements</h2>
             
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="card bg-base-100 shadow-lg">
+              <div className="card bg-base-100 shadow-2xs">
                 <div className="card-body">
                   <h3 className="card-title text-2xl mb-4">For All Services</h3>
                   <ul className="space-y-3">
@@ -201,7 +201,7 @@ const Services = () => {
                 </div>
               </div>
 
-              <div className="card bg-base-100 shadow-lg">
+              <div className="card bg-base-100 shadow-2xs">
                 <div className="card-body">
                   <h3 className="card-title text-2xl mb-4">Processing Time</h3>
                   <div className="space-y-4">

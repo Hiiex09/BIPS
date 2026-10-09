@@ -3,11 +3,15 @@ import {
   deleteAnnouncement,
   getAnnoucementPost,
   PostAnnouncement,
+  updateAnnouncement,
 } from "../controllers/announcement_controller.js";
 import { protectRoute } from "../middlewares/auth_middleware.js";
 import { authorizedRoles } from "../middlewares/auth_roles.js";
 import { validate } from "../middlewares/validate.js";
-import { createAnnouncementSchema } from "../validator/announcement_validation.js";
+import {
+  createAnnouncementSchema,
+  updateAnnouncementSchema,
+} from "../validator/announcement_validation.js";
 
 const router = express.Router();
 
@@ -25,8 +29,8 @@ router.patch(
   "/update-announcement/:id",
   protectRoute,
   authorizedRoles("Admin", "Staff"),
-  validate(createAnnouncementSchema),
-  PostAnnouncement,
+  validate(updateAnnouncementSchema),
+  updateAnnouncement,
 );
 
 router.delete(

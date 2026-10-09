@@ -1,134 +1,205 @@
-import { Users, ClipboardClock, TriangleAlert, Megaphone } from "lucide-react";
+import { Users, FileText, AlertTriangle, Megaphone, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import StatsCard from "../../components/admin/StatsCard";
 import { userStats, documentStats, incidentStats, announcementStats } from "../../data/mockData";
 
 const AdminHomepage = () => {
   return (
-    <div className="p-6 space-y-6">
-      {/* Welcome Section */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-base-content">Dashboard Overview</h1>
-        <p className="text-muted mt-2">Welcome to the Barangay Management System</p>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="space-y-6">
+      {/* ── Executive KPI Strip (Swiss Ledger Format) ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <StatsCard
-          title="Total Residents"
+          title="Registered Residents"
           value={userStats.totalResidents.toLocaleString()}
-          subtitle={`+${userStats.growthFromLastMonth} from last month`}
+          subtitle={`+${userStats.growthFromLastMonth} added this month`}
           icon={Users}
-          iconColor="text-primary"
-          iconBg="bg-primary/10"
-          trend={true}
         />
         <StatsCard
           title="Pending Requests"
           value={documentStats.totalPending}
-          subtitle={`${documentStats.urgentRequests} urgent`}
-          icon={ClipboardClock}
-          iconColor="text-warning"
-          iconBg="bg-warning/10"
+          subtitle={`${documentStats.urgentRequests} requires priority review`}
+          icon={FileText}
         />
         <StatsCard
-          title="Active Incidents"
+          title="Active Incident Cases"
           value={incidentStats.openIncidents}
-          subtitle={`${incidentStats.criticalIncidents} critical`}
-          icon={TriangleAlert}
-          iconColor="text-error"
-          iconBg="bg-error/10"
+          subtitle={`${incidentStats.criticalIncidents} flagged high priority`}
+          icon={AlertTriangle}
         />
         <StatsCard
-          title="Published Announcements"
+          title="Active Bulletins"
           value={announcementStats.published}
-          subtitle={`${announcementStats.scheduled} scheduled`}
+          subtitle={`${announcementStats.scheduled} scheduled for release`}
           icon={Megaphone}
-          iconColor="text-success"
-          iconBg="bg-success/10"
         />
       </div>
 
-      {/* Recent Activity Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        {/* Recent Documents */}
-        <div className="card bg-base-100 shadow-md">
-          <div className="card-body">
-            <h2 className="card-title text-lg mb-4">Recent Document Requests</h2>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-base-200/50 rounded-lg">
-                <div>
-                  <p className="font-medium">Barangay Clearance</p>
-                  <p className="text-sm text-muted">Juan Dela Cruz</p>
-                </div>
-                <span className="badge badge-warning badge-sm">Pending</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-base-200/50 rounded-lg">
-                <div>
-                  <p className="font-medium">Certificate of Residency</p>
-                  <p className="text-sm text-muted">Maria Santos</p>
-                </div>
-                <span className="badge badge-info badge-sm">Processing</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-base-200/50 rounded-lg">
-                <div>
-                  <p className="font-medium">Business Permit</p>
-                  <p className="text-sm text-muted">Pedro Reyes</p>
-                </div>
-                <span className="badge badge-success badge-sm">Completed</span>
-              </div>
+      {/* ── Two-Column Operational Ledger ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* Recent Documents Ledger */}
+        <div className="bg-base-100 border border-base-300 rounded-xs shadow-2xs">
+          <div className="px-5 py-3.5 border-b border-base-300 flex items-center justify-between">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                Queue 01
+              </span>
+              <h2 className="text-sm font-black text-base-content">Recent Document Requests</h2>
             </div>
+            <Link
+              to="/document-management"
+              className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
+            >
+              Open Inbox <ArrowUpRight size={13} />
+            </Link>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="border-b border-base-300 text-[10px] uppercase tracking-wider text-base-content/50 bg-base-200/40">
+                  <th className="py-2.5 px-4 font-bold">Document</th>
+                  <th className="py-2.5 px-4 font-bold">Requester</th>
+                  <th className="py-2.5 px-4 font-bold text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-base-300 font-medium">
+                <tr className="hover:bg-base-200/30 transition-colors">
+                  <td className="py-3 px-4 font-bold text-base-content">
+                    Barangay Clearance
+                  </td>
+                  <td className="py-3 px-4 text-base-content/70">Juan Dela Cruz</td>
+                  <td className="py-3 px-4 text-right">
+                    <span className="inline-block px-1.5 py-0.5 rounded-2xs text-[10px] font-black uppercase text-amber-600 bg-amber-500/10 border border-amber-500/20">
+                      Pending
+                    </span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-base-200/30 transition-colors">
+                  <td className="py-3 px-4 font-bold text-base-content">
+                    Certificate of Residency
+                  </td>
+                  <td className="py-3 px-4 text-base-content/70">Maria Santos</td>
+                  <td className="py-3 px-4 text-right">
+                    <span className="inline-block px-1.5 py-0.5 rounded-2xs text-[10px] font-black uppercase text-primary bg-primary/10 border border-primary/20">
+                      Approved
+                    </span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-base-200/30 transition-colors">
+                  <td className="py-3 px-4 font-bold text-base-content">
+                    Business Permit
+                  </td>
+                  <td className="py-3 px-4 text-base-content/70">Pedro Reyes</td>
+                  <td className="py-3 px-4 text-right">
+                    <span className="inline-block px-1.5 py-0.5 rounded-2xs text-[10px] font-black uppercase text-teal-700 bg-teal-600/10 border border-teal-600/20">
+                      Ready
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        {/* Recent Incidents */}
-        <div className="card bg-base-100 shadow-md">
-          <div className="card-body">
-            <h2 className="card-title text-lg mb-4">Recent Incident Reports</h2>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-base-200/50 rounded-lg">
-                <div>
-                  <p className="font-medium">Illegal Parking Complaint</p>
-                  <p className="text-sm text-muted">Market Street area</p>
-                </div>
-                <span className="badge badge-error badge-sm">Open</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-base-200/50 rounded-lg">
-                <div>
-                  <p className="font-medium">Noise Complaint</p>
-                  <p className="text-sm text-muted">Bonifacio Ave</p>
-                </div>
-                <span className="badge badge-warning badge-sm">In Progress</span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-base-200/50 rounded-lg">
-                <div>
-                  <p className="font-medium">Street Light Malfunction</p>
-                  <p className="text-sm text-muted">Rizal Street</p>
-                </div>
-                <span className="badge badge-success badge-sm">Resolved</span>
-              </div>
+        {/* Recent Incidents Ledger */}
+        <div className="bg-base-100 border border-base-300 rounded-xs shadow-2xs">
+          <div className="px-5 py-3.5 border-b border-base-300 flex items-center justify-between">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                Queue 02
+              </span>
+              <h2 className="text-sm font-black text-base-content">Recent Incident Reports</h2>
             </div>
+            <Link
+              to="/incident-reports"
+              className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
+            >
+              Open Board <ArrowUpRight size={13} />
+            </Link>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr className="border-b border-base-300 text-[10px] uppercase tracking-wider text-base-content/50 bg-base-200/40">
+                  <th className="py-2.5 px-4 font-bold">Incident Type</th>
+                  <th className="py-2.5 px-4 font-bold">Location</th>
+                  <th className="py-2.5 px-4 font-bold text-right">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-base-300 font-medium">
+                <tr className="hover:bg-base-200/30 transition-colors">
+                  <td className="py-3 px-4 font-bold text-base-content">
+                    Illegal Parking Complaint
+                  </td>
+                  <td className="py-3 px-4 text-base-content/70">Market Street Area</td>
+                  <td className="py-3 px-4 text-right">
+                    <span className="inline-block px-1.5 py-0.5 rounded-2xs text-[10px] font-black uppercase text-amber-600 bg-amber-500/10 border border-amber-500/20">
+                      Open
+                    </span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-base-200/30 transition-colors">
+                  <td className="py-3 px-4 font-bold text-base-content">
+                    Noise Complaint
+                  </td>
+                  <td className="py-3 px-4 text-base-content/70">Bonifacio Ave</td>
+                  <td className="py-3 px-4 text-right">
+                    <span className="inline-block px-1.5 py-0.5 rounded-2xs text-[10px] font-black uppercase text-primary bg-primary/10 border border-primary/20">
+                      In Progress
+                    </span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-base-200/30 transition-colors">
+                  <td className="py-3 px-4 font-bold text-base-content">
+                    Street Light Malfunction
+                  </td>
+                  <td className="py-3 px-4 text-base-content/70">Rizal Street</td>
+                  <td className="py-3 px-4 text-right">
+                    <span className="inline-block px-1.5 py-0.5 rounded-2xs text-[10px] font-black uppercase text-teal-700 bg-teal-600/10 border border-teal-600/20">
+                      Resolved
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="card bg-base-100 shadow-md mt-6">
-        <div className="card-body">
-          <h2 className="card-title text-lg mb-4">Quick Actions</h2>
-          <div className="flex flex-wrap gap-3">
-            <button className="btn btn-primary btn-sm">
-              Process Document Request
-            </button>
-            <button className="btn btn-warning btn-sm">
-              Review Pending Verifications
-            </button>
-            <button className="btn btn-error btn-sm">
-              Check Critical Incidents
-            </button>
-            <button className="btn btn-success btn-sm">
-              Create Announcement
-            </button>
-          </div>
+      {/* ── Quick Administrative Triggers ── */}
+      <div className="bg-base-100 border border-base-300 rounded-xs p-5 shadow-2xs">
+        <div className="mb-3">
+          <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+            Direct Routing
+          </span>
+          <h2 className="text-sm font-black text-base-content">Administrative Operations</h2>
+        </div>
+        <div className="flex flex-wrap gap-2.5">
+          <Link
+            to="/document-management"
+            className="btn btn-sm btn-primary rounded-xs text-xs font-bold shadow-2xs"
+          >
+            Review Document Queue
+          </Link>
+          <Link
+            to="/user-management"
+            className="btn btn-sm btn-ghost border border-base-300 hover:border-primary rounded-xs text-xs font-bold"
+          >
+            Inspect Resident Directory
+          </Link>
+          <Link
+            to="/incident-reports"
+            className="btn btn-sm btn-ghost border border-base-300 hover:border-primary rounded-xs text-xs font-bold"
+          >
+            Manage Incident Board
+          </Link>
+          <Link
+            to="/announcement-management"
+            className="btn btn-sm btn-ghost border border-base-300 hover:border-primary rounded-xs text-xs font-bold"
+          >
+            Draft Bulletin Announcement
+          </Link>
         </div>
       </div>
     </div>

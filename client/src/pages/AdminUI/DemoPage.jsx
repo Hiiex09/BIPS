@@ -105,7 +105,7 @@ const DemoPage = () => {
         />
 
         {/* Users Table */}
-        <div className="card bg-base-100 shadow-md">
+        <div className="card bg-base-100 shadow-2xs">
           <div className="card-body p-0">
             <div className="overflow-x-auto">
               <table className="table table-zebra">

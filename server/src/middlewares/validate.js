@@ -3,6 +3,8 @@ export const validate = (schema) => (req, res, next) => {
     req.body = schema.parse(req.body);
     next();
   } catch (err) {
-    return res.status(400).json({ errors: err.errors });
+    return res.status(400).json({
+      errors: err.issues.map((issue) => issue.message),
+    });
   }
 };
