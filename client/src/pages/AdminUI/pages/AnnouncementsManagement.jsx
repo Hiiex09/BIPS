@@ -8,10 +8,15 @@ import {
   Loader2,
   Calendar,
   X,
-  Send
+  Send,
+  CheckCircle2,
+  Clock,
+  Check,
+  XCircle,
+  MessageSquare
 } from "lucide-react";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import PageLayout from "../../../components/admin/PageLayout";
 import StatsCard from "../../../components/admin/StatsCard";
@@ -22,6 +27,11 @@ import {
   useCreateAnnouncement,
 } from "../../../hooks/UseAnnouncementRouteHooks";
 import { axiosInstance } from "../../../api/axios";
+import {
+  getAllStoriesAdminApi,
+  updateStoryStatusApi,
+  deleteStoryAdminApi,
+} from "../../../api/story_api";
 
 const AnnouncementsManagement = () => {
   const queryClient = useQueryClient();
@@ -41,8 +51,43 @@ const AnnouncementsManagement = () => {
     status: "Published",
   });
 
+  const [activeTab, setActiveTab] = useState("announcements"); // 'announcements' | 'stories'
+  const [selectedStory, setSelectedStory] = useState(null);
+  const [rejectModalStory, setRejectModalStory] = useState(null);
+  const [rejectNotes, setRejectNotes] = useState("");
+
   const { data: rawAnnouncements, isLoading, error } = useAnnouncements();
   const createMutation = useCreateAnnouncement();
+
+  // Story Moderation Queries & Mutations
+  const { data: storiesData, isLoading: isStoriesLoading } = useQuery({
+    queryKey: ["adminStories"],
+    queryFn: getAllStoriesAdminApi,
+  });
+
+  const moderateStoryMutation = useMutation({
+    mutationFn: updateStoryStatusApi,
+    onSuccess: (data) => {
+      toast.success(data.message || "Story updated");
+      queryClient.invalidateQueries({ queryKey: ["adminStories"] });
+      setRejectModalStory(null);
+      setRejectNotes("");
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Failed to update story status");
+    },
+  });
+
+  const deleteStoryMutation = useMutation({
+    mutationFn: deleteStoryAdminApi,
+    onSuccess: () => {
+      toast.success("Story deleted");
+      queryClient.invalidateQueries({ queryKey: ["adminStories"] });
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Failed to delete story");
+    },
+  });
 
   const deleteMutation = useMutation({
     mutationFn: async (id) => {
@@ -165,31 +210,59 @@ const AnnouncementsManagement = () => {
           />
         </div>
 
-        {/* ── Search & Filter Controls ── */}
-        <div className="w-full">
-          <SearchFilterBar
-            searchPlaceholder="Search bulletin titles, body text..."
-            onSearchChange={(val) => {
-              setSearch(val);
-              setCurrentPage(1);
-            }}
-            filters={[
-              {
-                placeholder: "Filter Category",
-                options: categoryFilters,
-                onChange: (val) => setCategoryFilter(val),
-              },
-              {
-                placeholder: "Filter Status",
-                options: statusFilters,
-                onChange: (val) => setStatusFilter(val),
-              },
-            ]}
-          />
+        {/* ── Tab Switcher: Bulletins vs Story Moderation Queue ── */}
+        <div className="flex items-center justify-between border-b border-base-300 pb-2">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setActiveTab("announcements")}
+              className={`btn btn-xs rounded-xs font-bold gap-1.5 ${
+                activeTab === "announcements" ? "btn-primary shadow-2xs" : "btn-ghost"
+              }`}
+            >
+              <Megaphone size={12} /> Official Bulletins ({announcements.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("stories")}
+              className={`btn btn-xs rounded-xs font-bold gap-1.5 ${
+                activeTab === "stories" ? "btn-primary shadow-2xs" : "btn-ghost"
+              }`}
+            >
+              <MessageSquare size={12} /> Resident Story Submissions ({storiesData?.total || 0})
+            </button>
+          </div>
+          <span className="text-[10px] font-mono text-muted uppercase">
+            AUTHORITY: {activeTab === "announcements" ? "Barangay Public Office" : "Community Moderation"}
+          </span>
         </div>
 
+        {/* ── Search & Filter Controls (only for announcements tab) ── */}
+        {activeTab === "announcements" && (
+          <div className="w-full">
+            <SearchFilterBar
+              searchPlaceholder="Search bulletin titles, body text..."
+              onSearchChange={(val) => {
+                setSearch(val);
+                setCurrentPage(1);
+              }}
+              filters={[
+                {
+                  placeholder: "Filter Category",
+                  options: categoryFilters,
+                  onChange: (val) => setCategoryFilter(val),
+                },
+                {
+                  placeholder: "Filter Status",
+                  options: statusFilters,
+                  onChange: (val) => setStatusFilter(val),
+                },
+              ]}
+            />
+          </div>
+        )}
+
         {/* ── Full-Width Editorial Feed (Layout 03) ── */}
-        <div className="bg-base-100 border border-base-300 rounded-xs shadow-2xs overflow-hidden">
+        {activeTab === "announcements" ? (
+          <div className="bg-base-100 border border-base-300 rounded-xs shadow-2xs overflow-hidden">
           <div className="p-3 border-b border-base-300 bg-base-200/40 flex items-center justify-between">
             <span className="text-[10px] font-black uppercase tracking-widest text-primary">
               Bulletin Feed ({filtered.length} Announcements)
@@ -300,6 +373,122 @@ const AnnouncementsManagement = () => {
             </div>
           )}
         </div>
+        ) : (
+          /* ── Story Moderation Inbox ── */
+          <div className="bg-base-100 border border-base-300 rounded-xs shadow-2xs overflow-hidden">
+            <div className="p-3 border-b border-base-300 bg-base-200/40 flex items-center justify-between">
+              <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                Resident Community Submissions ({storiesData?.stories?.length || 0})
+              </span>
+              <span className="text-[11px] text-muted">
+                Review, approve, reject, or publish community stories
+              </span>
+            </div>
+
+            {isStoriesLoading ? (
+              <div className="p-12 flex justify-center items-center gap-3 text-xs font-bold text-base-content/60">
+                <Loader2 className="animate-spin text-primary" size={20} />
+                <span>Loading moderation queue...</span>
+              </div>
+            ) : !storiesData?.stories || storiesData.stories.length === 0 ? (
+              <div className="p-12 text-center text-xs text-base-content/60 font-semibold">
+                No resident story proposals submitted yet.
+              </div>
+            ) : (
+              <div className="divide-y divide-base-300">
+                {storiesData.stories.map((story) => (
+                  <div
+                    key={story._id}
+                    className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-base-200/20"
+                  >
+                    <div className="space-y-1.5 flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span
+                          className={`badge badge-xs font-bold rounded-xs ${
+                            story.status === "Published"
+                              ? "badge-success"
+                              : story.status === "Approved"
+                              ? "badge-info"
+                              : story.status === "Rejected"
+                              ? "badge-error"
+                              : "badge-warning"
+                          }`}
+                        >
+                          {story.status}
+                        </span>
+                        <span className="text-[10px] font-mono text-muted uppercase">
+                          {story.category}
+                        </span>
+                        <span className="text-[11px] text-muted">
+                          by <strong className="text-base-content">{story.authorName}</strong> ·{" "}
+                          {new Date(story.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <h4 className="font-bold text-sm text-base-content truncate">
+                        {story.title}
+                      </h4>
+                      <p className="text-xs text-base-content/70 line-clamp-1">
+                        {story.content}
+                      </p>
+                      {story.reviewerNotes && (
+                        <p className="text-[11px] text-error/80 italic">
+                          Staff Note: {story.reviewerNotes}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Moderation Stage Action Buttons */}
+                    <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                      <button
+                        onClick={() => setSelectedStory(story)}
+                        className="btn btn-xs btn-ghost border border-base-300 rounded-xs text-[11px]"
+                      >
+                        Inspect
+                      </button>
+
+                      {story.status !== "Published" && (
+                        <button
+                          onClick={() => {
+                            moderateStoryMutation.mutate({
+                              id: story._id,
+                              status: "Published",
+                            });
+                          }}
+                          className="btn btn-xs btn-primary rounded-xs font-bold text-[11px] gap-1"
+                        >
+                          <Check size={12} /> Publish Live
+                        </button>
+                      )}
+
+                      {story.status === "Pending" && (
+                        <button
+                          onClick={() => {
+                            setRejectModalStory(story);
+                            setRejectNotes("");
+                          }}
+                          className="btn btn-xs btn-ghost border border-error/40 text-error hover:bg-error/10 rounded-xs text-[11px] gap-1"
+                        >
+                          <XCircle size={12} /> Reject
+                        </button>
+                      )}
+
+                      <button
+                        onClick={() => {
+                          if (window.confirm(`Permanently delete story "${story.title}"?`)) {
+                            deleteStoryMutation.mutate(story._id);
+                          }
+                        }}
+                        className="btn btn-xs btn-ghost text-error/60 hover:text-error hover:bg-error/10 rounded-xs"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* ── Inspect Announcement Modal ── */}
         {selectedAnnouncement && (
@@ -470,6 +659,134 @@ const AnnouncementsManagement = () => {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* ── Inspect Story Modal ── */}
+        {selectedStory && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+            <div className="bg-base-100 border border-base-300 rounded-xs shadow-xl w-full max-w-lg p-5 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+              <div className="flex items-start justify-between pb-3 border-b border-base-300">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+                    Resident Story Proposal
+                  </span>
+                  <h3 className="text-base font-black text-base-content">
+                    {selectedStory.title}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedStory(null)}
+                  className="btn btn-xs btn-ghost btn-square"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+
+              <div className="space-y-3 text-xs">
+                <div className="flex gap-2 items-center">
+                  <span className="px-1.5 py-0.5 rounded-2xs text-[9px] font-black uppercase bg-primary/10 text-primary border border-primary/20">
+                    {selectedStory.category}
+                  </span>
+                  <span className="text-muted text-[11px]">
+                    Author: <strong>{selectedStory.authorName}</strong>
+                  </span>
+                </div>
+
+                <div className="bg-base-200/50 p-3 rounded-xs border border-base-300">
+                  <p className="font-semibold text-base-content mb-1">Content:</p>
+                  <p className="text-muted leading-relaxed whitespace-pre-wrap">
+                    {selectedStory.content}
+                  </p>
+                </div>
+
+                {selectedStory.reviewerNotes && (
+                  <div className="bg-error/10 p-2.5 rounded-xs border border-error/20 text-error">
+                    <strong>Moderator Feedback:</strong> {selectedStory.reviewerNotes}
+                  </div>
+                )}
+              </div>
+
+              <div className="pt-3 border-t border-base-300 flex justify-end gap-2">
+                <button
+                  onClick={() => setSelectedStory(null)}
+                  className="btn btn-xs btn-outline rounded-xs"
+                >
+                  Close
+                </button>
+                {selectedStory.status !== "Published" && (
+                  <button
+                    onClick={() => {
+                      moderateStoryMutation.mutate({
+                        id: selectedStory._id,
+                        status: "Published",
+                      });
+                      setSelectedStory(null);
+                    }}
+                    className="btn btn-xs btn-primary rounded-xs font-bold"
+                  >
+                    Publish Story Live
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Reject Story with Notes Modal ── */}
+        {rejectModalStory && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+            <div className="bg-base-100 border border-base-300 rounded-xs shadow-xl w-full max-w-md p-5 space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-base-300">
+                <h3 className="font-extrabold text-sm text-error flex items-center gap-1.5">
+                  <XCircle size={15} /> Decline Story Submission
+                </h3>
+                <button
+                  onClick={() => setRejectModalStory(null)}
+                  className="btn btn-xs btn-ghost btn-square"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+
+              <p className="text-xs text-muted">
+                Please provide reason or revision feedback for{" "}
+                <strong>{rejectModalStory.authorName}</strong>:
+              </p>
+
+              <textarea
+                rows={3}
+                required
+                placeholder="e.g. Please clarify event location and attach official barangay clearance..."
+                className="textarea textarea-bordered w-full rounded-xs text-xs"
+                value={rejectNotes}
+                onChange={(e) => setRejectNotes(e.target.value)}
+              />
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-base-300">
+                <button
+                  type="button"
+                  onClick={() => setRejectModalStory(null)}
+                  className="btn btn-xs btn-ghost rounded-xs"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    moderateStoryMutation.mutate({
+                      id: rejectModalStory._id,
+                      status: "Rejected",
+                      reviewerNotes: rejectNotes,
+                    });
+                  }}
+                  className="btn btn-xs btn-error rounded-xs font-bold"
+                >
+                  Confirm Reject
+                </button>
+              </div>
             </div>
           </div>
         )}

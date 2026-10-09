@@ -7,6 +7,7 @@ import userRoutes from "./routes/user_routes.js";
 import announcementRoutes from "./routes/announcement_route.js";
 import certificateRoutes from "./routes/cert_request_route.js";
 import incidentRoutes from "./routes/incident_route.js";
+import storyRoutes from "./routes/story_route.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -48,6 +49,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/announcement", announcementRoutes);
 app.use("/api/v1/certificate", certificateRoutes);
 app.use("/api/v1/incidents", incidentRoutes);
+app.use("/api/v1/stories", storyRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const clientDist = path.join(__dirname, "../../client/dist");
