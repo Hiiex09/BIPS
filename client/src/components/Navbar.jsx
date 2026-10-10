@@ -3,13 +3,153 @@ import { ChevronDown, Menu, Phone, Clock, Search, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCheckAuth, useLogout } from "../hooks/UseAuthRouteHooks.js";
 
+/* ── Mega Menu Subcomponent ──────────────────────────── */
+const MegaMenu = ({ isOpen, onClose, user, serviceItems, menuRef }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      ref={menuRef}
+      className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[620px] bg-base-100 border border-base-300 rounded-xs shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+    >
+      <div className="flex items-center justify-between pb-2 mb-3 border-b border-base-300">
+        <span className="text-[10px] font-black uppercase tracking-widest text-primary">
+          Official Barangay Public Services
+        </span>
+        <Link
+          to="/services"
+          onClick={onClose}
+          className="text-[11px] font-bold text-primary hover:underline flex items-center gap-1"
+        >
+          View All Catalog &rarr;
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        {serviceItems.map((s) => (
+          <Link
+            key={s.num}
+            to={s.link}
+            onClick={onClose}
+            className="group p-2.5 rounded-xs border border-transparent hover:border-base-300 hover:bg-base-200/50 transition-all flex items-start gap-3 text-left"
+          >
+            <span className="font-mono text-xs font-black text-primary/80 group-hover:text-primary mt-0.5">
+              {s.num}
+            </span>
+            <div>
+              <p className="font-bold text-xs text-base-content group-hover:text-primary transition-colors">
+                {s.title}
+              </p>
+              <p className="text-[10px] text-base-content/60 leading-snug mt-0.5">
+                {s.desc}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <div className="mt-3 pt-2.5 border-t border-base-300 bg-base-200/40 -mx-4 -mb-4 p-3 px-4 flex items-center justify-between text-[11px] text-base-content/70">
+        <span>Need to follow up an existing application?</span>
+        <Link
+          to={user ? "/Resident/documents" : "/login"}
+          onClick={onClose}
+          className="font-bold text-primary hover:underline"
+        >
+          Track Request &rarr;
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+/* ── Mobile Menu Subcomponent ────────────────────────── */
+const MobileMenu = ({ user, onLogout }) => (
+  <div className="lg:hidden dropdown dropdown-end">
+    <button
+      tabIndex={0}
+      className="btn btn-ghost btn-sm p-1"
+      aria-label="Toggle navigation menu"
+    >
+      <Menu size={22} />
+    </button>
+
+    <div
+      className="dropdown-content mt-3 p-4 shadow-xl bg-base-100 rounded-xs border border-base-300 w-72 space-y-3 z-50 text-xs font-medium"
+    >
+      <div className="flex flex-col gap-1 border-b border-base-300 pb-2">
+        <Link to="/" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
+          Home
+        </Link>
+        <Link to="/services" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
+          All Services
+        </Link>
+        <Link to="/announcements" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
+          Announcements
+        </Link>
+        <Link to="/about" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
+          About Barangay
+        </Link>
+      </div>
+
+      <div className="space-y-1">
+        <span className="text-[10px] font-black uppercase text-base-content/50 px-2">
+          Quick Document Requests
+        </span>
+        <Link
+          to={user ? "/Resident/documents" : "/login"}
+          className="block py-1 px-2 hover:text-primary"
+        >
+          • Barangay Clearance
+        </Link>
+        <Link
+          to={user ? "/Resident/documents" : "/login"}
+          className="block py-1 px-2 hover:text-primary"
+        >
+          • Certificate of Indigency
+        </Link>
+        <Link
+          to={user ? "/Resident/documents" : "/login"}
+          className="block py-1 px-2 hover:text-primary"
+        >
+          • Certificate of Residency
+        </Link>
+      </div>
+
+      <div className="pt-2 border-t border-base-300">
+        {user ? (
+          <div className="space-y-2">
+            <Link
+              to="/Resident"
+              className="btn btn-sm btn-primary w-full rounded-xs"
+            >
+              Resident Portal
+            </Link>
+            <button
+              onClick={onLogout}
+              className="btn btn-sm btn-outline btn-error w-full rounded-xs"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            className="btn btn-sm btn-primary w-full rounded-xs font-bold"
+          >
+            Resident Login
+          </Link>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
 const Navbar = () => {
   const { user } = useCheckAuth();
   const { mutate: logoutUser } = useLogout();
   const navigate = useNavigate();
 
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const megaMenuRef = useRef(null);
 
   // Close mega-menu on click outside
@@ -25,13 +165,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logoutUser();
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/services?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
   };
 
   const serviceItems = [
@@ -118,7 +251,7 @@ const Navbar = () => {
             </Link>
 
             {/* Mega Menu Button Container */}
-            <div className="relative" ref={megaMenuRef}>
+            <div className="relative">
               <button
                 type="button"
                 onClick={() => setIsServicesOpen((prev) => !prev)}
@@ -138,57 +271,13 @@ const Navbar = () => {
                 />
               </button>
 
-              {/* Mega Menu Dropdown */}
-              {isServicesOpen && (
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[620px] bg-base-100 border border-base-300 rounded-xs shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-base-300">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-primary">
-                      Official Barangay Public Services
-                    </span>
-                    <Link
-                      to="/services"
-                      onClick={() => setIsServicesOpen(false)}
-                      className="text-[11px] font-bold text-primary hover:underline flex items-center gap-1"
-                    >
-                      View All Catalog &rarr;
-                    </Link>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    {serviceItems.map((s) => (
-                      <Link
-                        key={s.num}
-                        to={s.link}
-                        onClick={() => setIsServicesOpen(false)}
-                        className="group p-2.5 rounded-xs border border-transparent hover:border-base-300 hover:bg-base-200/50 transition-all flex items-start gap-3 text-left"
-                      >
-                        <span className="font-mono text-xs font-black text-primary/80 group-hover:text-primary mt-0.5">
-                          {s.num}
-                        </span>
-                        <div>
-                          <p className="font-bold text-xs text-base-content group-hover:text-primary transition-colors">
-                            {s.title}
-                          </p>
-                          <p className="text-[10px] text-base-content/60 leading-snug mt-0.5">
-                            {s.desc}
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-
-                  <div className="mt-3 pt-2.5 border-t border-base-300 bg-base-200/40 -mx-4 -mb-4 p-3 px-4 flex items-center justify-between text-[11px] text-base-content/70">
-                    <span>Need to follow up an existing application?</span>
-                    <Link
-                      to={user ? "/Resident/documents" : "/login"}
-                      onClick={() => setIsServicesOpen(false)}
-                      className="font-bold text-primary hover:underline"
-                    >
-                      Track Request &rarr;
-                    </Link>
-                  </div>
-                </div>
-              )}
+              <MegaMenu
+                isOpen={isServicesOpen}
+                onClose={() => setIsServicesOpen(false)}
+                user={user}
+                serviceItems={serviceItems}
+                menuRef={megaMenuRef}
+              />
             </div>
 
             <Link
@@ -205,25 +294,8 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Right: Search & Auth */}
+          {/* Desktop Right: Auth Actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <input
-                type="text"
-                placeholder="Search catalog..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="input input-sm input-bordered w-48 text-xs pr-8 rounded-xs focus:outline-primary"
-              />
-              <button
-                type="submit"
-                aria-label="Submit Search"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-primary transition-colors"
-              >
-                <Search size={14} />
-              </button>
-            </form>
-
             {user ? (
               <div className="flex items-center gap-2">
                 <Link
@@ -252,101 +324,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Hamburger Dropdown */}
-          <div className="lg:hidden dropdown dropdown-end">
-            <button
-              tabIndex={0}
-              className="btn btn-ghost btn-sm p-1"
-              aria-label="Toggle navigation menu"
-            >
-              <Menu size={22} />
-            </button>
-
-            <div
-              tabIndex={0}
-              className="dropdown-content mt-3 p-4 shadow-xl bg-base-100 rounded-xs border border-base-300 w-72 space-y-3 z-50 text-xs font-medium"
-            >
-              <form onSubmit={handleSearchSubmit} className="relative mb-2">
-                <input
-                  type="text"
-                  placeholder="Search services..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="input input-sm input-bordered w-full text-xs pr-8 rounded-xs"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-base-content/40"
-                >
-                  <Search size={14} />
-                </button>
-              </form>
-
-              <div className="flex flex-col gap-1 border-b border-base-300 pb-2">
-                <Link to="/" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
-                  Home
-                </Link>
-                <Link to="/services" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
-                  All Services
-                </Link>
-                <Link to="/announcements" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
-                  Announcements
-                </Link>
-                <Link to="/about" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
-                  About Barangay
-                </Link>
-              </div>
-
-              <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase text-base-content/50 px-2">
-                  Quick Document Requests
-                </span>
-                <Link
-                  to={user ? "/Resident/documents" : "/login"}
-                  className="block py-1 px-2 hover:text-primary"
-                >
-                  • Barangay Clearance
-                </Link>
-                <Link
-                  to={user ? "/Resident/documents" : "/login"}
-                  className="block py-1 px-2 hover:text-primary"
-                >
-                  • Certificate of Indigency
-                </Link>
-                <Link
-                  to={user ? "/Resident/documents" : "/login"}
-                  className="block py-1 px-2 hover:text-primary"
-                >
-                  • Certificate of Residency
-                </Link>
-              </div>
-
-              <div className="pt-2 border-t border-base-300">
-                {user ? (
-                  <div className="space-y-2">
-                    <Link
-                      to="/Resident"
-                      className="btn btn-sm btn-primary w-full rounded-xs"
-                    >
-                      Resident Portal
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="btn btn-sm btn-outline btn-error w-full rounded-xs"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                ) : (
-                  <Link
-                    to="/login"
-                    className="btn btn-sm btn-primary w-full rounded-xs font-bold"
-                  >
-                    Resident Login
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
+          <MobileMenu user={user} onLogout={handleLogout} />
         </div>
       </nav>
     </header>

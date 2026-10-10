@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Phone, MapPin, Download, ChevronDown, ChevronUp, Flame, Cross, Zap, ShieldAlert, X } from "lucide-react";
+import { Phone, MapPin, Download, ChevronDown, ChevronUp, Flame, Cross, Zap, ShieldAlert, X, ExternalLink, Navigation } from "lucide-react";
 import { emergencyHotlines, nonEmergencyContacts, emergencyFacilities, emergencyProcedures } from "../../data/residentMockData";
 
 /* ── Procedure icon mapper ──────────────────────────── */
@@ -48,7 +48,7 @@ const ProcedureItem = ({ proc, defaultOpen = false }) => {
         <div className="px-4 py-3 bg-base-50 border-t border-base-300">
           <ol className="space-y-1.5">
             {proc.steps.map((step, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted">
+              <li key={step} className="flex items-start gap-2 text-sm text-muted">
                 <span className="w-5 h-5 rounded-full bg-primary text-primary-content text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                   {i + 1}
                 </span>
@@ -65,6 +65,7 @@ const ProcedureItem = ({ proc, defaultOpen = false }) => {
 /* ── Main Page ──────────────────────────────────────── */
 const ResidentEmergency = () => {
   const [alertDismissed, setAlertDismissed] = useState(false);
+  const [selectedFacility, setSelectedFacility] = useState(emergencyFacilities[0]);
 
   return (
     <div className="space-y-5 w-full">
@@ -84,7 +85,11 @@ const ResidentEmergency = () => {
             <p className="text-xs opacity-85">Take shelter immediately if outdoors. High winds expected until 10:00 PM.</p>
           </div>
           <div className="flex items-center gap-2 ml-auto shrink-0">
-            <button onClick={() => setAlertDismissed(true)} className="btn btn-sm btn-circle btn-ghost">
+            <button
+              onClick={() => setAlertDismissed(true)}
+              aria-label="Dismiss weather warning"
+              className="btn btn-sm btn-circle btn-ghost"
+            >
               <X size={14} />
             </button>
           </div>
@@ -128,24 +133,68 @@ const ResidentEmergency = () => {
           {/* Nearest Facilities */}
           <div className="card bg-base-100 border border-base-300 shadow-sm">
             <div className="card-body p-5 gap-3">
-              <div className="flex items-center gap-2">
-                <MapPin size={15} className="text-primary" />
-                <h3 className="font-bold text-sm text-base-content">Nearest Emergency Facilities</h3>
-              </div>
-              {/* Facility Tags */}
-              <div className="flex flex-wrap gap-2">
-                {emergencyFacilities.map((f) => (
-                  <span key={f.name} className="badge badge-soft badge-primary badge-sm gap-1">
-                    <MapPin size={10} /> {f.name} ({f.distance})
-                  </span>
-                ))}
-              </div>
-              {/* Map Placeholder */}
-              <div className="aspect-[16/7] bg-base-200 rounded-xs flex items-center justify-center border border-base-300">
-                <div className="text-center text-muted">
-                  <MapPin size={32} className="mx-auto mb-2 opacity-30" />
-                  <p className="text-xs opacity-50">Map — Nearest Emergency Facilities</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <MapPin size={15} className="text-primary" />
+                  <h3 className="font-bold text-sm text-base-content">Nearest Emergency Facilities</h3>
                 </div>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedFacility.query || selectedFacility.name)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link link-primary text-xs font-semibold inline-flex items-center gap-1"
+                >
+                  Expand Map <ExternalLink size={12} />
+                </a>
+              </div>
+
+              {/* Facility Selectors */}
+              <div className="flex flex-wrap gap-2">
+                {emergencyFacilities.map((f) => {
+                  const isSelected = selectedFacility.name === f.name;
+                  return (
+                    <button
+                      key={f.name}
+                      type="button"
+                      onClick={() => setSelectedFacility(f)}
+                      className={`badge badge-sm gap-1.5 cursor-pointer transition-all ${
+                        isSelected
+                          ? "badge-primary text-white font-semibold shadow-xs"
+                          : "badge-soft badge-ghost hover:badge-neutral text-base-content/70"
+                      }`}
+                    >
+                      <MapPin size={11} /> {f.name} ({f.distance})
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Map Embed */}
+              <div className="aspect-[16/7] md:aspect-[16/8] bg-base-200 rounded-xs overflow-hidden border border-base-300 relative shadow-inner">
+                <iframe
+                  title={`Map showing ${selectedFacility.name}`}
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(selectedFacility.query || selectedFacility.name)}&output=embed`}
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Facility Details & Navigation */}
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-base-200">
+                <div className="text-xs text-muted">
+                  <span className="font-semibold text-base-content">{selectedFacility.name}:</span>{" "}
+                  {selectedFacility.address || "Cebu City, Philippines"} · Approx. {selectedFacility.distance} away
+                </div>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedFacility.query || selectedFacility.name)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-xs btn-primary rounded-xs gap-1.5 font-semibold text-white shadow-xs"
+                >
+                  <Navigation size={12} /> Get Directions
+                </a>
               </div>
             </div>
           </div>

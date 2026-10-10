@@ -18,11 +18,11 @@ const Pagination = ({
       }
     } else {
       if (currentPage <= 3) {
-        pages.push(1, 2, 3, 4, '...', totalPages);
+        pages.push(1, 2, 3, 4, 'ellipsis-end', totalPages);
       } else if (currentPage >= totalPages - 2) {
-        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+        pages.push(1, 'ellipsis-start', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+        pages.push(1, 'ellipsis-start', currentPage - 1, currentPage, currentPage + 1, 'ellipsis-end', totalPages);
       }
     }
     
@@ -38,20 +38,28 @@ const Pagination = ({
       <div className="join">
         <button 
           className="join-item btn btn-sm"
+          aria-label="Previous page"
           onClick={() => onPageChange?.(currentPage - 1)}
           disabled={currentPage === 1}
         >
           «
         </button>
         
-        {getPageNumbers().map((page, index) => (
-          page === '...' ? (
-            <button key={`ellipsis-${index}`} className="join-item btn btn-sm btn-disabled">
+        {getPageNumbers().map((page) => (
+          typeof page === 'string' && page.startsWith('ellipsis') ? (
+            <button
+              key={page}
+              className="join-item btn btn-sm btn-disabled"
+              aria-label="More pages"
+              disabled
+            >
               ...
             </button>
           ) : (
             <button
-              key={page}
+              key={`page-${page}`}
+              aria-label={`Page ${page}`}
+              aria-current={currentPage === page ? "page" : undefined}
               className={`join-item btn btn-sm ${currentPage === page ? 'btn-active' : ''}`}
               onClick={() => onPageChange?.(page)}
             >
@@ -62,6 +70,7 @@ const Pagination = ({
         
         <button 
           className="join-item btn btn-sm"
+          aria-label="Next page"
           onClick={() => onPageChange?.(currentPage + 1)}
           disabled={currentPage === totalPages}
         >

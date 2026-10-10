@@ -175,6 +175,7 @@ const Announcements = () => {
               <input 
                 type="email" 
                 placeholder="Enter your email" 
+                aria-label="Enter your email"
                 className="input input-lg flex-1 text-base-content"
               />
               <button className="btn btn-secondary btn-lg">

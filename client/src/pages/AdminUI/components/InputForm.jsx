@@ -36,6 +36,7 @@ const InputForm = () => {
           type="text"
           className="input w-full"
           placeholder="Title"
+          aria-label="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
@@ -49,6 +50,7 @@ const InputForm = () => {
           type="text"
           className="input w-full"
           placeholder="Content"
+          aria-label="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required
@@ -60,6 +62,7 @@ const InputForm = () => {
         <legend className="fieldset-legend">Category</legend>
         <select
           value={category}
+          aria-label="Category"
           className="select w-full"
           onChange={(e) => setCategory(e.target.value)}
           required
@@ -80,6 +83,7 @@ const InputForm = () => {
         <legend className="fieldset-legend">Priority</legend>
         <select
           value={priority}
+          aria-label="Priority"
           className="select w-full"
           onChange={(e) => setPriority(e.target.value)}
           required
@@ -98,6 +102,7 @@ const InputForm = () => {
         <legend className="fieldset-legend">Status</legend>
         <select
           value={status}
+          aria-label="Status"
           className="select w-full"
           onChange={(e) => setStatus(e.target.value)}
           required
@@ -115,6 +120,7 @@ const InputForm = () => {
         <legend className="fieldset-legend">Expiration</legend>
         <input
           type="date"
+          aria-label="Expiration date"
           className="input w-full"
           value={expires}
           onChange={(e) => setExpires(e.target.value)}

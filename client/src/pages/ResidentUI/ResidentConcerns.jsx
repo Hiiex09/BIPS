@@ -131,7 +131,13 @@ const ResidentConcerns = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="fieldset gap-1.5">
                     <legend className="fieldset-legend text-xs font-semibold">Category <span className="text-error">*</span></legend>
-                    <select name="category" value={form.category} onChange={handleChange} className="select select-bordered w-full">
+                    <select
+                      name="category"
+                      aria-label="Concern category"
+                      value={form.category}
+                      onChange={handleChange}
+                      className="select select-bordered w-full"
+                    >
                       <option value="" disabled>Select concern category</option>
                       {concernCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
                     </select>
@@ -141,6 +147,7 @@ const ResidentConcerns = () => {
                     <input
                       type="text"
                       name="subject"
+                      aria-label="Subject"
                       value={form.subject}
                       onChange={handleChange}
                       className="input input-bordered w-full"
@@ -153,6 +160,7 @@ const ResidentConcerns = () => {
                   <legend className="fieldset-legend text-xs font-semibold">Detailed Description <span className="text-error">*</span></legend>
                   <textarea
                     name="description"
+                    aria-label="Detailed Description"
                     value={form.description}
                     onChange={handleChange}
                     className="textarea textarea-bordered w-full h-28 resize-none"
