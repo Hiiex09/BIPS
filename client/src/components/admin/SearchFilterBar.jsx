@@ -12,6 +12,7 @@ const SearchFilterBar = ({
         <input
           type="search"
           placeholder={searchPlaceholder}
+          aria-label={searchPlaceholder}
           className="input input-sm input-bordered w-full rounded-xs pl-8 text-xs focus:outline-primary bg-base-100"
           onChange={(e) => onSearchChange?.(e.target.value)}
         />
@@ -21,23 +22,27 @@ const SearchFilterBar = ({
       {/* Filters with Swiss Selects */}
       {filters.length > 0 && (
         <div className="flex gap-2 flex-wrap items-center">
-          {filters.map((filter, index) => (
-            <select
-              key={index}
-              className="select select-sm select-bordered rounded-xs text-xs font-semibold w-full sm:w-auto focus:outline-primary bg-base-100"
-              onChange={(e) => filter.onChange?.(e.target.value)}
-              defaultValue=""
-            >
-              <option value="" disabled>
-                {filter.placeholder}
-              </option>
-              {filter.options.map((option, optIndex) => (
-                <option key={optIndex} value={option.value}>
-                  {option.label}
+          {filters.map((filter) => {
+            const filterKey = filter.name || filter.placeholder || "filter";
+            return (
+              <select
+                key={filterKey}
+                aria-label={filter.placeholder || filterKey}
+                className="select select-sm select-bordered rounded-xs text-xs font-semibold w-full sm:w-auto focus:outline-primary bg-base-100"
+                onChange={(e) => filter.onChange?.(e.target.value)}
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  {filter.placeholder}
                 </option>
-              ))}
-            </select>
-          ))}
+                {filter.options.map((option) => (
+                  <option key={option.value ?? option.label} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            );
+          })}
         </div>
       )}
     </div>

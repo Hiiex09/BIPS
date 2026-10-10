@@ -293,7 +293,7 @@ const AnnouncementsManagement = () => {
 
                 return (
                   <div
-                    key={item._id || idx}
+                    key={item._id || item.id || `${item.title}-${item.createdAt}`}
                     className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-base-200/30 transition-colors"
                   >
                     {/* Date Tile Element (matching public banner style) */}
@@ -343,6 +343,7 @@ const AnnouncementsManagement = () => {
                       </button>
                       <button
                         type="button"
+                        aria-label={`Delete bulletin ${item.title}`}
                         disabled={deleteMutation.isPending}
                         onClick={() => {
                           if (window.confirm(`Delete bulletin "${item.title}"?`)) {
@@ -473,6 +474,7 @@ const AnnouncementsManagement = () => {
                       )}
 
                       <button
+                        aria-label={`Delete story ${story.title}`}
                         onClick={() => {
                           if (window.confirm(`Permanently delete story "${story.title}"?`)) {
                             deleteStoryMutation.mutate(story._id);
@@ -505,6 +507,7 @@ const AnnouncementsManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close bulletin preview"
                   onClick={() => setSelectedAnnouncement(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -558,6 +561,7 @@ const AnnouncementsManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close publishing console"
                   onClick={() => setShowModal(false)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -567,12 +571,14 @@ const AnnouncementsManagement = () => {
 
               <form onSubmit={handleCreateSubmit} className="space-y-3.5 text-xs">
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="bulletin-title" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Bulletin Title
                   </label>
                   <input
+                    id="bulletin-title"
                     type="text"
                     required
+                    aria-label="Bulletin Title"
                     placeholder="e.g., Scheduled Water Interruption in Purok 4"
                     className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={formData.title}
@@ -586,6 +592,7 @@ const AnnouncementsManagement = () => {
                       Category
                     </label>
                     <select
+                      aria-label="Bulletin category"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -603,6 +610,7 @@ const AnnouncementsManagement = () => {
                       Broadcast Priority
                     </label>
                     <select
+                      aria-label="Broadcast priority"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.priority}
                       onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
@@ -617,6 +625,7 @@ const AnnouncementsManagement = () => {
                       Initial Status
                     </label>
                     <select
+                      aria-label="Initial bulletin status"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.status}
                       onChange={(e) => setFormData({ ...formData, status: e.target.value })}
@@ -628,12 +637,14 @@ const AnnouncementsManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="bulletin-content" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Announcement Details / Body
                   </label>
                   <textarea
+                    id="bulletin-content"
                     required
                     rows={4}
+                    aria-label="Announcement Details / Body"
                     placeholder="Provide full details, schedules, requirements or contact persons..."
                     className="textarea textarea-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={formData.content}
@@ -678,6 +689,7 @@ const AnnouncementsManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close story proposal"
                   onClick={() => setSelectedStory(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -744,6 +756,7 @@ const AnnouncementsManagement = () => {
                   <XCircle size={15} /> Decline Story Submission
                 </h3>
                 <button
+                  aria-label="Close decline modal"
                   onClick={() => setRejectModalStory(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -759,6 +772,7 @@ const AnnouncementsManagement = () => {
               <textarea
                 rows={3}
                 required
+                aria-label="Decline reason feedback"
                 placeholder="e.g. Please clarify event location and attach official barangay clearance..."
                 className="textarea textarea-bordered w-full rounded-xs text-xs"
                 value={rejectNotes}

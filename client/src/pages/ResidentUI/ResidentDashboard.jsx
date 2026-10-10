@@ -40,9 +40,9 @@ const CommunityNewsCard = ({ article }) => (
       <p className="text-xs text-muted">{article.date}</p>
       <h3 className="font-bold text-sm leading-snug">{article.title}</h3>
       <p className="text-xs text-muted line-clamp-3">{article.excerpt}</p>
-      <a className="link link-primary text-xs font-semibold mt-1 flex items-center gap-1">
+      <Link to="/Resident/news" className="link link-primary text-xs font-semibold mt-1 flex items-center gap-1">
         Read Article <ArrowRight size={12} />
-      </a>
+      </Link>
     </div>
   </div>
 );

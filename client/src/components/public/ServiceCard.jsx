@@ -16,8 +16,12 @@ const ServiceCard = ({ icon: Icon, title, description, color = "primary", link }
         </div>
         <h3 className="card-title text-2xl mb-3">{title}</h3>
         <p className="opacity-80 mb-4">{description}</p>
-        <a href={link || "#"} className="btn btn-ghost btn-sm gap-2 group-hover:gap-4 transition-all">
-          Learn More
+        <a
+          href={link || "#"}
+          aria-label={`View details for ${title}`}
+          className="btn btn-ghost btn-sm gap-2 group-hover:gap-4 transition-all"
+        >
+          View Details
           <ArrowRight size={16} />
         </a>
       </div>

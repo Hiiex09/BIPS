@@ -164,10 +164,12 @@ export const Signup = () => {
               {/* First + Last Name */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <span className="text-sm font-medium">First Name</span>
+                  <label htmlFor="signup-firstname" className="text-sm font-medium">First Name</label>
                   <input
+                    id="signup-firstname"
                     type="text"
                     name="firstName"
+                    aria-label="First Name"
                     value={formData.firstName}
                     onChange={handleInputChange}
                     placeholder="Juan"
@@ -177,10 +179,12 @@ export const Signup = () => {
                   />
                 </div>
                 <div>
-                  <span className="text-sm font-medium">Last Name</span>
+                  <label htmlFor="signup-lastname" className="text-sm font-medium">Last Name</label>
                   <input
+                    id="signup-lastname"
                     type="text"
                     name="lastName"
+                    aria-label="Last Name"
                     value={formData.lastName}
                     onChange={handleInputChange}
                     placeholder="Dela Cruz"
@@ -193,9 +197,11 @@ export const Signup = () => {
 
               {/* Address */}
               <div>
-                <span className="text-sm font-medium">Full Home Address</span>
+                <label htmlFor="signup-address" className="text-sm font-medium">Full Home Address</label>
                 <textarea
+                  id="signup-address"
                   name="address"
+                  aria-label="Full Home Address"
                   value={formData.address}
                   onChange={handleInputChange}
                   className="textarea textarea-bordered w-full mt-1"
@@ -208,10 +214,12 @@ export const Signup = () => {
               {/* Contact + Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <span className="text-sm font-medium">Contact Number</span>
+                  <label htmlFor="signup-mobile" className="text-sm font-medium">Contact Number</label>
                   <input
+                    id="signup-mobile"
                     type="tel"
                     name="mobile"
+                    aria-label="Contact Number"
                     value={formData.mobile}
                     onChange={handleInputChange}
                     placeholder="+63 912 345 6789"
@@ -221,10 +229,12 @@ export const Signup = () => {
                   />
                 </div>
                 <div>
-                  <span className="text-sm font-medium">Email Address</span>
+                  <label htmlFor="signup-email" className="text-sm font-medium">Email Address</label>
                   <input
+                    id="signup-email"
                     type="email"
                     name="email"
+                    aria-label="Email Address"
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="juan@example.com"

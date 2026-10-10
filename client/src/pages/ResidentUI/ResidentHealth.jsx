@@ -1,4 +1,5 @@
 import { CalendarDays, MapPin, Phone, AlertCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { healthCenterStats, healthServices, doctorSchedule } from "../../data/residentMockData";
 
 /* ── Stat Card ──────────────────────────────────────── */
@@ -73,8 +74,9 @@ const ResidentHealth = () => {
               </figure>
               <div className="card-body p-4 gap-2">
                 <h4 className="font-bold text-sm">{service.name}</h4>
-                <p className="text-xs text-muted leading-relaxed">{service.description}</p>
-                <a className="link link-primary text-xs font-semibold mt-1">{service.link}</a>
+                <Link to="/services" className="link link-primary text-xs font-semibold mt-1">
+                  {service.link}
+                </Link>
               </div>
             </div>
           ))}

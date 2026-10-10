@@ -394,9 +394,27 @@ export const nonEmergencyContacts = [
 ];
 
 export const emergencyFacilities = [
-  { name: "General Hospital", distance: "0.4mi", type: "hospital" },
-  { name: "Fire Station #12", distance: "1.2mi", type: "fire" },
-  { name: "Police Station 4", distance: "0.8mi", type: "police" },
+  {
+    name: "General Hospital",
+    distance: "0.4mi",
+    type: "hospital",
+    address: "Cebu City Medical Center, N. Bacalso Ave, Cebu City",
+    query: "Cebu City Medical Center, Cebu City, Philippines",
+  },
+  {
+    name: "Fire Station #12",
+    distance: "1.2mi",
+    type: "fire",
+    address: "Parian Fire Sub Station, Mabini St, Cebu City",
+    query: "Parian Fire Sub Station, Mabini St, Cebu City, Philippines",
+  },
+  {
+    name: "Police Station 4",
+    distance: "0.8mi",
+    type: "police",
+    address: "Police Station 4, General Maxilom Ave Ext, Cebu City",
+    query: "Police Station 4, General Maxilom Ave Ext, Cebu City, Philippines",
+  },
 ];
 
 export const emergencyProcedures = [

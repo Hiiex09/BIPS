@@ -297,7 +297,7 @@ const UserManagement = () => {
                 <tbody className="divide-y divide-base-300 font-medium">
                   {currentUsers.map((u, index) => (
                     <tr
-                      key={u._id || index}
+                      key={u._id || u.id || u.email}
                       className="hover:bg-base-200/40 transition-colors"
                     >
                       <td className="py-3 px-4 font-mono text-[11px] text-base-content/50">
@@ -391,6 +391,7 @@ const UserManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close user dossier"
                   onClick={() => setSelectedUser(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -468,6 +469,7 @@ const UserManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close user registration modal"
                   onClick={() => setShowCreateModal(false)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -478,12 +480,14 @@ const UserManagement = () => {
               <form onSubmit={handleCreateSubmit} className="space-y-3.5 text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-firstname" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       First Name
                     </label>
                     <input
+                      id="create-firstname"
                       type="text"
                       required
+                      aria-label="First Name"
                       placeholder="e.g., Juan"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={createForm.firstName}
@@ -491,12 +495,14 @@ const UserManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-lastname" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       Last Name
                     </label>
                     <input
+                      id="create-lastname"
                       type="text"
                       required
+                      aria-label="Last Name"
                       placeholder="e.g., Dela Cruz"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={createForm.lastName}
@@ -507,12 +513,14 @@ const UserManagement = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-email" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       Email Address
                     </label>
                     <input
+                      id="create-email"
                       type="email"
                       required
+                      aria-label="Email Address"
                       placeholder="juan@example.com"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={createForm.email}
@@ -520,13 +528,15 @@ const UserManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-mobile" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       Mobile Number (11 digits)
                     </label>
                     <input
+                      id="create-mobile"
                       type="text"
                       required
                       maxLength={11}
+                      aria-label="Mobile Number (11 digits)"
                       placeholder="09123456789"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                       value={createForm.mobile}
@@ -536,13 +546,15 @@ const UserManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="create-password" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Initial Password (min. 8 characters)
                   </label>
                   <input
+                    id="create-password"
                     type="password"
                     required
                     minLength={8}
+                    aria-label="Initial Password"
                     placeholder="••••••••••••"
                     className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                     value={createForm.password}
@@ -551,12 +563,14 @@ const UserManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="create-address" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Registered Home Address
                   </label>
                   <textarea
+                    id="create-address"
                     required
                     rows={2}
+                    aria-label="Registered Home Address"
                     placeholder="Purok, Street, Barangay Tejero, Cebu City"
                     className="textarea textarea-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={createForm.address}
@@ -570,6 +584,7 @@ const UserManagement = () => {
                       Account Role
                     </label>
                     <select
+                      aria-label="Account role"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={createForm.role}
                       onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })}
@@ -585,6 +600,7 @@ const UserManagement = () => {
                       Initial Status
                     </label>
                     <select
+                      aria-label="Initial account status"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={createForm.status}
                       onChange={(e) => setCreateForm({ ...createForm, status: e.target.value })}
@@ -633,6 +649,7 @@ const UserManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close edit user modal"
                   onClick={() => setEditingUser(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -649,6 +666,7 @@ const UserManagement = () => {
                     <input
                       type="text"
                       required
+                      aria-label="First Name"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={editingUser.firstName}
                       onChange={(e) => setEditingUser({ ...editingUser, firstName: e.target.value })}
@@ -661,6 +679,7 @@ const UserManagement = () => {
                     <input
                       type="text"
                       required
+                      aria-label="Last Name"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={editingUser.lastName}
                       onChange={(e) => setEditingUser({ ...editingUser, lastName: e.target.value })}
@@ -676,6 +695,7 @@ const UserManagement = () => {
                     <input
                       type="email"
                       required
+                      aria-label="Email Address"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                       value={editingUser.email}
                       onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
@@ -689,6 +709,7 @@ const UserManagement = () => {
                       type="text"
                       required
                       maxLength={11}
+                      aria-label="Mobile Number"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                       value={editingUser.mobile}
                       onChange={(e) => setEditingUser({ ...editingUser, mobile: e.target.value })}
@@ -703,6 +724,7 @@ const UserManagement = () => {
                   <textarea
                     required
                     rows={2}
+                    aria-label="Home Address"
                     className="textarea textarea-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={editingUser.address}
                     onChange={(e) => setEditingUser({ ...editingUser, address: e.target.value })}
@@ -715,6 +737,7 @@ const UserManagement = () => {
                       Assign Role
                     </label>
                     <select
+                      aria-label="Assign Role"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={editingUser.role}
                       onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
@@ -730,6 +753,7 @@ const UserManagement = () => {
                       Account Status
                     </label>
                     <select
+                      aria-label="Account Status"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={editingUser.status}
                       onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value })}
@@ -742,12 +766,14 @@ const UserManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1 flex items-center gap-1">
+                  <label htmlFor="edit-password" className="block text-[11px] font-bold text-base-content/70 mb-1 flex items-center gap-1">
                     <KeyRound size={12} />
                     <span>Reset Password (leave blank to keep unchanged)</span>
                   </label>
                   <input
+                    id="edit-password"
                     type="password"
+                    aria-label="Reset Password"
                     placeholder="Leave blank or enter min. 8 chars to change"
                     className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                     value={editingUser.password || ""}

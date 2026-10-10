@@ -447,6 +447,7 @@ const ResidentNews = () => {
               </div>
               <button
                 onClick={() => setIsSubmitModalOpen(false)}
+                aria-label="Close submit story modal"
                 className="btn btn-ghost btn-xs btn-circle"
               >
                 <X size={16} />
@@ -455,12 +456,14 @@ const ResidentNews = () => {
 
             <form onSubmit={handleSubmit} className="p-4 space-y-4">
               <div>
-                <label className="block text-xs font-bold text-base-content mb-1">
+                <label htmlFor="story-title" className="block text-xs font-bold text-base-content mb-1">
                   Story Title <span className="text-error">*</span>
                 </label>
                 <input
+                  id="story-title"
                   type="text"
                   required
+                  aria-label="Story Title"
                   placeholder="e.g., Purok 2 Weekend Sports Clinic"
                   className="input input-sm input-bordered w-full rounded-xs text-xs"
                   value={formData.title}
@@ -470,10 +473,12 @@ const ResidentNews = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-base-content mb-1">
+                  <label htmlFor="story-category" className="block text-xs font-bold text-base-content mb-1">
                     Category
                   </label>
                   <select
+                    id="story-category"
+                    aria-label="Story category"
                     className="select select-sm select-bordered w-full rounded-xs text-xs"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -485,11 +490,13 @@ const ResidentNews = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-base-content mb-1">
+                  <label htmlFor="story-image" className="block text-xs font-bold text-base-content mb-1">
                     Cover Photo URL (Optional)
                   </label>
                   <input
+                    id="story-image"
                     type="url"
+                    aria-label="Cover Photo URL (Optional)"
                     placeholder="https://..."
                     className="input input-sm input-bordered w-full rounded-xs text-xs"
                     value={formData.image}
@@ -499,11 +506,13 @@ const ResidentNews = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-base-content mb-1">
+                <label htmlFor="story-excerpt" className="block text-xs font-bold text-base-content mb-1">
                   Short Excerpt / Summary
                 </label>
                 <input
+                  id="story-excerpt"
                   type="text"
+                  aria-label="Short Excerpt / Summary"
                   placeholder="Brief 1-2 sentence overview"
                   className="input input-sm input-bordered w-full rounded-xs text-xs"
                   value={formData.excerpt}
@@ -512,12 +521,14 @@ const ResidentNews = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-base-content mb-1">
+                <label htmlFor="story-content" className="block text-xs font-bold text-base-content mb-1">
                   Story Content <span className="text-error">*</span>
                 </label>
                 <textarea
+                  id="story-content"
                   required
                   rows={5}
+                  aria-label="Story Content"
                   placeholder="Write the details of the event, initiative, or update..."
                   className="textarea textarea-bordered w-full rounded-xs text-xs leading-relaxed"
                   value={formData.content}
@@ -572,6 +583,7 @@ const ResidentNews = () => {
               />
               <button
                 onClick={() => setSelectedStory(null)}
+                aria-label="Close story details"
                 className="btn btn-circle btn-xs bg-base-100/90 hover:bg-base-100 border-0 absolute top-3 right-3 shadow-md"
               >
                 <X size={14} />
