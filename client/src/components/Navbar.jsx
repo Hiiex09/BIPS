@@ -9,7 +9,6 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const megaMenuRef = useRef(null);
 
   // Close mega-menu on click outside
@@ -25,13 +24,6 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logoutUser();
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/services?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
   };
 
   const serviceItems = [
@@ -205,25 +197,8 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Right: Search & Auth */}
+          {/* Desktop Right: Auth Actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <input
-                type="text"
-                placeholder="Search catalog..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="input input-sm input-bordered w-48 text-xs pr-8 rounded-xs focus:outline-primary"
-              />
-              <button
-                type="submit"
-                aria-label="Submit Search"
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-primary transition-colors"
-              >
-                <Search size={14} />
-              </button>
-            </form>
-
             {user ? (
               <div className="flex items-center gap-2">
                 <Link
@@ -265,22 +240,6 @@ const Navbar = () => {
               tabIndex={0}
               className="dropdown-content mt-3 p-4 shadow-xl bg-base-100 rounded-xs border border-base-300 w-72 space-y-3 z-50 text-xs font-medium"
             >
-              <form onSubmit={handleSearchSubmit} className="relative mb-2">
-                <input
-                  type="text"
-                  placeholder="Search services..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="input input-sm input-bordered w-full text-xs pr-8 rounded-xs"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-base-content/40"
-                >
-                  <Search size={14} />
-                </button>
-              </form>
-
               <div className="flex flex-col gap-1 border-b border-base-300 pb-2">
                 <Link to="/" className="py-1.5 px-2 hover:bg-base-200 rounded-xs">
                   Home
