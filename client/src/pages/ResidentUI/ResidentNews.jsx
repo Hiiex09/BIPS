@@ -447,6 +447,7 @@ const ResidentNews = () => {
               </div>
               <button
                 onClick={() => setIsSubmitModalOpen(false)}
+                aria-label="Close submit story modal"
                 className="btn btn-ghost btn-xs btn-circle"
               >
                 <X size={16} />
@@ -474,6 +475,7 @@ const ResidentNews = () => {
                     Category
                   </label>
                   <select
+                    aria-label="Story category"
                     className="select select-sm select-bordered w-full rounded-xs text-xs"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -572,6 +574,7 @@ const ResidentNews = () => {
               />
               <button
                 onClick={() => setSelectedStory(null)}
+                aria-label="Close story details"
                 className="btn btn-circle btn-xs bg-base-100/90 hover:bg-base-100 border-0 absolute top-3 right-3 shadow-md"
               >
                 <X size={14} />

@@ -38,6 +38,7 @@ const Pagination = ({
       <div className="join">
         <button 
           className="join-item btn btn-sm"
+          aria-label="Previous page"
           onClick={() => onPageChange?.(currentPage - 1)}
           disabled={currentPage === 1}
         >
@@ -46,12 +47,19 @@ const Pagination = ({
         
         {getPageNumbers().map((page, index) => (
           page === '...' ? (
-            <button key={`ellipsis-${index}`} className="join-item btn btn-sm btn-disabled">
+            <button
+              key={`ellipsis-${index}`}
+              className="join-item btn btn-sm btn-disabled"
+              aria-label="More pages"
+              disabled
+            >
               ...
             </button>
           ) : (
             <button
               key={page}
+              aria-label={`Page ${page}`}
+              aria-current={currentPage === page ? "page" : undefined}
               className={`join-item btn btn-sm ${currentPage === page ? 'btn-active' : ''}`}
               onClick={() => onPageChange?.(page)}
             >
@@ -62,6 +70,7 @@ const Pagination = ({
         
         <button 
           className="join-item btn btn-sm"
+          aria-label="Next page"
           onClick={() => onPageChange?.(currentPage + 1)}
           disabled={currentPage === totalPages}
         >

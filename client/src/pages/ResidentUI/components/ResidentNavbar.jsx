@@ -39,7 +39,7 @@ const ResidentNavbar = ({ pageTitle, drawerId }) => {
         {/* Notifications */}
         <div className="indicator">
           <span className="indicator-item badge badge-error badge-xs"></span>
-          <button className="btn btn-ghost btn-circle btn-sm">
+          <button aria-label="Notifications" className="btn btn-ghost btn-circle btn-sm">
             <Bell size={18} />
           </button>
         </div>

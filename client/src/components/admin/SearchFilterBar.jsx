@@ -12,6 +12,7 @@ const SearchFilterBar = ({
         <input
           type="search"
           placeholder={searchPlaceholder}
+          aria-label={searchPlaceholder}
           className="input input-sm input-bordered w-full rounded-xs pl-8 text-xs focus:outline-primary bg-base-100"
           onChange={(e) => onSearchChange?.(e.target.value)}
         />
@@ -24,6 +25,7 @@ const SearchFilterBar = ({
           {filters.map((filter, index) => (
             <select
               key={index}
+              aria-label={filter.placeholder || `Filter ${index + 1}`}
               className="select select-sm select-bordered rounded-xs text-xs font-semibold w-full sm:w-auto focus:outline-primary bg-base-100"
               onChange={(e) => filter.onChange?.(e.target.value)}
               defaultValue=""

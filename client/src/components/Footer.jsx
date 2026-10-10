@@ -21,7 +21,7 @@ const Footer = () => {
             </aside>
 
             {/* Quick Access */}
-            <nav>
+            <nav aria-label="Quick Access">
               <h6 className="footer-title">Quick Access</h6>
               <a className="link link-hover">E-Services</a>
               <a className="link link-hover">Voters Registration</a>
@@ -30,7 +30,7 @@ const Footer = () => {
             </nav>
 
             {/* Government Links */}
-            <nav>
+            <nav aria-label="Government Links">
               <h6 className="footer-title">Government Links</h6>
               <a className="link link-hover">City Hall Website</a>
               <a className="link link-hover">Department of Interior</a>
@@ -39,16 +39,16 @@ const Footer = () => {
             </nav>
 
             {/* Contact */}
-            <nav>
+            <nav aria-label="Contact Information">
               <h6 className="footer-title">Contact Us</h6>
               <div className="flex flex-col gap-2 text-sm">
                 <span>📧 support@brgysanjose.ph</span>
                 <span>📞 (02) 8000-0000</span>
                 <div className="flex gap-3 mt-3">
-                  <button className="btn btn-sm btn-circle btn-ghost">
+                  <button aria-label="Barangay Official Portal Website" className="btn btn-sm btn-circle btn-ghost">
                     🌐
                   </button>
-                  <button className="btn btn-sm btn-circle btn-ghost">
+                  <button aria-label="Official Facebook Page" className="btn btn-sm btn-circle btn-ghost">
                     📘
                   </button>
                 </div>

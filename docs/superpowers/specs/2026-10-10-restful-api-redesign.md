@@ -106,3 +106,4 @@ Update all client query callers in `client/src/api/`:
 1. Backend route mounting and syntax validation via server start.
 2. Frontend build verification (`npm run build`).
 3. Verification of all API endpoints via automated test/smoke scripts.
+

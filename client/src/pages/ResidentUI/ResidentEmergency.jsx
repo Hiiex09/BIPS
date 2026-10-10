@@ -85,7 +85,11 @@ const ResidentEmergency = () => {
             <p className="text-xs opacity-85">Take shelter immediately if outdoors. High winds expected until 10:00 PM.</p>
           </div>
           <div className="flex items-center gap-2 ml-auto shrink-0">
-            <button onClick={() => setAlertDismissed(true)} className="btn btn-sm btn-circle btn-ghost">
+            <button
+              onClick={() => setAlertDismissed(true)}
+              aria-label="Dismiss weather warning"
+              className="btn btn-sm btn-circle btn-ghost"
+            >
               <X size={14} />
             </button>
           </div>

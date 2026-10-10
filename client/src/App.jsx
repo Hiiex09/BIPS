@@ -35,6 +35,19 @@ const ResidentEmergency = lazy(() => import("./pages/ResidentUI/ResidentEmergenc
 // Route-based Code Splitting: Fallback Page
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 
+// Route Guard Helpers
+const AdminRoute = ({ user, children }) => {
+  if (!user || (user.role !== "Admin" && user.role !== "Staff")) {
+    return <Navigate to={user ? "/welcome" : "/"} replace />;
+  }
+  return children;
+};
+
+const LoginRoute = ({ user }) => {
+  if (!user) return <Login />;
+  return <Navigate to={user.role === "Resident" ? "/Resident" : "/welcome"} replace />;
+};
+
 const App = () => {
   const { user, isLoading } = useCheckAuth();
 
@@ -53,82 +66,61 @@ const App = () => {
               <Route path="/services" element={<Services />} />
               <Route path="/announcements" element={<Announcements />} />
               <Route path="/about" element={<About />} />
-              <Route
-                path="/login"
-                element={
-                  !user ? (
-                    <Login />
-                  ) : user.role === "Resident" ? (
-                    <Navigate to="/Resident" />
-                  ) : (
-                    <Navigate to="/welcome" />
-                  )
-                }
-              />
+              <Route path="/login" element={<LoginRoute user={user} />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/demo" element={<DemoPage />} />
             </Route>
 
             {/* Admin Protected Routes */}
             <Route
-              path="/welcome"
+              path="/admin"
               element={
-                user && (user.role === "Admin" || user.role === "Staff") ? (
+                <AdminRoute user={user}>
                   <AdminLandingPage />
-                ) : (
-                  <Navigate to="/" />
-                )
+                </AdminRoute>
               }
             />
 
             <Route
               path="/user-management"
               element={
-                user && (user.role === "Admin" || user.role === "Staff") ? (
+                <AdminRoute user={user}>
                   <UserManagement />
-                ) : (
-                  <Navigate to="/welcome" />
-                )
+                </AdminRoute>
               }
             />
 
             <Route
               path="/document-management"
               element={
-                user && (user.role === "Admin" || user.role === "Staff") ? (
+                <AdminRoute user={user}>
                   <DocumentsManagement />
-                ) : (
-                  <Navigate to="/welcome" />
-                )
+                </AdminRoute>
               }
             />
 
             <Route
               path="/incident-reports"
               element={
-                user && (user.role === "Admin" || user.role === "Staff") ? (
+                <AdminRoute user={user}>
                   <IncidentReports />
-                ) : (
-                  <Navigate to="/welcome" />
-                )
+                </AdminRoute>
               }
             />
 
             <Route
               path="/announcement-management"
               element={
-                user && (user.role === "Admin" || user.role === "Staff") ? (
+                <AdminRoute user={user}>
                   <AnnouncementsManagement />
-                ) : (
-                  <Navigate to="/welcome" />
-                )
+                </AdminRoute>
               }
             />
 
             {/* Resident Protected Routes with ResidentLayout */}
             <Route
               path="/Resident"
-              element={user ? <ResidentLayout /> : <Navigate to="/login" />}
+              element={user ? <ResidentLayout /> : <Navigate to="/login" replace />}
             >
               <Route index element={<ResidentDashboard />} />
               <Route path="documents" element={<ResidentDocuments />} />

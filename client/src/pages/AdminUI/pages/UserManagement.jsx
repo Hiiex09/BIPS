@@ -391,6 +391,7 @@ const UserManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close user dossier"
                   onClick={() => setSelectedUser(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -468,6 +469,7 @@ const UserManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close user registration modal"
                   onClick={() => setShowCreateModal(false)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -570,6 +572,7 @@ const UserManagement = () => {
                       Account Role
                     </label>
                     <select
+                      aria-label="Account role"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={createForm.role}
                       onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })}
@@ -585,6 +588,7 @@ const UserManagement = () => {
                       Initial Status
                     </label>
                     <select
+                      aria-label="Initial account status"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={createForm.status}
                       onChange={(e) => setCreateForm({ ...createForm, status: e.target.value })}
@@ -633,6 +637,7 @@ const UserManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close edit user modal"
                   onClick={() => setEditingUser(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -649,6 +654,7 @@ const UserManagement = () => {
                     <input
                       type="text"
                       required
+                      aria-label="First Name"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={editingUser.firstName}
                       onChange={(e) => setEditingUser({ ...editingUser, firstName: e.target.value })}
@@ -661,6 +667,7 @@ const UserManagement = () => {
                     <input
                       type="text"
                       required
+                      aria-label="Last Name"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={editingUser.lastName}
                       onChange={(e) => setEditingUser({ ...editingUser, lastName: e.target.value })}
@@ -676,6 +683,7 @@ const UserManagement = () => {
                     <input
                       type="email"
                       required
+                      aria-label="Email Address"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                       value={editingUser.email}
                       onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
@@ -689,6 +697,7 @@ const UserManagement = () => {
                       type="text"
                       required
                       maxLength={11}
+                      aria-label="Mobile Number"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                       value={editingUser.mobile}
                       onChange={(e) => setEditingUser({ ...editingUser, mobile: e.target.value })}
@@ -703,6 +712,7 @@ const UserManagement = () => {
                   <textarea
                     required
                     rows={2}
+                    aria-label="Home Address"
                     className="textarea textarea-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={editingUser.address}
                     onChange={(e) => setEditingUser({ ...editingUser, address: e.target.value })}
@@ -715,6 +725,7 @@ const UserManagement = () => {
                       Assign Role
                     </label>
                     <select
+                      aria-label="Assign Role"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={editingUser.role}
                       onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value })}
@@ -730,6 +741,7 @@ const UserManagement = () => {
                       Account Status
                     </label>
                     <select
+                      aria-label="Account Status"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={editingUser.status}
                       onChange={(e) => setEditingUser({ ...editingUser, status: e.target.value })}

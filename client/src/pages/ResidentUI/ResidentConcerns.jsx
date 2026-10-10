@@ -131,7 +131,13 @@ const ResidentConcerns = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="fieldset gap-1.5">
                     <legend className="fieldset-legend text-xs font-semibold">Category <span className="text-error">*</span></legend>
-                    <select name="category" value={form.category} onChange={handleChange} className="select select-bordered w-full">
+                    <select
+                      name="category"
+                      aria-label="Concern category"
+                      value={form.category}
+                      onChange={handleChange}
+                      className="select select-bordered w-full"
+                    >
                       <option value="" disabled>Select concern category</option>
                       {concernCategories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
                     </select>

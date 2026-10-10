@@ -22,7 +22,12 @@ const ResidentLayout = () => {
 
   return (
     <div className="drawer lg:drawer-open">
-      <input id={DRAWER_ID} type="checkbox" className="drawer-toggle" />
+      <input
+        id={DRAWER_ID}
+        type="checkbox"
+        className="drawer-toggle"
+        aria-label="Toggle navigation drawer"
+      />
 
       {/* Main Content */}
       <div className="drawer-content flex flex-col h-screen overflow-hidden">

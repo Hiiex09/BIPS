@@ -343,6 +343,7 @@ const AnnouncementsManagement = () => {
                       </button>
                       <button
                         type="button"
+                        aria-label={`Delete bulletin ${item.title}`}
                         disabled={deleteMutation.isPending}
                         onClick={() => {
                           if (window.confirm(`Delete bulletin "${item.title}"?`)) {
@@ -473,6 +474,7 @@ const AnnouncementsManagement = () => {
                       )}
 
                       <button
+                        aria-label={`Delete story ${story.title}`}
                         onClick={() => {
                           if (window.confirm(`Permanently delete story "${story.title}"?`)) {
                             deleteStoryMutation.mutate(story._id);
@@ -505,6 +507,7 @@ const AnnouncementsManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close bulletin preview"
                   onClick={() => setSelectedAnnouncement(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -558,6 +561,7 @@ const AnnouncementsManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close publishing console"
                   onClick={() => setShowModal(false)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -586,6 +590,7 @@ const AnnouncementsManagement = () => {
                       Category
                     </label>
                     <select
+                      aria-label="Bulletin category"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -603,6 +608,7 @@ const AnnouncementsManagement = () => {
                       Broadcast Priority
                     </label>
                     <select
+                      aria-label="Broadcast priority"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.priority}
                       onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
@@ -617,6 +623,7 @@ const AnnouncementsManagement = () => {
                       Initial Status
                     </label>
                     <select
+                      aria-label="Initial bulletin status"
                       className="select select-sm select-bordered w-full rounded-xs text-xs font-semibold focus:outline-primary"
                       value={formData.status}
                       onChange={(e) => setFormData({ ...formData, status: e.target.value })}
@@ -678,6 +685,7 @@ const AnnouncementsManagement = () => {
                 </div>
                 <button
                   type="button"
+                  aria-label="Close story proposal"
                   onClick={() => setSelectedStory(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
@@ -744,6 +752,7 @@ const AnnouncementsManagement = () => {
                   <XCircle size={15} /> Decline Story Submission
                 </h3>
                 <button
+                  aria-label="Close decline modal"
                   onClick={() => setRejectModalStory(null)}
                   className="btn btn-xs btn-ghost btn-square"
                 >
