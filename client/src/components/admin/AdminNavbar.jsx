@@ -82,6 +82,7 @@ const AdminNavbar = ({ title, showSearch = true, onActionClick }) => {
               <input
                 type="text"
                 placeholder="Quick lookup (Press '/' to search)"
+                aria-label="Quick lookup (Press '/' to search)"
                 className="input input-xs input-bordered w-48 sm:w-60 rounded-xs pl-7 text-xs focus:outline-primary"
                 onKeyDown={(e) => {
                   if (e.key === "Escape") e.currentTarget.blur();

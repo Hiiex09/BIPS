@@ -480,12 +480,14 @@ const UserManagement = () => {
               <form onSubmit={handleCreateSubmit} className="space-y-3.5 text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-firstname" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       First Name
                     </label>
                     <input
+                      id="create-firstname"
                       type="text"
                       required
+                      aria-label="First Name"
                       placeholder="e.g., Juan"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={createForm.firstName}
@@ -493,12 +495,14 @@ const UserManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-lastname" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       Last Name
                     </label>
                     <input
+                      id="create-lastname"
                       type="text"
                       required
+                      aria-label="Last Name"
                       placeholder="e.g., Dela Cruz"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={createForm.lastName}
@@ -509,12 +513,14 @@ const UserManagement = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-email" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       Email Address
                     </label>
                     <input
+                      id="create-email"
                       type="email"
                       required
+                      aria-label="Email Address"
                       placeholder="juan@example.com"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                       value={createForm.email}
@@ -522,13 +528,15 @@ const UserManagement = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                    <label htmlFor="create-mobile" className="block text-[11px] font-bold text-base-content/70 mb-1">
                       Mobile Number (11 digits)
                     </label>
                     <input
+                      id="create-mobile"
                       type="text"
                       required
                       maxLength={11}
+                      aria-label="Mobile Number (11 digits)"
                       placeholder="09123456789"
                       className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                       value={createForm.mobile}
@@ -538,13 +546,15 @@ const UserManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="create-password" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Initial Password (min. 8 characters)
                   </label>
                   <input
+                    id="create-password"
                     type="password"
                     required
                     minLength={8}
+                    aria-label="Initial Password"
                     placeholder="••••••••••••"
                     className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                     value={createForm.password}
@@ -553,12 +563,14 @@ const UserManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="create-address" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Registered Home Address
                   </label>
                   <textarea
+                    id="create-address"
                     required
                     rows={2}
+                    aria-label="Registered Home Address"
                     placeholder="Purok, Street, Barangay Tejero, Cebu City"
                     className="textarea textarea-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={createForm.address}
@@ -754,12 +766,14 @@ const UserManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1 flex items-center gap-1">
+                  <label htmlFor="edit-password" className="block text-[11px] font-bold text-base-content/70 mb-1 flex items-center gap-1">
                     <KeyRound size={12} />
                     <span>Reset Password (leave blank to keep unchanged)</span>
                   </label>
                   <input
+                    id="edit-password"
                     type="password"
+                    aria-label="Reset Password"
                     placeholder="Leave blank or enter min. 8 chars to change"
                     className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary font-mono"
                     value={editingUser.password || ""}

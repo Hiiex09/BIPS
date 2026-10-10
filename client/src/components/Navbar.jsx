@@ -74,7 +74,6 @@ const MobileMenu = ({ user, onLogout }) => (
     </button>
 
     <div
-      tabIndex={0}
       className="dropdown-content mt-3 p-4 shadow-xl bg-base-100 rounded-xs border border-base-300 w-72 space-y-3 z-50 text-xs font-medium"
     >
       <div className="flex flex-col gap-1 border-b border-base-300 pb-2">

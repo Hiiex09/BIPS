@@ -198,6 +198,7 @@ const RequestModal = ({ doc, onClose }) => {
             <legend className="fieldset-legend text-xs">Purpose</legend>
             <input
               type="text"
+              aria-label="Purpose"
               className="input input-bordered w-full"
               placeholder="e.g. Employment requirement"
               value={form.purpose}
@@ -208,6 +209,7 @@ const RequestModal = ({ doc, onClose }) => {
             <legend className="fieldset-legend text-xs">Contact Number</legend>
             <input
               type="text"
+              aria-label="Contact Number"
               className="input input-bordered w-full"
               placeholder="09XXXXXXXXX"
               value={form.contactNumber}

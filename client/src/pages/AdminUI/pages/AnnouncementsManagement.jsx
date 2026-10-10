@@ -571,12 +571,14 @@ const AnnouncementsManagement = () => {
 
               <form onSubmit={handleCreateSubmit} className="space-y-3.5 text-xs">
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="bulletin-title" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Bulletin Title
                   </label>
                   <input
+                    id="bulletin-title"
                     type="text"
                     required
+                    aria-label="Bulletin Title"
                     placeholder="e.g., Scheduled Water Interruption in Purok 4"
                     className="input input-sm input-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={formData.title}
@@ -635,12 +637,14 @@ const AnnouncementsManagement = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-base-content/70 mb-1">
+                  <label htmlFor="bulletin-content" className="block text-[11px] font-bold text-base-content/70 mb-1">
                     Announcement Details / Body
                   </label>
                   <textarea
+                    id="bulletin-content"
                     required
                     rows={4}
+                    aria-label="Announcement Details / Body"
                     placeholder="Provide full details, schedules, requirements or contact persons..."
                     className="textarea textarea-bordered w-full rounded-xs text-xs focus:outline-primary"
                     value={formData.content}
@@ -768,6 +772,7 @@ const AnnouncementsManagement = () => {
               <textarea
                 rows={3}
                 required
+                aria-label="Decline reason feedback"
                 placeholder="e.g. Please clarify event location and attach official barangay clearance..."
                 className="textarea textarea-bordered w-full rounded-xs text-xs"
                 value={rejectNotes}

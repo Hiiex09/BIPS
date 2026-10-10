@@ -147,6 +147,7 @@ const ResidentConcerns = () => {
                     <input
                       type="text"
                       name="subject"
+                      aria-label="Subject"
                       value={form.subject}
                       onChange={handleChange}
                       className="input input-bordered w-full"
@@ -159,6 +160,7 @@ const ResidentConcerns = () => {
                   <legend className="fieldset-legend text-xs font-semibold">Detailed Description <span className="text-error">*</span></legend>
                   <textarea
                     name="description"
+                    aria-label="Detailed Description"
                     value={form.description}
                     onChange={handleChange}
                     className="textarea textarea-bordered w-full h-28 resize-none"

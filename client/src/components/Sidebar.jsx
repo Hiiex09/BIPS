@@ -15,16 +15,16 @@ export function Sidebar() {
           <h3 className="card-title">Information Center</h3>
           <ul className="menu">
             <li>
-              <a>Community Profile</a>
+              <a href="/about">Community Profile</a>
             </li>
             <li>
-              <a>Transparency Board</a>
+              <a href="/announcements">Transparency Board</a>
             </li>
             <li>
-              <a>Citizen’s Charter</a>
+              <a href="/services">Citizen’s Charter</a>
             </li>
             <li>
-              <a>Downloadable Forms</a>
+              <a href="/services">Downloadable Forms</a>
             </li>
           </ul>
         </div>

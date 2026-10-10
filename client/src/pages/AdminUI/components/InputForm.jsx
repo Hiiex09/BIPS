@@ -36,6 +36,7 @@ const InputForm = () => {
           type="text"
           className="input w-full"
           placeholder="Title"
+          aria-label="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
@@ -49,6 +50,7 @@ const InputForm = () => {
           type="text"
           className="input w-full"
           placeholder="Content"
+          aria-label="Content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required

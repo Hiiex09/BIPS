@@ -23,19 +23,19 @@ const Footer = () => {
             {/* Quick Access */}
             <nav aria-label="Quick Access">
               <h6 className="footer-title">Quick Access</h6>
-              <a className="link link-hover">E-Services</a>
-              <a className="link link-hover">Voters Registration</a>
-              <a className="link link-hover">Local Ordinances</a>
-              <a className="link link-hover">Job Opportunities</a>
+              <a href="/services" className="link link-hover">E-Services</a>
+              <a href="https://comelec.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">Voters Registration</a>
+              <a href="/services" className="link link-hover">Local Ordinances</a>
+              <a href="https://philjobnet.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">Job Opportunities</a>
             </nav>
 
             {/* Government Links */}
             <nav aria-label="Government Links">
               <h6 className="footer-title">Government Links</h6>
-              <a className="link link-hover">City Hall Website</a>
-              <a className="link link-hover">Department of Interior</a>
-              <a className="link link-hover">PhilHealth</a>
-              <a className="link link-hover">SSS Philippines</a>
+              <a href="https://cebucity.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">City Hall Website</a>
+              <a href="https://dilg.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">Department of Interior</a>
+              <a href="https://www.philhealth.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">PhilHealth</a>
+              <a href="https://www.sss.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">SSS Philippines</a>
             </nav>
 
             {/* Contact */}

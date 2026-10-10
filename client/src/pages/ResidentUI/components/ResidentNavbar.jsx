@@ -1,7 +1,7 @@
 import { Bell, LogOut, User, Menu } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserInfo, logout as logoutApi } from "../../../api/auth_api.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const ResidentNavbar = ({ pageTitle, drawerId }) => {
   const queryClient = useQueryClient();
@@ -60,13 +60,12 @@ const ResidentNavbar = ({ pageTitle, drawerId }) => {
             </div>
           </div>
           <ul
-            tabIndex={0}
             className="dropdown-content menu menu-sm bg-base-100 rounded-box z-50 mt-2 w-48 p-2 shadow-2xs border border-base-300"
           >
             <li>
-              <a className="text-sm">
+              <Link to="/Resident" className="text-sm">
                 <User size={14} /> Profile
-              </a>
+              </Link>
             </li>
             <li>
               <button
