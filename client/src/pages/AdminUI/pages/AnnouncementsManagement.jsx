@@ -293,7 +293,7 @@ const AnnouncementsManagement = () => {
 
                 return (
                   <div
-                    key={item._id || idx}
+                    key={item._id || item.id || `${item.title}-${item.createdAt}`}
                     className="p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-base-200/30 transition-colors"
                   >
                     {/* Date Tile Element (matching public banner style) */}

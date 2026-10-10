@@ -18,9 +18,10 @@ const AnnouncementPortal = () => {
           <dialog
             id="my_modal_5"
             className="modal modal-bottom sm:modal-middle"
+            aria-labelledby="create-announcement-modal-title"
           >
             <div className="modal-box">
-              <h3 className="font-bold text-lg">Create Annoucement</h3>
+              <h3 id="create-announcement-modal-title" className="font-bold text-lg">Create Announcement</h3>
               <InputForm />
               <div className="modal-action">
                 <form method="dialog">

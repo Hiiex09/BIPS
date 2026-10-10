@@ -98,8 +98,8 @@ const Home = () => {
               
               {/* Quick Stats */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8">
-                {stats.map((stat, index) => (
-                  <div key={index} className="text-center">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="text-center">
                     <div className="text-2xl lg:text-3xl font-bold text-primary">{stat.value}</div>
                     <div className="text-xs lg:text-sm opacity-70">{stat.label}</div>
                   </div>
@@ -157,8 +157,8 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <ServiceCard key={index} {...service} />
+            {services.map((service) => (
+              <ServiceCard key={service.title} {...service} />
             ))}
           </div>
 
@@ -182,9 +182,9 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <div
-                key={index}
+                key={feature}
                 className="card bg-base-100 shadow-2xs hover:shadow-xl transition-shadow"
               >
                 <div className="card-body items-center text-center">

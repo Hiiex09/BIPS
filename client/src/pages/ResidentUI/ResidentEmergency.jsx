@@ -48,7 +48,7 @@ const ProcedureItem = ({ proc, defaultOpen = false }) => {
         <div className="px-4 py-3 bg-base-50 border-t border-base-300">
           <ol className="space-y-1.5">
             {proc.steps.map((step, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted">
+              <li key={step} className="flex items-start gap-2 text-sm text-muted">
                 <span className="w-5 h-5 rounded-full bg-primary text-primary-content text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                   {i + 1}
                 </span>

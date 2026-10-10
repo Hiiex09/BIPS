@@ -297,7 +297,7 @@ const UserManagement = () => {
                 <tbody className="divide-y divide-base-300 font-medium">
                   {currentUsers.map((u, index) => (
                     <tr
-                      key={u._id || index}
+                      key={u._id || u.id || u.email}
                       className="hover:bg-base-200/40 transition-colors"
                     >
                       <td className="py-3 px-4 font-mono text-[11px] text-base-content/50">

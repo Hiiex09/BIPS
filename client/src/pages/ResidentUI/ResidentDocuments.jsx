@@ -189,9 +189,9 @@ const RequestModal = ({ doc, onClose }) => {
   };
 
   return (
-    <dialog open className="modal modal-open">
+    <dialog open className="modal modal-open" aria-labelledby="request-document-modal-title">
       <div className="modal-box max-w-sm">
-        <h3 className="font-bold text-lg mb-1">Request {doc.title}</h3>
+        <h3 id="request-document-modal-title" className="font-bold text-lg mb-1">Request {doc.title}</h3>
         <p className="text-sm text-muted mb-4">Fill in the details to submit your document request.</p>
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="fieldset">

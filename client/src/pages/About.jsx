@@ -114,10 +114,10 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {values.map((value, index) => {
+            {values.map((value) => {
               const Icon = value.icon;
               return (
-                <div key={index} className="card bg-base-100 shadow-2xs hover:shadow-xl transition-shadow">
+                <div key={value.title} className="card bg-base-100 shadow-2xs hover:shadow-xl transition-shadow">
                   <div className="card-body items-center text-center">
                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
                       <Icon size={32} className="text-primary" />
@@ -143,7 +143,7 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <div className="space-y-8">
               {milestones.map((milestone, index) => (
-                <div key={index} className="flex gap-6 items-start group">
+                <div key={milestone.year} className="flex gap-6 items-start group">
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 bg-primary text-primary-content rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 group-hover:scale-110 transition-transform">
                       {milestone.year}
@@ -175,8 +175,8 @@ const About = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {teamMembers.map((member, index) => (
-              <TeamCard key={index} {...member} />
+            {teamMembers.map((member) => (
+              <TeamCard key={member.name} {...member} />
             ))}
           </div>
         </div>

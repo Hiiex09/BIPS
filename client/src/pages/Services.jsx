@@ -118,8 +118,8 @@ const Services = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {primaryServices.map((service, index) => (
-              <ServiceCard key={index} {...service} />
+            {primaryServices.map((service) => (
+              <ServiceCard key={service.title} {...service} />
             ))}
           </div>
         </div>
@@ -135,7 +135,7 @@ const Services = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {process.map((item, index) => (
-              <div key={index} className="relative">
+              <div key={item.step} className="relative">
                 <div className="card bg-base-100 shadow-2xs h-full">
                   <div className="card-body items-center text-center">
                     <div className="w-16 h-16 bg-primary text-primary-content rounded-full flex items-center justify-center text-2xl font-bold mb-4">
@@ -161,14 +161,14 @@ const Services = () => {
       {/* Additional Services */}
       <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-12">
+          <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Other Services</h2>
             <p className="text-lg opacity-70">More ways we can help you</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {additionalServices.map((service, index) => (
-              <ServiceCard key={index} {...service} />
+            {additionalServices.map((service) => (
+              <ServiceCard key={service.title} {...service} />
             ))}
           </div>
         </div>

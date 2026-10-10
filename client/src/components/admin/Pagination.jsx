@@ -18,11 +18,11 @@ const Pagination = ({
       }
     } else {
       if (currentPage <= 3) {
-        pages.push(1, 2, 3, 4, '...', totalPages);
+        pages.push(1, 2, 3, 4, 'ellipsis-end', totalPages);
       } else if (currentPage >= totalPages - 2) {
-        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+        pages.push(1, 'ellipsis-start', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+        pages.push(1, 'ellipsis-start', currentPage - 1, currentPage, currentPage + 1, 'ellipsis-end', totalPages);
       }
     }
     
@@ -45,10 +45,10 @@ const Pagination = ({
           «
         </button>
         
-        {getPageNumbers().map((page, index) => (
-          page === '...' ? (
+        {getPageNumbers().map((page) => (
+          typeof page === 'string' && page.startsWith('ellipsis') ? (
             <button
-              key={`ellipsis-${index}`}
+              key={page}
               className="join-item btn btn-sm btn-disabled"
               aria-label="More pages"
               disabled
@@ -57,7 +57,7 @@ const Pagination = ({
             </button>
           ) : (
             <button
-              key={page}
+              key={`page-${page}`}
               aria-label={`Page ${page}`}
               aria-current={currentPage === page ? "page" : undefined}
               className={`join-item btn btn-sm ${currentPage === page ? 'btn-active' : ''}`}
