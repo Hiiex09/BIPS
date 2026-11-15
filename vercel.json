@@ -1,21 +1,8 @@
 {
-  "projects": {
-    "client": {
-      "framework": "vite"
-    },
-    "server": {
-      "functions": {
-        "api/*.js": {
-          "runtime": "nodejs18.x"
-        }
-      }
-    }
-  },
-  "builds": [
-    { "src": "client/vite.config.js", "use": "@vercel/static-build" },
-    { "src": "server/api/**/*.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/server/api/$1.js" }
-  ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm install --prefix client",
+  "buildCommand": "npm run build --prefix client",
+  "outputDirectory": "client/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
