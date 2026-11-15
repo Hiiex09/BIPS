@@ -1,252 +1,117 @@
-import {
-  FileCheck,
-  Store,
-  Heart,
-  ShieldAlert,
-  FileText,
-  BadgeCheck,
-  Building,
-  ClipboardList,
-  Clock,
-  CheckCircle2
-} from "lucide-react";
-import ServiceCard from "../components/public/ServiceCard";
+import { Link } from "react-router-dom";
+import { useCheckAuth } from "../hooks/UseAuthRouteHooks.js";
+import { DOCUMENTS, HALL, REQUEST_STEPS } from "../data/hall";
+
+const GENERAL_REQUIREMENTS = [
+  "A valid government-issued ID",
+  "Proof that you live in Tejero, such as a utility bill or lease",
+  "The completed request form, online or at the counter",
+];
 
 const Services = () => {
-  const primaryServices = [
-    {
-      icon: FileCheck,
-      title: "Barangay Clearance",
-      description: "Required for employment, travel, and various legal transactions. Get yours in 2-3 business days.",
-      color: "primary"
-    },
-    {
-      icon: Building,
-      title: "Business Permit",
-      description: "Start or renew your business with our streamlined permit application process.",
-      color: "secondary"
-    },
-    {
-      icon: Heart,
-      title: "Certificate of Indigency",
-      description: "For medical, educational, and financial assistance. Supporting our community members in need.",
-      color: "accent"
-    },
-    {
-      icon: ShieldAlert,
-      title: "Incident Report",
-      description: "Report concerns and incidents 24/7. Help us maintain a safe and secure community.",
-      color: "info"
-    }
-  ];
-
-  const additionalServices = [
-    {
-      icon: FileText,
-      title: "Certificate of Residency",
-      description: "Proof of residency for various requirements",
-      color: "primary"
-    },
-    {
-      icon: BadgeCheck,
-      title: "Good Moral Certificate",
-      description: "Character reference for employment and education",
-      color: "secondary"
-    },
-    {
-      icon: ClipboardList,
-      title: "Barangay ID Application",
-      description: "Official identification for residents",
-      color: "accent"
-    },
-    {
-      icon: Building,
-      title: "Building Permit Endorsement",
-      description: "Construction and renovation permits",
-      color: "info"
-    }
-  ];
-
-  const process = [
-    {
-      step: "1",
-      title: "Submit Requirements",
-      description: "Fill out the online form with required documents"
-    },
-    {
-      step: "2",
-      title: "Verification",
-      description: "Our staff verifies your information and documents"
-    },
-    {
-      step: "3",
-      title: "Processing",
-      description: "Your request is processed within 2-3 business days"
-    },
-    {
-      step: "4",
-      title: "Ready for Pickup",
-      description: "Get notified when your document is ready"
-    }
-  ];
+  const { user } = useCheckAuth();
+  const requestLink = user ? "/Resident/documents" : "/login";
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-secondary/20 py-12 sm:py-16 lg:py-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="badge badge-primary badge-lg mb-6">Digital Services</div>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6">
-              All Services in <span className="text-primary">One Place</span>
-            </h1>
-            <p className="text-xl opacity-80 mb-8">
-              Access barangay services anytime, anywhere. Fast, secure, and convenient online processing.
-            </p>
-          </div>
+    <main>
+      <header className="border-b border-base-300">
+        <div className="page-wrap py-12 sm:py-16">
+          <h1 className="type-display max-w-3xl">Barangay services</h1>
+          <p className="type-lede mt-5">
+            What the hall can issue, what each one is for, and what to bring.
+            Requests marked online can be filed from the resident portal.
+          </p>
         </div>
-      </section>
+      </header>
 
-      {/* Primary Services */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Most Requested Services</h2>
-            <p className="text-lg opacity-70 max-w-2xl mx-auto">
-              Quick access to our most popular services
-            </p>
+      {/* Register of documents */}
+      <section className="page-section">
+        <div className="page-wrap">
+          <div className="hidden sm:grid grid-cols-[1.2fr_2fr_1.6fr_7rem] gap-6 pb-3 text-sm text-base-content/55 border-b border-base-content">
+            <span>Document</span>
+            <span>What it's for</span>
+            <span>What to bring</span>
+            <span>How to file</span>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {primaryServices.map((service) => (
-              <ServiceCard key={service.title} {...service} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it Works */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-base-200/50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">How It Works</h2>
-            <p className="text-lg opacity-70">Simple 4-step process to get your documents</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {process.map((item, index) => (
-              <div key={item.step} className="relative">
-                <div className="card bg-base-100 shadow-2xs h-full">
-                  <div className="card-body items-center text-center">
-                    <div className="w-16 h-16 bg-primary text-primary-content rounded-full flex items-center justify-center text-2xl font-bold mb-4">
-                      {item.step}
-                    </div>
-                    <h3 className="font-bold text-xl mb-2">{item.title}</h3>
-                    <p className="opacity-70">{item.description}</p>
-                  </div>
-                </div>
-                {index < process.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 text-primary">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </div>
+          <ul className="ruled border-b border-base-300">
+            {DOCUMENTS.map((doc) => (
+              <li
+                key={doc.title}
+                className="grid gap-2 py-5 sm:grid-cols-[1.2fr_2fr_1.6fr_7rem] sm:gap-6 sm:items-baseline"
+              >
+                <h2 className="type-heading text-lg">{doc.title}</h2>
+                <p className="text-base-content/80">{doc.use}</p>
+                <p className="text-sm text-base-content/65">
+                  <span className="sm:hidden">Bring: </span>
+                  {doc.bring}
+                </p>
+                {doc.online ? (
+                  <Link to={requestLink} className="link-ink text-sm font-semibold text-primary">
+                    Request online
+                  </Link>
+                ) : (
+                  <span className="text-sm text-base-content/60">At the hall</span>
                 )}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Additional Services */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">Other Services</h2>
-            <p className="text-lg opacity-70">More ways we can help you</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {additionalServices.map((service) => (
-              <ServiceCard key={service.title} {...service} />
+      {/* How a request moves — a true sequence, so it is numbered */}
+      <section className="page-section bg-base-200 border-y border-base-300">
+        <div className="page-wrap">
+          <h2 className="type-title">How a request moves through the hall</h2>
+          <ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {REQUEST_STEPS.map((step, i) => (
+              <li key={step.title} className="border-t-[3px] border-primary pt-4">
+                <span className="type-condensed text-3xl font-bold text-primary">{i + 1}</span>
+                <h3 className="type-heading mt-2">{step.title}</h3>
+                <p className="mt-2 text-base-content/70">{step.detail}</p>
+              </li>
             ))}
-          </div>
+          </ol>
+          <p className="mt-10 max-w-2xl text-base-content/70">
+            Most documents are ready in 2 to 3 working days. Rush processing
+            within 1 working day is available at the counter for an additional fee.
+          </p>
         </div>
       </section>
 
-      {/* Requirements Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-10 sm:mb-12">General Requirements</h2>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="card bg-base-100 shadow-2xs">
-                <div className="card-body">
-                  <h3 className="card-title text-2xl mb-4">For All Services</h3>
-                  <ul className="space-y-3">
-                    <li className="flex gap-3">
-                      <CheckCircle2 size={20} className="text-success flex-shrink-0 mt-1" />
-                      <span>Valid Government ID</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <CheckCircle2 size={20} className="text-success flex-shrink-0 mt-1" />
-                      <span>Proof of Residency</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <CheckCircle2 size={20} className="text-success flex-shrink-0 mt-1" />
-                      <span>Completed Application Form</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+      {/* General requirements + help */}
+      <section className="page-section">
+        <div className="page-wrap grid gap-12 md:grid-cols-2 md:gap-16">
+          <div>
+            <h2 className="type-title">Bring these for any request</h2>
+            <ul className="mt-6 space-y-3">
+              {GENERAL_REQUIREMENTS.map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span aria-hidden="true" className="mt-2.5 h-1.5 w-3 shrink-0 rounded-full bg-primary" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              <div className="card bg-base-100 shadow-2xs">
-                <div className="card-body">
-                  <h3 className="card-title text-2xl mb-4">Processing Time</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <Clock size={24} className="text-primary" />
-                      <div>
-                        <div className="font-semibold">Regular Processing</div>
-                        <div className="text-sm opacity-70">2-3 business days</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Clock size={24} className="text-secondary" />
-                      <div>
-                        <div className="font-semibold">Rush Processing</div>
-                        <div className="text-sm opacity-70">1 business day (additional fee)</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div className="md:border-l md:border-base-300 md:pl-16">
+            <h2 className="type-title">Not sure what you need?</h2>
+            <p className="mt-4 text-base-content/75">
+              Ask the hall before you go. Staff can tell you which document fits
+              your purpose.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href={`tel:${HALL.phone.replace(/[^\d+]/g, "")}`} className="btn-ink">
+                Call {HALL.phone}
+              </a>
+              <a href={`mailto:${HALL.email}`} className="btn-line">
+                Email the hall
+              </a>
             </div>
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-primary text-primary-content">
-        <div className="container mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-6">
-            Need Help with Your Request?
-          </h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Our staff is ready to assist you with your document requests
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <button className="btn btn-base-100 btn-lg">
-              Contact Us
-            </button>
-            <button className="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-primary">
-              View FAQs
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
+    </main>
   );
 };
 

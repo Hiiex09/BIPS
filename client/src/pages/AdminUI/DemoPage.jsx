@@ -82,7 +82,7 @@ const DemoPage = () => {
             value={userStats.pendingVerification}
             subtitle="Requires Action"
             icon={ClipboardList}
-            iconColor="text-warning"
+            iconColor="text-warning-ink"
             iconBg="bg-warning/10"
           />
         </div>

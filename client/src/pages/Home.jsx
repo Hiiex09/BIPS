@@ -1,278 +1,170 @@
-import { 
-  FileCheck, 
-  Store, 
-  Heart, 
-  ShieldAlert, 
-  Megaphone, 
-  Users, 
-  MapPin,
-  ArrowRight,
-  CheckCircle
-} from "lucide-react";
 import { Link } from "react-router-dom";
-import ServiceCard from "../components/public/ServiceCard";
-
-// Google Maps search query for the barangay hall (Plus Code: 8W25+PGJ, Cebu City, 6000 Cebu)
-const BARANGAY_MAP_QUERY = "8W25+PGJ, Cebu City, 6000 Cebu";
+import { MapPin, Phone } from "lucide-react";
+import { useCheckAuth } from "../hooks/UseAuthRouteHooks.js";
+import ClearanceDocument from "../components/public/ClearanceDocument";
+import {
+  DOCUMENTS,
+  HALL,
+  HOTLINES,
+  mapDirectionsUrl,
+  mapEmbedUrl,
+} from "../data/hall";
 
 const Home = () => {
-  const services = [
-    {
-      icon: FileCheck,
-      title: "Barangay Clearance",
-      description: "Get your barangay clearance for employment, business, and local requirements quickly and easily.",
-      color: "primary",
-      link: "/services"
-    },
-    {
-      icon: Store,
-      title: "Business Permit",
-      description: "Apply or renew your business permits online. Streamlined process for all types of businesses.",
-      color: "secondary",
-      link: "/services"
-    },
-    {
-      icon: Heart,
-      title: "Indigency Certificate",
-      description: "Apply for financial and medical assistance certificates for those who need support.",
-      color: "accent",
-      link: "/services"
-    },
-    {
-      icon: ShieldAlert,
-      title: "Report Incident",
-      description: "Report incidents and concerns instantly. Help us keep our community safe and secure.",
-      color: "info",
-      link: "/services"
-    }
-  ];
-
-  const features = [
-    "24/7 Online Access",
-    "Fast Processing",
-    "Track Your Requests",
-    "Secure & Private",
-    "Mobile Friendly",
-    "Multi-language Support"
-  ];
-
-  const stats = [
-    { value: "1,284", label: "Active Residents" },
-    { value: "500+", label: "Monthly Services" },
-    { value: "98%", label: "Satisfaction Rate" },
-    { value: "24/7", label: "Available" }
-  ];
+  const { user } = useCheckAuth();
+  const requestLink = user ? "/Resident/documents" : "/login";
+  const concernLink = user ? "/Resident/concerns" : "/login";
+  const onlineDocs = DOCUMENTS.filter((d) => d.online);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section - Asymmetric Offset Split */}
-      <section className="relative bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-primary rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 left-0 w-40 sm:w-80 h-40 sm:h-80 bg-secondary rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20 relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="badge badge-primary badge-lg gap-2">
-                <Megaphone size={16} />
-                Welcome to Our Digital Portal
-              </div>
-              <h1 className="hero-title">
-                Your Barangay,
-                <span className="text-primary"> Now Digital</span>
-              </h1>
-              <p className="hero-subtitle">
-                Access services, stay informed, and connect with your community—all from the comfort of your home.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/services" className="btn btn-primary btn-lg gap-2">
-                  Get Started
-                  <ArrowRight size={20} />
-                </Link>
-                <Link to="/about" className="btn btn-outline btn-lg">
-                  Learn More
-                </Link>
-              </div>
-              
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="text-center">
-                    <div className="text-2xl lg:text-3xl font-bold text-primary">{stat.value}</div>
-                    <div className="text-xs lg:text-sm opacity-70">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Hero Image with Floating Cards */}
-            <div className="relative hidden lg:block">
-              <div className="relative z-10">
-                <img
-                  src="https://images.pexels.com/photos/34692362/pexels-photo-34692362.jpeg"
-                  alt="Community gathering"
-                  className="rounded-xs shadow-2xs w-full"
-                />
-              </div>
-              
-              {/* Floating Feature Cards */}
-              <div className="absolute -top-6 -left-6 bg-base-100 rounded-xs shadow-2xs p-4 max-w-xs z-20">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-success/10 rounded-xs flex items-center justify-center">
-                    <CheckCircle size={24} className="text-success" />
-                  </div>
-                  <div>
-                    <div className="font-bold">Fast Approval</div>
-                    <div className="text-sm opacity-70">2-3 days processing</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute -bottom-6 -right-6 bg-base-100 rounded-xs shadow-2xs p-4 max-w-xs z-20">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-primary/10 rounded-xs flex items-center justify-center">
-                    <Users size={24} className="text-primary" />
-                  </div>
-                  <div>
-                    <div className="font-bold">Trusted by Many</div>
-                    <div className="text-sm opacity-70">1,200+ residents served</div>
-                  </div>
-                </div>
-              </div>
+    <main>
+      {/* Hero: the clearance getting stamped */}
+      <section className="border-b border-base-300">
+        <div className="page-wrap grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-24">
+          <div>
+            <h1 className="type-display">
+              Get your barangay papers without the queue.
+            </h1>
+            <p className="type-lede mt-6">
+              Request a clearance or certificate from Barangay Tejero, follow it
+              until it's stamped, and come to the hall once — to pick it up.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to={requestLink} className="btn-stamp btn-lg">
+                Request a document
+              </Link>
+              <Link to="/services" className="btn-line btn-lg">
+                See what to bring
+              </Link>
             </div>
           </div>
+
+          <ClearanceDocument className="mx-auto w-full max-w-md lg:max-w-none" />
         </div>
       </section>
 
-      {/* Services Section - Feature Grid */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="section-heading">Digital Services</h2>
-            <p className="section-description">
-              Everything you need, available at your fingertips. Fast, secure, and convenient.
+      {/* What you can request online */}
+      <section className="page-section">
+        <div className="page-wrap grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+          <div>
+            <h2 className="type-title">Request these online</h2>
+            <p className="mt-4 text-base-content/70 max-w-sm">
+              Fill in the form from your phone. You only visit the hall when
+              your document is ready.
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service) => (
-              <ServiceCard key={service.title} {...service} />
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link to="/services" className="btn btn-primary btn-lg">
-              View All Services
-              <ArrowRight size={20} />
+            <Link to="/services" className="link-ink mt-6 inline-block font-semibold">
+              All barangay services
             </Link>
           </div>
-        </div>
-      </section>
 
-      {/* Features Section - Bento Grid */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-base-200/50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="section-heading">Why Choose Us</h2>
-            <p className="section-description">
-              Modern solutions designed for our community's needs
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {features.map((feature) => (
-              <div
-                key={feature}
-                className="card bg-base-100 shadow-2xs hover:shadow-xl transition-shadow"
-              >
-                <div className="card-body items-center text-center">
-                  <CheckCircle size={32} className="text-success mb-2" />
-                  <h3 className="font-bold text-lg">{feature}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-primary to-secondary text-primary-content">
-        <div className="container mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-            Join hundreds of residents already using our digital services
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link to="/signup" className="btn btn-base-100 btn-lg">
-              Create Account
-            </Link>
-            <Link to="/announcements" className="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-primary">
-              View Announcements
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-base-100">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-12">
-            <h2 className="section-heading">Visit Us</h2>
-            <p className="section-description">
-              Find us at the heart of our community
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="card bg-base-200 shadow-xl">
-              <div className="card-body">
-                <div className="flex items-center gap-3 mb-4">
-                  <MapPin size={24} className="text-primary" />
-                  <div>
-                    <h3 className="font-bold text-lg">Barangay Hall</h3>
-                    <p className="opacity-70">Tejero, Cebu City, 6000 Cebu</p>
-                  </div>
-                </div>
-                <div className="aspect-video bg-base-300 rounded-xs overflow-hidden border border-base-300">
-                  <iframe
-                    title="Barangay Tejero Hall location"
-                    src={`https://www.google.com/maps?q=${encodeURIComponent(BARANGAY_MAP_QUERY)}&output=embed`}
-                    className="w-full h-full border-0"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                  />
-                </div>
-                <a
-                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(BARANGAY_MAP_QUERY)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary btn-sm self-start mt-3 gap-2"
+          <ul className="ruled border-y border-base-300">
+            {onlineDocs.map((doc) => (
+              <li key={doc.title}>
+                <Link
+                  to={requestLink}
+                  className="group grid gap-1 py-5 sm:grid-cols-[14rem_1fr] sm:gap-6 hover:bg-tint -mx-3 px-3 rounded-sm"
                 >
-                  <MapPin size={14} /> Get Directions
-                </a>
-                <div className="grid md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">Office Hours</h4>
-                    <p className="text-sm opacity-70">Monday - Friday: 8:00 AM - 5:00 PM</p>
-                    <p className="text-sm opacity-70">Saturday: 8:00 AM - 12:00 PM</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-2">Contact</h4>
-                    <p className="text-sm opacity-70">Phone: (02) 8888-1234</p>
-                    <p className="text-sm opacity-70">Email: info@barangaysanjose.gov.ph</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  <span className="type-heading group-hover:underline decoration-primary decoration-2 underline-offset-4">{doc.title}</span>
+                  <span className="text-base-content/75">
+                    {doc.use}
+                    <span className="mt-1 block text-sm text-base-content/55">
+                      Bring: {doc.bring}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Concerns & emergencies */}
+      <section className="bg-accent text-accent-content">
+        <div className="page-wrap grid gap-10 py-14 sm:py-16 md:grid-cols-2 md:gap-16">
+          <div>
+            <h2 className="type-title">Something wrong on your street?</h2>
+            <p className="mt-4 text-accent-content/75 max-w-md">
+              Report a broken streetlight, uncollected garbage, flooding or a
+              peace and order concern, with a photo if you have one. You can
+              follow what the hall does about it from your account.
+            </p>
+            <Link
+              to={concernLink}
+              className="btn btn-lg mt-8 rounded-md border-0 bg-accent-content text-accent font-semibold hover:bg-white"
+            >
+              Report a concern
+            </Link>
+          </div>
+
+          <div className="md:border-l md:border-accent-content/20 md:pl-16">
+            <h2 className="type-heading">In an emergency, call</h2>
+            <ul className="mt-5 space-y-3">
+              {HOTLINES.map((line) => (
+                <li key={line.number}>
+                  <a
+                    href={`tel:${line.number}`}
+                    className="flex items-baseline gap-4 rounded-sm hover:text-white"
+                  >
+                    <span className="w-24 text-4xl font-extrabold text-white [font-stretch:125%] tabular-nums">
+                      {line.number}
+                    </span>
+                    <span className="text-lg">{line.name}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* Visit the hall */}
+      <section className="page-section">
+        <div className="page-wrap grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <div>
+            <h2 className="type-title">Visit the hall</h2>
+            <p className="mt-4 flex gap-2 text-base-content/80">
+              <MapPin size={18} className="mt-1 shrink-0 text-primary" aria-hidden="true" />
+              {HALL.address}
+            </p>
+
+            <dl className="mt-8 space-y-3">
+              {HALL.hours.map((h) => (
+                <div key={h.days} className="flex justify-between gap-4 border-b border-base-300 pb-3">
+                  <dt className="text-base-content/70">{h.days}</dt>
+                  <dd className="font-semibold tabular-nums">{h.time}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href={mapDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ink"
+              >
+                Get directions
+              </a>
+              <a href={`tel:${HALL.phone.replace(/[^\d+]/g, "")}`} className="btn-line gap-2">
+                <Phone size={16} aria-hidden="true" />
+                {HALL.phone}
+              </a>
+            </div>
+          </div>
+
+          <div className="aspect-[4/3] overflow-hidden rounded-sm border border-base-300 bg-base-200">
+            <iframe
+              title="Map to Barangay Tejero Hall"
+              src={mapEmbedUrl}
+              className="h-full w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+    </main>
   );
 };
 
