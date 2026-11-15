@@ -6,8 +6,10 @@ const getBaseURL = () => {
     return import.meta.env.VITE_API_URL || "http://localhost:4000/api/v1";
   }
 
-  // In production, use the environment variable or fall back to relative path
-  const apiUrl = import.meta.env.VITE_API_URL;
+  // In production, use the environment variable or fall back to relative path.
+  // Strip a stray BOM / whitespace (e.g. pasted from a UTF-8-with-BOM file),
+  // otherwise the URL becomes relative and requests hit the frontend host.
+  const apiUrl = import.meta.env.VITE_API_URL?.replace(/^﻿/, "").trim();
   if (apiUrl) {
     return apiUrl;
   }
