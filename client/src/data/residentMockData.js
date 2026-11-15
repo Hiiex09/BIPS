@@ -357,7 +357,7 @@ export const ordinancesList = [
       "Unregistered pets may be impounded.",
     ],
     fileSize: "0.6 MB",
-    iconColor: "text-warning",
+    iconColor: "text-warning-ink",
     iconBg: "bg-warning/10",
   },
   {
@@ -374,8 +374,8 @@ export const ordinancesList = [
       "Penalties range from ₱500 to ₱5,000.",
     ],
     fileSize: "0.7 MB",
-    iconColor: "text-secondary",
-    iconBg: "bg-secondary/10",
+    iconColor: "text-primary",
+    iconBg: "bg-tint",
   },
 ];
 

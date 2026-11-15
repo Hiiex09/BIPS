@@ -1,54 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 @import "tailwindcss";
-@plugin "daisyui";
+/* Only the barangay theme: the stock dark theme would turn input text near-white on a dark-mode device. */
+@plugin "daisyui" {
+  themes: false;
+}
 @plugin "daisyui/theme" {
   name: "barangay";
   default: true;
   prefersdark: false;
   color-scheme: light;
 
-  /* Color Tokens - Swiss Civic Anchor (Barangay Tejero) */
-  --color-base-100: oklch(100% 0 0);           /* Pure White #FFFFFF */
-  --color-base-200: oklch(98% 0.002 240);      /* Neutral #F7F7F8 */
-  --color-base-300: oklch(91% 0.005 240);      /* 1px Hairline #E5E7EB */
-  --color-base-content: #0B1020;  /* Deep Ink #111827 */
-  
-  /* Primary Civic Signal - Yves Klein Blue (#002FA7) */
-  --color-primary: #002FA7;
-  --color-primary-content: oklch(100% 0 0);
-  
-  /* Secondary Accent - Sunburst Amber/Gold (#F59E0B) */
-  --color-secondary: oklch(75% 0.17 75);
-  --color-secondary-content: oklch(20% 0.05 75);
-  
-  /* Deep Slate Anchor (#0F172A) */
-  --color-accent: #0B1020;
-  --color-accent-content: oklch(98% 0.01 240);
-  
-  --color-neutral: oklch(18% 0.02 240);
-  --color-neutral-content: oklch(98% 0.01 240);
-  
-  --color-info: #002FA7;
-  --color-info-content: oklch(100% 0 0);
-  
-  --color-success: #15803D;
-  --color-success-content: oklch(100% 0 0);
-  
-  --color-warning: oklch(75% 0.17 75);
-  --color-warning-content: oklch(20% 0.05 75);
-  
-  --color-error: #D4002A;
-  --color-error-content: oklch(98% 0.01 25);
+  /* Palette (coolors ffffff-00171f-003459): white page, #00171F ink, #003459 deep blue */
+  --color-base-100: #FFFFFF;   /* page */
+  --color-base-200: #F2F5F7;   /* tint of deep blue for alternate sections */
+  --color-base-300: #D3DCE2;   /* ruled line */
+  --color-base-content: #00171F; /* ink */
 
-  /* Swiss Structure: Strict, disciplined radii (hairline precision) */
-  --radius-selector: 0.125rem;
-  --radius-field: 0.125rem;
-  --radius-box: 0.25rem;
+  /* Deep blue: buttons, links, the stamp */
+  --color-primary: #003459;
+  --color-primary-content: #FFFFFF;
 
-  /* Border Size: Visible 1px hairline rules */
+  /* Light tint: hover fills and soft surfaces */
+  --color-secondary: #E6EEF4;
+  --color-secondary-content: #003459;
+
+  /* Deep blue as a surface (bands, auth panel) */
+  --color-accent: #003459;
+  --color-accent-content: #FFFFFF;
+
+  --color-neutral: #00171F;
+  --color-neutral-content: #FFFFFF;
+
+  --color-info: #2E6DA4;
+  --color-info-content: #FFFFFF;
+
+  --color-success: #2F7A4F;
+  --color-success-content: #FFFFFF;
+
+  /* Amber: status only (pending badges), always with ink text */
+  --color-warning: #F4D35E;
+  --color-warning-content: #00171F;
+
+  /* Alarm red: hotlines and urgent notices only */
+  --color-error: #C8102E;
+  --color-error-content: #FFFFFF;
+
+  --radius-selector: 0.25rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.375rem;
+
   --border: 1px;
+}
+
+@theme {
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #00171F;
+  --color-deep: #003459;
+  --color-tint: #E6EEF4;
+  --color-warning-ink: #7A5C00; /* readable text shade of the amber status colour (~6:1) */
 }
 
 @layer base {
@@ -64,21 +75,30 @@
   }
 
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-    line-height: 1.5;
+    font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
+    font-stretch: 100%;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    font-family: "Archivo", ui-sans-serif, system-ui, sans-serif;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 }
 
 @layer components {
-  /* Admin component styles */
+  /* Admin component styles (unchanged contract) */
   .stats-card {
     @apply card card-border bg-base-100 shadow-sm hover:shadow-md transition-shadow;
   }
@@ -95,38 +115,153 @@
     @apply text-lg font-semibold text-base-content mb-4;
   }
 
-  /* Public page styles */
-  .hero-title {
-    @apply text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6;
+  /* ── Public site type scale (1.25 modular scale) ── */
+  .type-display {
+    font-stretch: 125%;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4.5rem);
   }
 
-  .hero-subtitle {
-    @apply text-base sm:text-xl md:text-2xl opacity-90 mb-6 sm:mb-8;
+  .type-title {
+    font-stretch: 118%;
+    font-weight: 750;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    font-size: clamp(1.625rem, 1.2rem + 1.6vw, 2.5rem);
   }
 
-  .section-heading {
-    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4;
+  .type-heading {
+    font-stretch: 112%;
+    font-weight: 700;
+    line-height: 1.2;
+    font-size: 1.25rem;
   }
 
-  .section-description {
-    @apply text-base sm:text-lg md:text-xl text-center opacity-80 max-w-3xl mx-auto mb-8 sm:mb-12;
+  .type-lede {
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.55;
+    max-width: 38rem;
+    color: color-mix(in oklab, var(--color-base-content) 78%, transparent);
   }
 
-  .service-card {
-    @apply card bg-base-100 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2;
+  .type-condensed {
+    font-stretch: 75%;
+    font-variant-numeric: tabular-nums;
   }
 
-  .announcement-card {
-    @apply card bg-base-100 border-l-4 shadow-md hover:shadow-lg transition-shadow;
+  /* Page frame */
+  .page-wrap {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
   }
+
+  .page-section {
+    @apply py-14 sm:py-20;
+  }
+
+  /* Ruled list — the document-register pattern used for services & notices */
+  .ruled > * + * {
+    border-top: 1px solid var(--color-base-300);
+  }
+
+  /* Buttons: a single, firm shape */
+  .btn-ink {
+    @apply btn rounded-md border-0 bg-ink text-white font-semibold hover:bg-deep;
+  }
+
+  .btn-stamp {
+    @apply btn btn-primary rounded-md font-semibold;
+  }
+
+  .btn-line {
+    @apply btn btn-ghost rounded-md border border-base-content/25 font-semibold hover:border-base-content hover:bg-transparent;
+  }
+
+  .link-ink {
+    @apply underline decoration-base-content/30 underline-offset-4 decoration-1 hover:decoration-primary hover:decoration-2;
+  }
+}
+
+/* ── Form fields ──
+   Unlayered on purpose so it wins over daisyUI's .input/.textarea (which cap width
+   at 20rem and use a faint 20% border). Ink text on paper; border meets 3:1 contrast. */
+.input.field,
+.textarea.field {
+  width: 100%;
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 50%, transparent);
+  border-radius: 0.375rem;
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+  box-shadow: none;
+}
+
+.input.field input {
+  color: inherit;
+}
+
+.input.field::placeholder,
+.input.field input::placeholder,
+.textarea.field::placeholder {
+  color: color-mix(in oklab, var(--color-base-content) 45%, transparent);
+}
+
+.input.field:focus,
+.input.field:focus-within,
+.textarea.field:focus {
+  border-color: var(--color-primary);
+  outline: 3px solid color-mix(in oklab, var(--color-primary) 25%, transparent);
+  outline-offset: 0;
+}
+
+/* ── The rubber stamp: the one orchestrated motion on the site ── */
+@keyframes stamp-land {
+  0%   { opacity: 0; transform: rotate(-14deg) scale(1.6); }
+  60%  { opacity: 1; transform: rotate(-9deg) scale(0.96); }
+  100% { opacity: 1; transform: rotate(-9deg) scale(1); }
+}
+
+@keyframes step-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes step-in {
+  from { opacity: 0.25; }
+  to   { opacity: 1; }
+}
+
+.stamp {
+  transform: rotate(-9deg);
+  animation: stamp-land 420ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  animation-delay: 1500ms;
+}
+
+.step-bar {
+  transform-origin: left center;
+  animation: step-fill 380ms ease-out both;
+}
+
+.step-label {
+  animation: step-in 300ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp,
+  .step-bar,
+  .step-label {
+    animation: none;
+    opacity: 1;
+  }
+  .step-bar { transform: none; }
 }
 
 @utility text-muted {
-  color: oklch(50% 0.01 240);
+  color: color-mix(in oklab, var(--color-base-content) 62%, transparent);
 }
 
 @utility bg-card-hover {
-  background-color: oklch(98% 0.002 240);
+  background-color: var(--color-base-200);
 }
 
 @utility scrollbar-hidden {

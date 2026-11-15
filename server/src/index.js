@@ -38,11 +38,14 @@ app.use(
   }),
 );
 
+// Behind a hosting proxy (Render, Vercel), use the client's real IP for rate limiting.
+if (process.env.NODE_ENV === "production") app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(cookieParser());
 
-// Serve uploaded files statically
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+// Uploaded IDs are personal data: they are NOT served statically.
+// Staff view them through GET /api/v1/users/admin/:id/id-document (auth + role checked).
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);

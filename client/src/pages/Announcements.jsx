@@ -1,194 +1,166 @@
-import { Megaphone, Calendar, Search, Filter } from "lucide-react";
 import { useState } from "react";
+import { Search } from "lucide-react";
 import AnnouncementCard from "../components/public/AnnouncementCard";
 
+const announcements = [
+  {
+    id: 1,
+    title: "Community clean-up drive this Saturday",
+    content: "Join us this Saturday for our monthly barangay clean-up drive. Meeting point at the basketball court at 7:00 AM. Bring gloves and cleaning materials. Snacks will be provided.",
+    date: "Feb 15, 2024",
+    category: "Events",
+    urgent: false,
+  },
+  {
+    id: 2,
+    title: "Water interruption on February 20",
+    content: "Water supply will be temporarily interrupted on February 20, 2024, from 9:00 AM to 3:00 PM for maintenance work. Please store enough water for your needs.",
+    date: "Feb 14, 2024",
+    category: "Public Service",
+    urgent: true,
+  },
+  {
+    id: 3,
+    title: "Free medical check-up at the health center",
+    content: "Free medical check-up and consultation at the barangay health center on February 25, 2024. First come, first served. Bring your barangay ID.",
+    date: "Feb 12, 2024",
+    category: "Health",
+    urgent: false,
+  },
+  {
+    id: 4,
+    title: "Basketball league registration is open",
+    content: "Registration for the annual barangay basketball league is open until March 1, 2024. Open to ages 18 to 35. Up to 15 players per team.",
+    date: "Feb 10, 2024",
+    category: "Sports",
+    urgent: false,
+  },
+  {
+    id: 5,
+    title: "Road repairs on Rizal Street, March 1 to 15",
+    content: "Major road repairs will be done on Rizal Street from March 1 to 15. Expect traffic delays and use alternative routes.",
+    date: "Feb 8, 2024",
+    category: "Public Service",
+    urgent: false,
+  },
+  {
+    id: 6,
+    title: "Senior citizens' pension distribution",
+    content: "Senior citizens can claim their monthly pension at the barangay hall on February 28 to 29, 2024, from 9:00 AM to 3:00 PM. Bring a valid ID and your pension booklet.",
+    date: "Feb 7, 2024",
+    category: "Public Service",
+    urgent: false,
+  },
+];
+
+const categories = ["All", "Events", "Public Service", "Health", "Sports"];
+
 const Announcements = () => {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [query, setQuery] = useState("");
 
-  const announcements = [
-    {
-      id: 1,
-      title: "Community Clean-up Drive This Saturday",
-      content: "Join us this Saturday for our monthly barangay clean-up drive. Meeting point at the basketball court at 7:00 AM. Bring gloves and cleaning materials. Snacks will be provided.",
-      date: "Feb 15, 2024",
-      category: "Events",
-      urgent: false
-    },
-    {
-      id: 2,
-      title: "Water Interruption Notice",
-      content: "Please be advised that water supply will be temporarily interrupted on February 20, 2024, from 9:00 AM to 3:00 PM for maintenance work. Please store enough water for your needs.",
-      date: "Feb 14, 2024",
-      category: "Public Service",
-      urgent: true
-    },
-    {
-      id: 3,
-      title: "Free Medical Check-up Available",
-      content: "Free medical check-up and consultation will be available at the barangay health center on February 25, 2024. First come, first served. Bring your barangay ID.",
-      date: "Feb 12, 2024",
-      category: "Health",
-      urgent: false
-    },
-    {
-      id: 4,
-      title: "Basketball League Registration Now Open",
-      content: "Registration for the annual barangay basketball league is now open. Deadline for registration is March 1, 2024. Open to ages 18-35. Team limit: 15 players.",
-      date: "Feb 10, 2024",
-      category: "Sports",
-      urgent: false
-    },
-    {
-      id: 5,
-      title: "Road Repair Schedule",
-      content: "Major road repairs will be conducted on Rizal Street from March 1-15. Expect traffic delays and follow alternative routes. We appreciate your patience and understanding.",
-      date: "Feb 8, 2024",
-      category: "Public Service",
-      urgent: false
-    },
-    {
-      id: 6,
-      title: "Senior Citizens' Monthly Pension Distribution",
-      content: "Senior citizens can claim their monthly pension at the barangay hall on February 28-29, 2024, from 9:00 AM to 3:00 PM. Please bring valid ID and pension booklet.",
-      date: "Feb 7, 2024",
-      category: "Public Service",
-      urgent: false
-    }
-  ];
-
-  const categories = ["all", "Events", "Public Service", "Health", "Sports"];
-
-  const filteredAnnouncements = selectedCategory === "all" 
-    ? announcements 
-    : announcements.filter(a => a.category === selectedCategory);
+  const q = query.trim().toLowerCase();
+  const filtered = announcements.filter(
+    (a) =>
+      (selectedCategory === "All" || a.category === selectedCategory) &&
+      (!q || a.title.toLowerCase().includes(q) || a.content.toLowerCase().includes(q)),
+  );
+  const urgent = filtered.filter((a) => a.urgent);
+  const regular = filtered.filter((a) => !a.urgent);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/20 via-base-100 to-accent/20 py-12 sm:py-16 lg:py-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                <Megaphone size={40} className="text-primary" />
-              </div>
-            </div>
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-6">
-              Community <span className="text-primary">Announcements</span>
-            </h1>
-            <p className="text-xl opacity-80 mb-8">
-              Stay updated with the latest news, events, and important notices from our barangay
-            </p>
-          </div>
+    <main>
+      <header className="border-b border-base-300">
+        <div className="page-wrap py-12 sm:py-16">
+          <h1 className="type-display">Notices from the hall</h1>
+          <p className="type-lede mt-5">
+            Interruptions, schedules, events and advisories for Tejero residents.
+          </p>
         </div>
-      </section>
+      </header>
 
-      {/* Search and Filter Section */}
-      <section className="py-4 sm:py-6 bg-base-100 sticky top-0 z-10 shadow-2xs">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4">
-              {/* Search */}
-              <div className="flex-1">
-                <label className="input input-bordered flex items-center gap-2">
-                  <Search size={20} className="opacity-50" />
-                  <input type="text" placeholder="Search announcements..." className="grow" />
-                </label>
-              </div>
+      {/* Filters */}
+      <div className="sticky top-0 z-10 border-b border-base-300 bg-base-100/95 backdrop-blur">
+        <div className="page-wrap flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between">
+          <div role="group" aria-label="Filter by category" className="flex gap-1 overflow-x-auto scrollbar-hidden">
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                aria-pressed={selectedCategory === category}
+                className={`shrink-0 rounded-md px-3 py-1.5 text-sm font-semibold transition-colors ${
+                  selectedCategory === category
+                    ? "bg-primary text-primary-content"
+                    : "text-base-content/70 hover:bg-base-200 hover:text-base-content"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
 
-              {/* Category Filter */}
-              <div className="flex gap-2 overflow-x-auto">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`btn btn-sm ${
-                      selectedCategory === category 
-                        ? 'btn-primary' 
-                        : 'btn-outline'
-                    } flex-shrink-0`}
-                  >
-                    {category === "all" ? "All" : category}
-                  </button>
+          <label className="input input-sm w-full md:w-72 rounded-md border-base-300 bg-base-100 flex items-center gap-2">
+            <Search size={16} className="opacity-50" aria-hidden="true" />
+            <input
+              type="search"
+              placeholder="Search notices"
+              aria-label="Search notices"
+              className="grow"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </label>
+        </div>
+      </div>
+
+      <section className="page-section pt-10 sm:pt-12">
+        <div className="page-wrap">
+          <div className="max-w-4xl">
+          {urgent.length > 0 && (
+            <div className="mb-14">
+              <h2 className="type-heading text-error">Urgent</h2>
+              <div className="ruled mt-4 border-y border-base-300">
+                {urgent.map((a) => (
+                  <AnnouncementCard key={a.id} {...a} />
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          )}
 
-      {/* Announcements Grid */}
-      <section className="py-10 sm:py-12 bg-base-200/30">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            {/* Urgent Announcements */}
-            {filteredAnnouncements.some(a => a.urgent) && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                  <span className="badge badge-error">Urgent</span>
-                  Important Notices
-                </h2>
-                <div className="space-y-4">
-                  {filteredAnnouncements
-                    .filter(a => a.urgent)
-                    .map((announcement) => (
-                      <AnnouncementCard key={announcement.id} {...announcement} />
-                    ))}
-                </div>
-              </div>
-            )}
-
-            {/* Regular Announcements */}
+          {regular.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold mb-6">All Announcements</h2>
-              <div className="space-y-4">
-                {filteredAnnouncements
-                  .filter(a => !a.urgent)
-                  .map((announcement) => (
-                    <AnnouncementCard key={announcement.id} {...announcement} />
-                  ))}
+              <h2 className="type-heading">All notices</h2>
+              <div className="ruled mt-4 border-y border-base-300">
+                {regular.map((a) => (
+                  <AnnouncementCard key={a.id} {...a} />
+                ))}
               </div>
             </div>
+          )}
 
-            {filteredAnnouncements.length === 0 && (
-              <div className="text-center py-20">
-                <div className="text-6xl opacity-20 mb-4">📢</div>
-                <h3 className="text-2xl font-bold mb-2">No announcements found</h3>
-                <p className="opacity-70">Try adjusting your filters</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Subscribe Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-primary text-primary-content">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-6">
-              Never Miss an Update
-            </h2>
-            <p className="text-xl opacity-90 mb-8">
-              Get important announcements delivered straight to your phone or email
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                aria-label="Enter your email"
-                className="input input-lg flex-1 text-base-content"
-              />
-              <button className="btn btn-secondary btn-lg">
-                Subscribe
+          {filtered.length === 0 && (
+            <div className="py-16">
+              <h2 className="type-heading">No notices match your search</h2>
+              <p className="mt-2 text-base-content/70">
+                Try another word, or choose All to see every notice.
+              </p>
+              <button
+                type="button"
+                className="btn-line btn-sm mt-5"
+                onClick={() => {
+                  setQuery("");
+                  setSelectedCategory("All");
+                }}
+              >
+                Clear filters
               </button>
             </div>
-            <p className="text-sm opacity-70 mt-4">
-              We respect your privacy. Unsubscribe anytime.
-            </p>
+          )}
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

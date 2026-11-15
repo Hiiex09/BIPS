@@ -1,47 +1,36 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
-import {
-  BadgeCheck,
-  CircleSmall,
-  Eye,
-  EyeOff,
-  LockKeyhole,
-  ShieldCheck,
-  ShieldUser,
-  Upload,
-} from "lucide-react";
+import { Eye, EyeOff, Upload } from "lucide-react";
 import { useSignup } from "../hooks/UseAuthRouteHooks";
+import AuthShell from "../components/public/AuthShell";
+
+const fieldClass =
+  "input field";
+
+const emptyForm = {
+  firstName: "",
+  lastName: "",
+  address: "",
+  mobile: "",
+  email: "",
+  password: "",
+  idUpload: null,
+};
 
 export const Signup = () => {
-  const [mode, setMode] = useState("signup");
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
-    mobile: "",
-    email: "",
-    password: "",
-    idUpload: null,
-  });
+  const [formData, setFormData] = useState(emptyForm);
 
   const { mutate: signup, isPending, error } = useSignup();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      idUpload: file || null,
-    });
+    setFormData({ ...formData, idUpload: file || null });
   };
 
   const handleSubmit = (e) => {
@@ -59,293 +48,166 @@ export const Signup = () => {
     }
 
     signup(submitData, {
-      onSuccess: () => {
-        setFormData({
-          firstName: "",
-          lastName: "",
-          address: "",
-          mobile: "",
-          email: "",
-          password: "",
-          idUpload: null,
-        });
-      },
+      onSuccess: () => setFormData(emptyForm),
     });
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
-      {/* Left Info Panel — hidden on mobile */}
-      <div className="hidden lg:flex lg:w-5/12 xl:w-[38%] bg-primary text-primary-content flex-col justify-center p-10 xl:p-14">
-        <div className="w-16 h-16 rounded-xs flex items-center justify-center backdrop-blur-md bg-white/15 border border-white/25 shadow-2xs mb-6">
-          <ShieldUser size={40} className="text-white" />
+    <AuthShell
+      title="Register as a resident"
+      intro="The hall uses these details to verify that you live in Tejero."
+      footnote="By registering, you agree to the portal's Terms of Service and Privacy Policy."
+    >
+      <form className="space-y-5" onSubmit={handleSubmit}>
+        {error && (
+          <div role="alert" className="rounded-md border border-error/40 bg-error/5 px-4 py-3 text-sm text-error">
+            {error.response?.data?.message || error.message || "Registration didn't go through. Check your details and try again."}
+          </div>
+        )}
+
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label htmlFor="signup-firstname" className="text-sm font-semibold">First name</label>
+            <input
+              id="signup-firstname"
+              type="text"
+              name="firstName"
+              autoComplete="given-name"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              className={`${fieldClass} mt-1.5`}
+              required
+              disabled={isPending}
+            />
+          </div>
+          <div>
+            <label htmlFor="signup-lastname" className="text-sm font-semibold">Last name</label>
+            <input
+              id="signup-lastname"
+              type="text"
+              name="lastName"
+              autoComplete="family-name"
+              value={formData.lastName}
+              onChange={handleInputChange}
+              className={`${fieldClass} mt-1.5`}
+              required
+              disabled={isPending}
+            />
+          </div>
         </div>
 
-        <h1 className="text-white text-3xl xl:text-4xl font-bold mb-4 leading-tight">
-          Digitalizing Barangay Services for a Better Community.
-        </h1>
+        <div>
+          <label htmlFor="signup-address" className="text-sm font-semibold">Home address</label>
+          <textarea
+            id="signup-address"
+            name="address"
+            autoComplete="street-address"
+            value={formData.address}
+            onChange={handleInputChange}
+            className="textarea field mt-1.5"
+            placeholder="House no., street, purok"
+            rows={2}
+            required
+            disabled={isPending}
+          />
+        </div>
 
-        <p className="text-white/90 mb-6 text-sm xl:text-base">
-          Access local permits, view community announcements, and securely
-          connect with your local officials from the comfort of your home.
-        </p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div>
+            <label htmlFor="signup-mobile" className="text-sm font-semibold">Mobile number</label>
+            <input
+              id="signup-mobile"
+              type="tel"
+              name="mobile"
+              autoComplete="tel"
+              value={formData.mobile}
+              onChange={handleInputChange}
+              placeholder="0912 345 6789"
+              className={`${fieldClass} mt-1.5`}
+              required
+              disabled={isPending}
+            />
+          </div>
+          <div>
+            <label htmlFor="signup-email" className="text-sm font-semibold">Email</label>
+            <input
+              id="signup-email"
+              type="email"
+              name="email"
+              autoComplete="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`${fieldClass} mt-1.5`}
+              required
+              disabled={isPending}
+            />
+          </div>
+        </div>
 
-        <div className="flex flex-col gap-3 mb-6">
-          <p className="inline-flex gap-3 items-center">
-            <BadgeCheck fill="white" color="#3b82f6" size={22} />
-            <span className="text-white text-sm">
-              Official Government Record Access
-            </span>
-          </p>
-          <p className="inline-flex gap-3 items-center">
-            <BadgeCheck fill="white" color="#3b82f6" size={22} />
-            <span className="text-white text-sm">
-              Fast Document Processing (Barangay Clearance)
-            </span>
-          </p>
-          <p className="inline-flex gap-3 items-center">
-            <BadgeCheck fill="white" color="#3b82f6" size={22} />
-            <span className="text-white text-sm">
-              Secure Identity Verification
-            </span>
+        <div>
+          <label htmlFor="signup-password" className="text-sm font-semibold">Password</label>
+          <div className={`${fieldClass} mt-1.5 flex items-center gap-2 pr-1.5`}>
+            <input
+              id="signup-password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              autoComplete="new-password"
+              value={formData.password}
+              onChange={handleInputChange}
+              aria-describedby="signup-password-hint"
+              className="grow bg-transparent"
+              required
+              minLength="8"
+              disabled={isPending}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
+          <p id="signup-password-hint" className="mt-1.5 text-xs text-base-content/60">
+            At least 8 characters.
           </p>
         </div>
 
-        <div className="inline-flex gap-3 items-center px-4 py-2 rounded-xs backdrop-blur-md bg-white/10 border border-white/20 shadow-2xs">
-          <LockKeyhole size={20} className="text-white shrink-0" />
-          <span className="text-white text-sm">
-            End-to-End Encrypted & Secure Database
+        <div>
+          <span className="text-sm font-semibold">
+            Valid ID <span className="font-normal text-base-content/60">(optional, speeds up verification)</span>
           </span>
-        </div>
-      </div>
-
-      {/* Right Signup Card */}
-      <div className="flex-1 flex items-center justify-center bg-base-200 px-4 py-8 sm:py-12">
-        <div className="card bg-base-100 shadow-xl w-full max-w-md rounded-xs">
-          <div className="p-6 sm:p-8">
-            {/* Tabs */}
-            <div className="bg-base-200 rounded-lg p-1 flex mb-6">
-              <Link
-                to={"/login"}
-                onClick={() => setMode("login")}
-                className={`btn btn-sm flex-1 text-sm ${
-                  mode === "login" ? "btn-primary" : "btn-ghost"
-                }`}
-              >
-                Login
-              </Link>
-              <Link
-                to={"/signup"}
-                onClick={() => setMode("signup")}
-                className={`btn btn-sm flex-1 text-sm ${
-                  mode === "signup" ? "btn-primary" : "btn-ghost"
-                }`}
-              >
-                Register
-              </Link>
-            </div>
-
-            {/* Title */}
-            <h2 className="text-2xl font-bold mb-2">Create Resident Account</h2>
-            <p className="text-gray-500 text-sm mb-6">
-              Enter your details to join the barangay portal
-            </p>
-
-            {/* FORM */}
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              {error && (
-                <div className="alert alert-error">
-                  <span>
-                    {error.message || "An error occurred during signup"}
-                  </span>
-                </div>
-              )}
-
-              {/* First + Last Name */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor="signup-firstname" className="text-sm font-medium">First Name</label>
-                  <input
-                    id="signup-firstname"
-                    type="text"
-                    name="firstName"
-                    aria-label="First Name"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    placeholder="Juan"
-                    className="input input-bordered w-full mt-1"
-                    required
-                    disabled={isPending}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="signup-lastname" className="text-sm font-medium">Last Name</label>
-                  <input
-                    id="signup-lastname"
-                    type="text"
-                    name="lastName"
-                    aria-label="Last Name"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    placeholder="Dela Cruz"
-                    className="input input-bordered w-full mt-1"
-                    required
-                    disabled={isPending}
-                  />
-                </div>
-              </div>
-
-              {/* Address */}
-              <div>
-                <label htmlFor="signup-address" className="text-sm font-medium">Full Home Address</label>
-                <textarea
-                  id="signup-address"
-                  name="address"
-                  aria-label="Full Home Address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  className="textarea textarea-bordered w-full mt-1"
-                  placeholder="Bldg No., Street, Barangay, City/Municipality"
-                  required
-                  disabled={isPending}
-                ></textarea>
-              </div>
-
-              {/* Contact + Email */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor="signup-mobile" className="text-sm font-medium">Contact Number</label>
-                  <input
-                    id="signup-mobile"
-                    type="tel"
-                    name="mobile"
-                    aria-label="Contact Number"
-                    value={formData.mobile}
-                    onChange={handleInputChange}
-                    placeholder="+63 912 345 6789"
-                    className="input input-bordered w-full mt-1"
-                    required
-                    disabled={isPending}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="signup-email" className="text-sm font-medium">Email Address</label>
-                  <input
-                    id="signup-email"
-                    type="email"
-                    name="email"
-                    aria-label="Email Address"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="juan@example.com"
-                    className="input input-bordered w-full mt-1"
-                    required
-                    disabled={isPending}
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div>
-                <span className="text-sm font-medium">Password</span>
-                <div className="relative mt-1">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    placeholder="At least 8 characters"
-                    className="input input-bordered w-full pr-10"
-                    required
-                    minLength="8"
-                    disabled={isPending}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 btn btn-ghost btn-xs btn-circle text-base-content/60 hover:text-base-content"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                  >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
-                </div>
-              </div>
-
-              {/* ID Upload */}
-              <div>
-                <span className="text-sm font-medium">
-                  Resident ID Upload (Valid ID){" "}
-                  <span className="text-gray-400 text-xs">(Optional)</span>
-                </span>
-                <label className="border border-dashed rounded-lg mt-2 p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-base-200 transition">
-                  <Upload size={30} className="mb-2 text-blue-600" />
-                  <p className="text-sm font-semibold">
-                    Click to upload or drag and drop
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    PNG, JPG or PDF (Max 5MB)
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {formData.idUpload
-                      ? `Selected: ${formData.idUpload.name}`
-                      : "No file selected"}
-                  </p>
-                  <input
-                    type="file"
-                    hidden
-                    onChange={handleFileChange}
-                    accept=".png,.jpg,.jpeg,.pdf"
-                    disabled={isPending}
-                  />
-                </label>
-              </div>
-
-              {/* Submit */}
-              <button
-                type="submit"
-                disabled={isPending}
-                className="btn btn-primary w-full mt-4"
-              >
-                {isPending ? "Registering..." : "Register Account →"}
-              </button>
-            </form>
-
-            <p className="text-sm text-center mt-3">
-              Already have an account?{" "}
-              <Link to={"/login"} className="text-blue-600 cursor-pointer">
-                Login here
-              </Link>
-            </p>
-          </div>
-
-          {/* Footer */}
-          <div className="border-t px-6 sm:px-8 py-5 text-center space-y-3">
-            <p className="text-xs text-gray-500 leading-relaxed">
-              By registering, you agree to our
-              <span className="link link-primary mx-1 cursor-pointer">
-                Terms of Service
+          <label className="mt-1.5 flex cursor-pointer items-center gap-4 rounded-md border border-dashed border-base-content/50 bg-base-100 px-4 py-4 hover:border-primary focus-within:border-primary">
+            <Upload size={22} className="shrink-0 text-primary" aria-hidden="true" />
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold truncate">
+                {formData.idUpload ? formData.idUpload.name : "Choose a photo or PDF of your ID"}
               </span>
-              and
-              <span className="link link-primary mx-1 cursor-pointer">
-                Privacy Policy
-              </span>
-              . We process your data according to the Data Privacy Act of 2012.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-evenly items-center py-4 px-4 gap-2">
-            <span className="text-xs flex items-center gap-1">
-              <ShieldCheck size={18} fill="green" color="white" />
-              Official Barangay Tejero Portal
+              <span className="block text-xs text-base-content/60">PNG, JPG or PDF, up to 5 MB</span>
             </span>
-            <span className="text-xs flex items-center gap-1">
-              <CircleSmall size={14} fill="gray" color="white" />
-              Support: barangay.tejero@gmail.com
-            </span>
-          </div>
+            <input
+              type="file"
+              className="sr-only"
+              onChange={handleFileChange}
+              accept=".png,.jpg,.jpeg,.pdf"
+              disabled={isPending}
+            />
+          </label>
         </div>
-      </div>
-    </div>
+
+        <button type="submit" disabled={isPending} className="btn-stamp w-full">
+          {isPending ? "Registering…" : "Register"}
+        </button>
+      </form>
+
+      <p className="mt-6 text-sm text-base-content/70">
+        Already registered?{" "}
+        <Link to="/login" className="link-ink font-semibold text-base-content">
+          Log in
+        </Link>
+      </p>
+    </AuthShell>
   );
 };
 

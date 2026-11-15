@@ -1,4 +1,5 @@
 import express from "express";
+import rateLimit from "express-rate-limit";
 import {
   checkAuth,
   googleLogin,
@@ -13,14 +14,24 @@ import { loginSchema, signupSchema } from "../validator/auth_validation.js";
 
 const router = express.Router();
 
+// Per-IP limit on credential endpoints (on top of the per-account lockout in login).
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 20,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  message: { message: "Too many attempts from this device. Try again in 15 minutes." },
+});
+
 router.post(
   "/signup",
+  authLimiter,
   upload.single("idUpload"),
   validate(signupSchema),
   signup,
 );
-router.post("/login", validate(loginSchema), login);
-router.post("/google", googleLogin);
+router.post("/login", authLimiter, validate(loginSchema), login);
+router.post("/google", authLimiter, googleLogin);
 router.post("/logout", logout);
 router.get("/checkAuth", protectRoute, checkAuth);
 

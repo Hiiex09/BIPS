@@ -1,7 +1,7 @@
 import express from "express";
 import { protectRoute } from "../middlewares/auth_middleware.js";
 import { authorizedRoles } from "../middlewares/auth_roles.js";
-import { getUserInfo } from "../controllers/user_controller.js";
+import { getUserIdDocument, getUserInfo } from "../controllers/user_controller.js";
 import {
   getAllResident,
   getUsersList,
@@ -63,6 +63,12 @@ router.get(
   totalCertificateRequest,
 );
 
+router.get(
+  "/admin/:id/id-document",
+  protectRoute,
+  authorizedRoles("Admin", "Staff"),
+  getUserIdDocument,
+);
 router.get("/total/announcement", totalAnnouncement);
 
 router.get(
