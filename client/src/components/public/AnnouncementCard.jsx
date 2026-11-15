@@ -1,31 +1,34 @@
-import { Calendar, Clock } from "lucide-react";
-
-const AnnouncementCard = ({ title, content, date, category, urgent = false }) => {
-  const borderColors = {
-    Events: "border-primary",
-    "Public Service": "border-info",
-    Health: "border-success",
-    Sports: "border-secondary",
-    default: "border-accent"
+const splitDate = (value) => {
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return { day: "", month: value, iso: undefined };
+  return {
+    iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`,
+    day: d.getDate(),
+    month: d.toLocaleString("en-US", { month: "short" }),
+    year: d.getFullYear(),
   };
+};
+
+/** One notice in the bulletin register: date column, then the notice itself. */
+const AnnouncementCard = ({ title, content, date, category, urgent = false }) => {
+  const { iso, day, month, year } = splitDate(date);
 
   return (
-    <div className={`announcement-card ${borderColors[category] || borderColors.default}`}>
-      <div className="card-body">
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="badge badge-sm badge-outline">{category}</span>
-            {urgent && <span className="badge badge-sm badge-error">Urgent</span>}
-          </div>
-          <div className="flex items-center gap-2 text-sm opacity-60">
-            <Calendar size={14} />
-            <span>{date}</span>
-          </div>
-        </div>
-        <h3 className="card-title text-xl mb-2">{title}</h3>
-        <p className="opacity-80 line-clamp-3">{content}</p>
+    <article className="grid grid-cols-[3.5rem_1fr] gap-4 py-6 sm:grid-cols-[4.5rem_1fr] sm:gap-6">
+      <time dateTime={iso} className="leading-none">
+        <span className={`block text-3xl sm:text-4xl font-extrabold [font-stretch:125%] tabular-nums ${urgent ? "text-error" : "text-primary"}`}>
+          {day}
+        </span>
+        <span className="mt-1 block text-sm text-base-content/60">
+          {month} {year}
+        </span>
+      </time>
+      <div>
+        <p className="text-sm text-base-content/60">{category}</p>
+        <h3 className="type-heading mt-1">{title}</h3>
+        <p className="mt-2 text-base-content/75 max-w-prose">{content}</p>
       </div>
-    </div>
+    </article>
   );
 };
 

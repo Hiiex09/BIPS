@@ -36,10 +36,18 @@ const ResidentEmergency = lazy(() => import("./pages/ResidentUI/ResidentEmergenc
 const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 
 // Route Guard Helpers
+const isStaff = (user) => user?.role === "Admin" || user?.role === "Staff";
+
 const AdminRoute = ({ user, children }) => {
-  if (!user || (user.role !== "Admin" && user.role !== "Staff")) {
-    return <Navigate to={user ? "/welcome" : "/"} replace />;
-  }
+  if (!user) return <Navigate to="/login" replace />;
+  // A logged-in resident goes to their own portal (redirecting to /welcome here looped).
+  if (!isStaff(user)) return <Navigate to="/Resident" replace />;
+  return children;
+};
+
+const ResidentRoute = ({ user, children }) => {
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== "Resident") return <Navigate to="/welcome" replace />;
   return children;
 };
 
@@ -71,15 +79,16 @@ const App = () => {
               <Route path="/demo" element={<DemoPage />} />
             </Route>
 
-            {/* Admin Protected Routes */}
+            {/* Admin Protected Routes — /welcome is the dashboard that login and the sidebar link to */}
             <Route
-              path="/admin"
+              path="/welcome"
               element={
                 <AdminRoute user={user}>
                   <AdminLandingPage />
                 </AdminRoute>
               }
             />
+            <Route path="/admin" element={<Navigate to="/welcome" replace />} />
 
             <Route
               path="/user-management"
@@ -120,7 +129,11 @@ const App = () => {
             {/* Resident Protected Routes with ResidentLayout */}
             <Route
               path="/Resident"
-              element={user ? <ResidentLayout /> : <Navigate to="/login" replace />}
+              element={
+                <ResidentRoute user={user}>
+                  <ResidentLayout />
+                </ResidentRoute>
+              }
             >
               <Route index element={<ResidentDashboard />} />
               <Route path="documents" element={<ResidentDocuments />} />

@@ -20,7 +20,7 @@ const StatCard = ({ stat }) => (
 const StatusBadge = ({ status }) => {
   const map = {
     available: { cls: "badge-success badge-soft", label: "Available" },
-    limited: { cls: "badge-warning badge-soft", label: "Limited" },
+    limited: { cls: "badge-warning", label: "Limited" },
     full: { cls: "badge-error badge-soft", label: "Fully Booked" },
   };
   const { cls, label } = map[status] || { cls: "badge-ghost", label: status };

@@ -1,74 +1,69 @@
-const Footer = () => {
-  return (
-    <>
-      <footer className="bg-base-100 border-t border-base-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10 sm:py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
-            {/* Branding */}
-            <aside className="lg:col-span-2">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-primary rounded-lg" />
-                <h2 className="font-bold text-lg">Barangay Tejero</h2>
-              </div>
-              <p className="font-medium text-sm mb-2">
-                Digital Governance Portal
-              </p>
-              <p className="text-sm opacity-70 max-w-sm">
-                The digital official portal of our community, committed to
-                providing efficient and accessible government services for every
-                resident.
-              </p>
-            </aside>
+import { Link } from "react-router-dom";
+import { HALL } from "../data/hall";
 
-            {/* Quick Access */}
-            <nav aria-label="Quick Access">
-              <h6 className="footer-title">Quick Access</h6>
-              <a href="/services" className="link link-hover">E-Services</a>
-              <a href="https://comelec.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">Voters Registration</a>
-              <a href="/services" className="link link-hover">Local Ordinances</a>
-              <a href="https://philjobnet.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">Job Opportunities</a>
-            </nav>
+const EXTERNAL_LINKS = [
+  { href: "https://cebucity.gov.ph", label: "Cebu City Government" },
+  { href: "https://dilg.gov.ph", label: "DILG" },
+  { href: "https://comelec.gov.ph", label: "COMELEC voter registration" },
+  { href: "https://www.philhealth.gov.ph", label: "PhilHealth" },
+  { href: "https://www.sss.gov.ph", label: "SSS" },
+  { href: "https://philjobnet.gov.ph", label: "PhilJobNet" },
+];
 
-            {/* Government Links */}
-            <nav aria-label="Government Links">
-              <h6 className="footer-title">Government Links</h6>
-              <a href="https://cebucity.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">City Hall Website</a>
-              <a href="https://dilg.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">Department of Interior</a>
-              <a href="https://www.philhealth.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">PhilHealth</a>
-              <a href="https://www.sss.gov.ph" target="_blank" rel="noopener noreferrer" className="link link-hover">SSS Philippines</a>
-            </nav>
+const Footer = () => (
+  <footer className="border-t border-base-300 bg-base-200">
+    <div className="page-wrap grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div>
+        <p className="text-lg font-extrabold [font-stretch:118%]">{HALL.name}</p>
+        <p className="mt-2 max-w-xs text-sm text-base-content/70">
+          The resident portal of Barangay Tejero, Cebu City. Request documents,
+          report concerns and read notices from the hall.
+        </p>
+      </div>
 
-            {/* Contact */}
-            <nav aria-label="Contact Information">
-              <h6 className="footer-title">Contact Us</h6>
-              <div className="flex flex-col gap-2 text-sm">
-                <span>📧 support@brgysanjose.ph</span>
-                <span>📞 (02) 8000-0000</span>
-                <div className="flex gap-3 mt-3">
-                  <button aria-label="Barangay Official Portal Website" className="btn btn-sm btn-circle btn-ghost">
-                    🌐
-                  </button>
-                  <button aria-label="Official Facebook Page" className="btn btn-sm btn-circle btn-ghost">
-                    📘
-                  </button>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </footer>
+      <nav aria-label="Portal">
+        <h2 className="text-sm font-semibold text-base-content/60">Portal</h2>
+        <ul className="mt-3 space-y-2 text-sm">
+          <li><Link to="/services" className="link-ink">Services</Link></li>
+          <li><Link to="/announcements" className="link-ink">Notices</Link></li>
+          <li><Link to="/about" className="link-ink">About the barangay</Link></li>
+          <li><Link to="/login" className="link-ink">Log in</Link></li>
+        </ul>
+      </nav>
 
-      {/* Bottom Footer */}
-      <footer className="bg-base-100 border-t border-base-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-center">
-          <p className="text-xs opacity-50">
-            © 2024 Barangay Information Portal. Built for the citizens of the
-            Republic of the Philippines.
+      <nav aria-label="Government links">
+        <h2 className="text-sm font-semibold text-base-content/60">Government</h2>
+        <ul className="mt-3 space-y-2 text-sm">
+          {EXTERNAL_LINKS.map((l) => (
+            <li key={l.href}>
+              <a href={l.href} target="_blank" rel="noopener noreferrer" className="link-ink">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div>
+        <h2 className="text-sm font-semibold text-base-content/60">Contact the hall</h2>
+        <address className="mt-3 space-y-2 text-sm not-italic">
+          <p>{HALL.address}</p>
+          <p>
+            <a href={`tel:${HALL.phone.replace(/[^\d+]/g, "")}`} className="link-ink">{HALL.phone}</a>
           </p>
-        </div>
-      </footer>
-    </>
-  );
-};
+          <p>
+            <a href={`mailto:${HALL.email}`} className="link-ink break-all">{HALL.email}</a>
+          </p>
+        </address>
+      </div>
+    </div>
+
+    <div className="border-t border-base-300">
+      <p className="page-wrap py-4 text-xs text-base-content/55">
+        © {new Date().getFullYear()} Barangay Tejero, Cebu City
+      </p>
+    </div>
+  </footer>
+);
 
 export default Footer;

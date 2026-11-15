@@ -21,7 +21,7 @@ const StatusBadge = ({ status }) => {
     RESOLVED: "badge-success badge-soft",
     CLOSED: "badge-neutral badge-soft",
     "IN PROGRESS": "badge-info badge-soft",
-    "UNDER REVIEW": "badge-warning badge-soft",
+    "UNDER REVIEW": "badge-warning",
   };
   return <span className={`badge badge-sm font-semibold ${map[label] || "badge-ghost"}`}>{label}</span>;
 };
