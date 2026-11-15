@@ -60,6 +60,7 @@ export const userSchema = new Schema(
     lastLogin: { type: Date },
     failedAttempts: { type: Number, default: 0 },
     isLocked: { type: Boolean, default: false },
+    lockUntil: { type: Date, default: null },
   },
   { timestamps: true },
 );
